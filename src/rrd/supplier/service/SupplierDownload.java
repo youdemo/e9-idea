@@ -1,0 +1,99 @@
+package rrd.supplier.service;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.api.integration.Base;
+import org.apache.commons.beanutils.BeanUtils;
+import weaver.conn.RecordSet;
+import weaver.general.BaseBean;
+import weaver.general.Util;
+
+@SuppressWarnings("serial")
+public class SupplierDownload extends HttpServlet{
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	 public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		BaseBean log = new BaseBean();
+		log.writeLog("doPost-----");
+		String urlKey = URLDecoder.decode(Util.null2String(request.getParameter("urlKey")),"UTF-8");
+		String type = Util.null2String(request.getParameter("type"));
+
+		SupplierInfoServiceImpl sisi = new SupplierInfoServiceImpl();
+		String rqid = sisi.getRqid(urlKey);
+		if("".equals(rqid)){
+			return;
+		}
+		String xzwd1 = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzwd1").getBytes("ISO-8859-1"),"UTF-8");
+		String xzwd2 = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzwd2").getBytes("ISO-8859-1"),"UTF-8");
+		String xzdj = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzdj").getBytes("ISO-8859-1"),"UTF-8");
+
+		String fileName = "";
+        if("0".equals(type)){
+			fileName = xzwd1;
+		}else if("1".equals(type)){
+			fileName = xzwd2;
+		}
+        new BaseBean().writeLog("testaaa","url:"+xzdj+fileName);
+        File file = new File(xzdj+fileName);
+		 //log.writeLog(map.toString());
+
+		 exportFile(response,file,fileName);
+	 }
+	
+	public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		doPost(request,response);
+	} 
+	/** 
+	 	* 文件输出
+		* @param file 文件
+		* @param fileName 文件名
+	 */
+	 public static void exportFile(HttpServletResponse response, File file, String fileName) throws IOException {
+		 response.setContentType("application/octet-stream");
+		 response.setHeader("content-disposition", "attachment; filename=\"" +  new String(fileName.replaceAll("<", "").replaceAll(">", "").replaceAll("&lt;", "").replaceAll("&gt;", "").getBytes("UTF-8"),"ISO-8859-1"));
+		 ServletOutputStream out = null;
+		 out = response.getOutputStream();
+		 InputStream imagefile = null;
+		 int byteread;
+		 byte data[] = new byte[1024];
+		 try {
+			 imagefile = new FileInputStream(file);
+			 response.setCharacterEncoding("UTF-8");
+			 while ((byteread = imagefile.read(data)) != -1) {
+				 out.write(data, 0, byteread);
+				 out.flush();
+			 }
+		 } catch (FileNotFoundException e) {
+		 } finally {
+			 if (imagefile != null) {
+				 try {
+					 imagefile.close();
+				 } catch (Exception e) {
+					 throw new RuntimeException(e);
+				 }
+			 }
+		 }
+	 }
+	 
+
+}

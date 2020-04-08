@@ -1,0 +1,2 @@
+doFieldSQL(" select count(1)  from uf_xzkhsp  where IFNULL(khmc,'')='$7510$' and IFNULL(szgj,'')='$7507$' and IFNULL(szsf,'')='$7508$' and IFNULL(khdz,'')='$7461$' and IFNULL(fplx,'')='$7495$' and IFNULL(khyhmc,'')='$7462$' and IFNULL(khyhzh,'')='$7463$' and IFNULL(fptt,'')='$7464$' and IFNULL(fpjsdz,'')='$7465$' and IFNULL(kpdh,'')='$7466$' and IFNULL(kpdz,'')='$8384$' and khdm='$7575$'
+ ")
