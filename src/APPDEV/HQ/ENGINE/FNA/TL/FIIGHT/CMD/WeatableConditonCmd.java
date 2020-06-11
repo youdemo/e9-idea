@@ -8,7 +8,6 @@ import com.api.browser.util.ConditionType;
 import com.engine.common.biz.AbstractCommonCommand;
 import com.engine.common.entity.BizLogContext;
 import com.engine.core.interceptor.CommandContext;
-import weaver.hrm.HrmUserVarify;
 import weaver.hrm.User;
 
 import java.util.ArrayList;
@@ -55,19 +54,17 @@ public class WeatableConditonCmd extends AbstractCommonCommand<Map<String,Object
         requestid.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
         requestid.setLabel("差旅单号"); //设置文本值  这个将覆盖多语言标签的值
         //workcode.setRules("required");
-       // workcode.setRules("required");
-       // workcode.setIsQuickSearch(true);
+        // workcode.setRules("required");
+        // workcode.setIsQuickSearch(true);
         conditionItems.add(requestid);
 
-
-        //文本输入框
-        SearchConditionItem rzgsbm = conditionFactory.createCondition(ConditionType.INPUT,502327, "rzgsbm");
-        rzgsbm.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
-        rzgsbm.setFieldcol(16);	//条件输入框所占宽度，默认值18
-        rzgsbm.setLabelcol(8);
-        rzgsbm.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
-        rzgsbm.setLabel("入账公司编码"); //设置文本值  这个将覆盖多语言标签的值
-        conditionItems.add(rzgsbm);
+        SearchConditionItem ccr = conditionFactory.createCondition(ConditionType.BROWSER,502327, "ccr","17");
+        ccr.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
+        ccr.setFieldcol(16); //条件输入框所占宽度，默认值18
+        ccr.setLabelcol(8);
+        ccr.setViewAttr(2); // 编辑权限 1：只读，2：可编辑， 3：必填 默认2
+        ccr.setLabel("出差人"); //设置文本值 这个将覆盖多语言标签的值
+        conditionItems.add(ccr);
 
         SearchConditionItem costcenter = conditionFactory.createCondition(ConditionType.INPUT,502327, "costcenter");
         costcenter.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
@@ -76,6 +73,16 @@ public class WeatableConditonCmd extends AbstractCommonCommand<Map<String,Object
         costcenter.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
         costcenter.setLabel("成本中心"); //设置文本值  这个将覆盖多语言标签的值
         conditionItems.add(costcenter);
+        //文本输入框
+        SearchConditionItem rzgsbm = conditionFactory.createCondition(ConditionType.BROWSER, "502327", "rzgsbm", "162",1,"travel_dzgsdm");
+        rzgsbm.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
+        rzgsbm.setFieldcol(16);	//条件输入框所占宽度，默认值18
+        rzgsbm.setLabelcol(8);
+        rzgsbm.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
+        rzgsbm.setLabel("入账公司编码"); //设置文本值  这个将覆盖多语言标签的值
+        conditionItems.add(rzgsbm);
+
+
 
         //下拉选择框类
         SearchConditionItem sfbx = conditionFactory.createCondition(ConditionType.SELECT,502327,"sfbx");
@@ -90,6 +97,13 @@ public class WeatableConditonCmd extends AbstractCommonCommand<Map<String,Object
         sfbx.setLabel("是否报销");
         conditionItems.add(sfbx);
 
+        SearchConditionItem wfstatus = conditionFactory.createCondition(ConditionType.BROWSER, "502327", "WFStatus", "161",1,"fna_wfstatus");
+        wfstatus.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
+        wfstatus.setFieldcol(16);	//条件输入框所占宽度，默认值18
+        wfstatus.setLabelcol(8);
+        wfstatus.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
+        wfstatus.setLabel("差旅状态"); //设置文本值  这个将覆盖多语言标签的值
+        conditionItems.add(wfstatus);
 
         SearchConditionItem year = conditionFactory.createCondition(ConditionType.BROWSER,502327, "year","178");
         year.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
@@ -120,6 +134,27 @@ public class WeatableConditonCmd extends AbstractCommonCommand<Map<String,Object
         month.setLabelcol(8);
         month.setLabel("月份");
         conditionItems.add(month);
+
+        SearchConditionItem hasrefund = conditionFactory.createCondition(ConditionType.SELECT,502327,"hasrefund");
+        List<SearchConditionOption> selectOptionshasrefund = new ArrayList <>();  //设置选项值
+        selectOptionshasrefund.add(new SearchConditionOption("","",true));
+        selectOptionshasrefund.add(new SearchConditionOption("0","有退票费"));
+        selectOptionshasrefund.add(new SearchConditionOption("1","无退票费"));
+
+        hasrefund.setOptions(selectOptionshasrefund);
+        hasrefund.setColSpan(2);
+        hasrefund.setFieldcol(16);
+        hasrefund.setLabelcol(8);
+        hasrefund.setLabel("有无退票费");
+        conditionItems.add(hasrefund);
+
+        SearchConditionItem tpStatus = conditionFactory.createCondition(ConditionType.BROWSER, "502327", "tpStatus", "161",1,"fna_wfstatus1");
+        tpStatus.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
+        tpStatus.setFieldcol(16);	//条件输入框所占宽度，默认值18
+        tpStatus.setLabelcol(8);
+        tpStatus.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
+        tpStatus.setLabel("退票审批状态"); //设置文本值  这个将覆盖多语言标签的值
+        conditionItems.add(tpStatus);
 
 
 

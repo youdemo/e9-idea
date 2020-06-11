@@ -15,7 +15,7 @@
     String urlkeyparam = urlKey;
     boolean flag =tu.checkIfOvertime(URLDecoder.decode(URLDecoder.decode(urlKey,"UTF-8"),"UTF-8"));
     if(flag){
-        out.print("连接已超时失效，如还未填写，请联系RRD对应的资源或采购人员发送新网页连接123");
+        out.print("连接已超时失效，如还未填写，请联系RRD对应的资源或采购人员发送新网页连接");
         return;
     }
     String rqid = Util.null2String(request.getParameter("rqid"));
@@ -45,11 +45,7 @@
     dataMap.put("yddh1",Util.null2String(request.getParameter("yddh1")));//移动电话
     dataMap.put("yxdz1",Util.null2String(request.getParameter("yxdz1")));//邮箱地址
     dataMap.put("tyshxydm",Util.null2String(request.getParameter("tyshxydm")));//统一社会信用代码
-    dataMap.put("khh",Util.null2String(request.getParameter("khh")));//开户行
-    dataMap.put("yhzh",Util.null2String(request.getParameter("yhzh")));//银行账号
-    dataMap.put("wb",Util.null2String(request.getParameter("wb")));//外币
-    dataMap.put("yhzhwb",Util.null2String(request.getParameter("yhzhwb")));//银行账号（外币)
-    dataMap.put("swiftcode",Util.null2String(request.getParameter("swiftcode")));//SWIFT CODE
+
     dataMap.put("glgs",Util.null2String(request.getParameter("glgs")));//关联公司
     dataMap.put("ygzsr",Util.null2String(request.getParameter("ygzsr")));//员工总数（人）
     dataMap.put("bgcsmjm2",Util.null2String(request.getParameter("bgcsmjm2")));//办公场所面积（m2）
@@ -81,7 +77,6 @@
     dataMap.put("syddhlysm",Util.null2String(request.getParameter("syddhlysm")));//商业道德函理由说明
     dataMap.put("sl",Util.null2String(request.getParameter("sl")));//税率
 
-    dataMap.put("bz",Util.null2String(request.getParameter("bz")));//交易货币
     dataMap.put("sfyyyzzjggz",Util.null2String(request.getParameter("sfyyyzzjggz")));//是否有营业相关附件
     dataMap.put("sfyyhkhxxjggz",Util.null2String(request.getParameter("sfyyhkhxxjggz")));//是否有银行相关附件
     dataMap.put("sfysyddhjggz",Util.null2String(request.getParameter("sfysyddhjggz")));//是否有商业相关附件
@@ -90,7 +85,18 @@
     dataMap.put("cwrwqsmly",Util.null2String(request.getParameter("cwrwqsmly")));//财务如无请说明理由
     dataMap.put("sfygsxgfj",Util.null2String(request.getParameter("sfygsxgfj")));//是否有公司相关附件
     dataMap.put("gsrwqsmly",Util.null2String(request.getParameter("gsrwqsmly")));//公司如无请说明理由
-
+    dataMap.put("bz1",Util.null2String(request.getParameter("bz1")));//币种1
+    dataMap.put("bz2",Util.null2String(request.getParameter("bz2")));//币种1
+    dataMap.put("bz3",Util.null2String(request.getParameter("bz3")));//币种1
+    dataMap.put("khh1",Util.null2String(request.getParameter("khh1")));//开户行1
+    dataMap.put("khh2",Util.null2String(request.getParameter("khh2")));//开户行2
+    dataMap.put("khh3",Util.null2String(request.getParameter("khh3")));//开户行3
+    dataMap.put("yhzh1",Util.null2String(request.getParameter("yhzh1")));//银行账号1
+    dataMap.put("yhzh2",Util.null2String(request.getParameter("yhzh2")));//银行账号2
+    dataMap.put("yhzh3",Util.null2String(request.getParameter("yhzh3")));//银行账号3
+    dataMap.put("swiftcode1",Util.null2String(request.getParameter("swiftcode1")));//swiftcode1
+    dataMap.put("swiftcode2",Util.null2String(request.getParameter("swiftcode2")));//swiftcode2
+    dataMap.put("swiftcode3",Util.null2String(request.getParameter("swiftcode3")));//swiftcode3
     SupplierInfoServiceImpl sis = new SupplierInfoServiceImpl();
     String result = sis.saveData(dataMap,submittype,rqid,zcid);
 

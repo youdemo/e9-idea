@@ -1,0 +1,142 @@
+ *{
+                padding:0px;
+                margin: 0px;
+                font-family:'Microsoft YaHei';
+            }
+            html,body{
+                width:100%;
+                height:100%;
+            }
+            .HR-portal{
+                width:100%;
+                height:100%;
+                background-color: white;
+            }
+            .structure{
+                height:60%;
+                min-height: 170px
+            }
+
+ .structure1{
+     height:34%;
+     min-height: 170px
+ }
+
+            .HR-div{
+                width:15%;
+                height:85%;
+                float: left;
+                background-color: #FFFFFF;
+                margin-left: 25px;
+            }
+
+
+            .age-title{
+                text-align: center;
+                color: #333333;
+                font-size:14px;
+                margin-top: 5px;
+                margin-bottom: 10px;
+            }
+            .HR-flow{
+            	margin-top: 5px;
+            	height: 80px;
+            }
+
+            .mode-div{
+            	width: 100%;
+            	height: 145px;
+            	float: left;
+                /*border: 1px solid red;*/
+                height: 100%;
+            }
+
+            .flow-mode-data{
+            	height: 60px;
+            }
+            .flow-mode-ul{
+            	height:50px;
+            	margin-top: 5px;
+            }
+            .flow-mode-ul li{
+            	float: left;
+            	height: 100%;
+            	width: 15%;
+            	list-style: none;
+            	margin-left: 1.5%;
+            	border-radius: 10px;
+            	
+            }
+            .flow-mode-ul li:nth-child(1){
+            	background-color: #4594E7;
+            }
+             .flow-mode-ul li:nth-child(2){
+            	background-color: #6073EF;
+            }
+             .flow-mode-ul li:nth-child(3){
+            	background-color: #30CCAD;
+            }
+            .flow-mode-ul li:nth-child(4){
+            	background-color: #837BF5;
+            }
+            .flow-mode-ul li:nth-child(5){
+            	background-color: #2472C3;
+            }
+
+             .flow-mode-ul li:nth-child(6){
+                 background-color: #30CCAD;
+             }
+           
+            .flow-mode-label{
+            	width: 100%;
+            	height: 22px;
+            	border-radius: 10px;
+            	line-height: 27px;
+            	font-size: 12px;
+            	text-align: center;
+            	color: #FFFFFF;
+            }
+            .flow-mode-number{
+            	line-height: 24px;
+            	height: 35px;
+            	font-size: 18px;
+            	text-align: center;
+            	color: #FFFFFF;
+            }
+            .meter{
+            	height: 100px;
+                height: 65%;
+            }
+
+
+            .meter-div{
+                width: 50%;
+                height: 100%;
+                float: left;
+            }
+
+
+.HR-br{
+    width: 90%;
+    height: 87%;
+}
+
+.flow-mode{
+    height: 85%;
+/*    border: 1px solid red;*/
+}
+#age-title,#level,#education,#sexfb,#shglfb,#jtglfb,#yglbfb{
+    width: 100%;
+    height: 84%;
+}
+
+ #jgfb{
+     width: 100%;
+     height: 84%;
+ }
+
+
+.clear{
+    clear: both;
+}
+

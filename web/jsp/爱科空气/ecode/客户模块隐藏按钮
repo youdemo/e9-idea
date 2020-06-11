@@ -1,0 +1,29 @@
+ecodeSDK.overwritePropsFnQueueMapSet('WeaTop', {
+    fn: (newProps, name) => {
+    if(!ecodeSDK.checkLPath('/wui/index.html#/main/crm/mineCustomer')&&!ecodeSDK.checkLPath('/spa/crm/static/index.html#/main/crm/mineCustomer')) return ;
+if (newProps.buttons.length > 0) {
+    let delid='-1'
+    let i=0;
+    for(let v of newProps.buttons) {
+        if(v.props.children[2] =="新建"){
+            delid=delid+','+i
+        }else if(v.props.children[2] =="导入"){
+            delid=delid+','+i
+        }else if(v.props.children[2] =="生日提醒"){
+            delid=delid+','+i
+        }
+        i=i+1
+    }
+    let arrids = delid.split(",").reverse();
+    for(let v of arrids){
+        if(v != -1){
+            newProps.buttons.splice(v, 1)
+        }
+    }
+
+}
+
+},
+order:1, //排序字段，如果存在同一个页面复写了同一个组件，控制顺序时使用
+    desc:'客户按钮隐藏'
+})

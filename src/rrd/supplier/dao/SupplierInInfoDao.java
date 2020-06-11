@@ -87,6 +87,115 @@ public class SupplierInInfoDao {
     private String sfygsxgfj = "";//是否有公司相关附件
     private String gsrwqsmly = "";//公司如无请说明理由
 
+    private String bz1 = "";//币种1
+    private String bz2 = "";//币种1
+    private String bz3 = "";//币种1
+    private String khh1 = "";//开户行1
+    private String khh2 = "";//开户行2
+    private String khh3 = "";//开户行3
+    private String yhzh1 = "";//银行账号1
+    private String yhzh2 = "";//银行账号2
+    private String yhzh3 = "";//银行账号3
+    private String swiftcode1 = "";//swiftcode1
+    private String swiftcode2 = "";//swiftcode2
+    private String swiftcode3 = "";//swiftcode3
+
+    public String getBz1() {
+        return bz1;
+    }
+
+    public void setBz1(String bz1) {
+        this.bz1 = bz1;
+    }
+
+    public String getBz2() {
+        return bz2;
+    }
+
+    public void setBz2(String bz2) {
+        this.bz2 = bz2;
+    }
+
+    public String getBz3() {
+        return bz3;
+    }
+
+    public void setBz3(String bz3) {
+        this.bz3 = bz3;
+    }
+
+    public String getKhh1() {
+        return khh1;
+    }
+
+    public void setKhh1(String khh1) {
+        this.khh1 = khh1;
+    }
+
+    public String getKhh2() {
+        return khh2;
+    }
+
+    public void setKhh2(String khh2) {
+        this.khh2 = khh2;
+    }
+
+    public String getKhh3() {
+        return khh3;
+    }
+
+    public void setKhh3(String khh3) {
+        this.khh3 = khh3;
+    }
+
+    public String getYhzh1() {
+        return yhzh1;
+    }
+
+    public void setYhzh1(String yhzh1) {
+        this.yhzh1 = yhzh1;
+    }
+
+    public String getYhzh2() {
+        return yhzh2;
+    }
+
+    public void setYhzh2(String yhzh2) {
+        this.yhzh2 = yhzh2;
+    }
+
+    public String getYhzh3() {
+        return yhzh3;
+    }
+
+    public void setYhzh3(String yhzh3) {
+        this.yhzh3 = yhzh3;
+    }
+
+    public String getSwiftcode1() {
+        return swiftcode1;
+    }
+
+    public void setSwiftcode1(String swiftcode1) {
+        this.swiftcode1 = swiftcode1;
+    }
+
+    public String getSwiftcode2() {
+        return swiftcode2;
+    }
+
+    public void setSwiftcode2(String swiftcode2) {
+        this.swiftcode2 = swiftcode2;
+    }
+
+    public String getSwiftcode3() {
+        return swiftcode3;
+    }
+
+    public void setSwiftcode3(String swiftcode3) {
+        this.swiftcode3 = swiftcode3;
+    }
+
     public String getId() {
         return id;
     }

@@ -8,7 +8,6 @@ import com.api.browser.util.ConditionType;
 import com.engine.common.biz.AbstractCommonCommand;
 import com.engine.common.entity.BizLogContext;
 import com.engine.core.interceptor.CommandContext;
-import weaver.hrm.HrmUserVarify;
 import weaver.hrm.User;
 
 import java.util.ArrayList;
@@ -55,13 +54,13 @@ public class WeatableConditonCmd extends AbstractCommonCommand<Map<String,Object
         cxry.setLabel("查询人员"); //设置文本值 这个将覆盖多语言标签的值
         conditionItems.add(cxry);
 
-        SearchConditionItem workcode = conditionFactory.createCondition(ConditionType.INPUT,502327, "workcode");
-        workcode.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
-        workcode.setFieldcol(16); //条件输入框所占宽度，默认值18
-        workcode.setLabelcol(8);
-        workcode.setViewAttr(2); // 编辑权限 1：只读，2：可编辑， 3：必填 默认2
-        workcode.setLabel("工号"); //设置文本值 这个将覆盖多语言标签的值
-        conditionItems.add(workcode);
+        SearchConditionItem wfstatus = conditionFactory.createCondition(ConditionType.BROWSER, "502327", "WFStatus", "161",1,"fna_wfstatus");
+        wfstatus.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
+        wfstatus.setFieldcol(16);	//条件输入框所占宽度，默认值18
+        wfstatus.setLabelcol(8);
+        wfstatus.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
+        wfstatus.setLabel("流程状态"); //设置文本值  这个将覆盖多语言标签的值
+        conditionItems.add(wfstatus);
 
 
 
@@ -76,13 +75,18 @@ public class WeatableConditonCmd extends AbstractCommonCommand<Map<String,Object
         startDate.setOptions(selectOptions);
         conditionItems.add(startDate);
 
-        SearchConditionItem wfstatus = conditionFactory.createCondition(ConditionType.BROWSER, "502327", "WFStatus", "161",1,"WF_STATUS");
-        wfstatus.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
-        wfstatus.setFieldcol(16);	//条件输入框所占宽度，默认值18
-        wfstatus.setLabelcol(8);
-        wfstatus.setViewAttr(2);  //	 编辑权限  1：只读，2：可编辑， 3：必填   默认2
-        wfstatus.setLabel("流程状态"); //设置文本值  这个将覆盖多语言标签的值
-        conditionItems.add(wfstatus);
+        SearchConditionItem endDate = conditionFactory.createCondition(ConditionType.DATE, 722, new String[]{"endDate", "fromdate1", "lenddate1"});
+        endDate.setColSpan(2);//定义一行显示条件数，默认值为2,当值为1时标识该条件单独占一行
+        endDate.setFieldcol(16);    //条件输入框所占宽度，默认值18
+        endDate.setLabelcol(8);
+        endDate.setViewAttr(2);  //  编辑权限  1：只读，2：可编辑， 3：必填   默认2
+        endDate.setLabel("差旅结束日期"); //设置文本值  这个将覆盖多语言标签的值
+        List<SearchConditionOption> selectOptions1 = new ArrayList <>(); //设置选项值
+        selectOptions1.add(new SearchConditionOption("6", "日期范围选择",true));
+        endDate.setOptions(selectOptions1);
+        conditionItems.add(endDate);
+
+
 
 
 

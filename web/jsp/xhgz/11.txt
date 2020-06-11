@@ -1,0 +1,11 @@
+update formtable_main_2 set yfzysprq=convert(varchar(20),getdate(),23) where requestid=$requestid$
+update formtable_main_2 set yfzysprq=a.lastoperatedate from workflow_requestbase a where formtable_main_2.requestid=a.requestid and a.currentnodetype=3
+
+
+2020年4月第1周试车明细
+select requestid,bh,sjkfzt,(select c.selectname from workflow_billfield a, workflow_bill b,workflow_selectitem c where a.billid=b.id and c.fieldid=a.id  and b.tablename='formtable_main_2' and a.fieldname='a' and c.selectvalue=t.sjkflb) as sjkflb,mbkh,(select lastname from hrmresource where id=t.zpyfzy)zpyfzy,jarq,yjlh,jjlh from (
+select a.requestid,a.bh,a.sjkfzt,a.a as sjkflb,a.mbkh,a.zpyfzy,yfzysprq as jarq,(select kzlh from formtable_main_27_dt1 where id=(select min(t1.id) from formtable_main_27 t,formtable_main_27_dt1 t1 where t.id=t1.mainid and requestid=a.requestId)) as yjlh,(select kzlh from formtable_main_27_dt1 where id=(select min(t1.id) from formtable_main_27 t,formtable_main_27_dt3 t1 where t.id=t1.mainid and requestid=a.requestId)) as jjlh from formtable_main_2 a join workflow_requestbase b on a.requestId=b.requestid where b.currentnodetype=3
+) t
+
+select requestid,bdbh,khmc, (select  c.selectname from workflow_billfield a, workflow_bill b,workflow_selectitem c where a.billid=b.id and c.fieldid=a.id  and b.tablename='formtable_main_128' and a.fieldname='lb' and c.selectvalue=t.lb) as lb from
+(select a.requestid,a.bh as bdbh,khmc,lb,(select lastname from hrmresource where id=a.ywy) as ywy,'' as yfjsrq,b.bh,b.pm,b.slkg  from formtable_main_128 a,formtable_main_128_dt1 b,workflow_requestbase c where a.id=b.mainid and a.requestid = c.requestid and c.currentnodetype=3)t

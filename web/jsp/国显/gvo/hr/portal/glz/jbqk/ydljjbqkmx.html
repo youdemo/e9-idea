@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>月度累计加班情况明细</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+
+  <style>
+    body{margin: 10px; font-size: 12px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    .layui-table td, .layui-table th {
+        position: relative;
+        padding: 9px 15px;
+        min-height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        font-family: "Microsoft YaHei";
+    }
+    .layui-table-tool {
+        position: relative;
+        z-index: 890;
+        width: 100%;
+        min-height: 35px;
+        line-height: 30px;
+        padding: 10px 15px;
+        border-width: 0 0 1px;
+    }
+
+    .layui-table-tool-self {
+        position: absolute;
+        right: 17px;
+        top: 2px;
+    }
+    .layui-table-cell {
+        height: 16px;
+        line-height: 16px;
+        padding: 0 3px;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .layui-input{
+        height:25px;
+        line-height: 25px;
+    }
+    .layui-form-pane .layui-form-label {
+        height:25px;
+        padding: 4px 9px;
+        line-height:15px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 18px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 12px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .zh-btn+.zh-btn {
+        margin-left: 10px;
+    }
+    .zh-btn:hover {
+        opacity: .8;
+        filter: alpha(opacity=80);
+        color: #fff;
+        background-color: #005492;
+    }
+    .zh-btn {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 18px;
+        background-color: #bcc1c0;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        outline: 0;
+        -webkit-appearance: none;
+        -webkit-transition: all .3s;
+        box-sizing: border-box;
+    }
+    .choose_btn{
+        background-color: #005492;
+    }
+    .layui-form-item {
+        margin-bottom: 7px;
+        clear: both;
+        *zoom: 1;
+    }
+    .layui-form-checkbox span {
+        padding: 0 10px;
+        height: 100%;
+        font-size: 9px;
+        border-radius: 2px 0 0 2px;
+        background-color: #d2d2d2;
+        color: #fff;
+        overflow: hidden;
+    }
+    .layui-form-pane .layui-form-checkbox {
+        margin: 0px;
+    }
+  </style>
+</head>
+<body>
+
+<div style="width: 100%;display: block;margin: auto">
+    <div >
+        <div  >
+            <button class="zh-btn choose_btn">部门月度累计加班情况</button>
+            <button class="zh-btn" onclick="changewd('1')">个人年度累计加班情况</button>
+        </div>
+        <div style="margin-top: 2px">
+            <button class="zh-btn choose_btn" id="jjrybtn" onclick="changery('0')">间接人员</button>
+            <button class="zh-btn" id="zjrybtn" onclick="changery('1')">直接人员</button>
+        </div>
+        <div style="margin-top: 2px">
+            <button class="zh-btn" onclick="changeqk('0')">汇总情况</button>
+            <button class="zh-btn choose_btn" >明细情况</button>
+        </div>
+        <form class="layui-form layui-form-pane" action="" onkeydown="if(event.keyCode==13){return false}">
+            <input type="hidden" id="identitytype" value="0"></input>
+            <div class="layui-form-item" style="margin-top:2px;margin-buttom:2px">
+                <label class="layui-form-label">组织</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="width:120px">
+                    <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                </div>
+                <label class="layui-form-label">员工</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="rygh" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-top:2px;margin-buttom:2px">
+                <label class="layui-form-label">工时类别</label>
+                <div class="layui-input-inline">
+                    <select id="worktype" lay-verify="">
+                        <option value=""></option>
+                        <option value="标准工时">标准工时</option>
+                        <option value="不定时">不定时</option>
+                    </select>
+                </div>
+
+                <label class="layui-form-label">加班时段区数</label>
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="text" id="jbsdqsstart"  onkeyup="value=zhzs(this.value)"  placeholder="请输入" value="" autocomplete="off" class="layui-input">
+
+                </div>
+                <div class="layui-input-inline" style="width:10px">
+                    <div style="margin-top:6px">至</div>
+
+                </div>
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="text" id="jbsdqsend"  onkeyup="value=zhzs(this.value)"  placeholder="请输入" value="" autocomplete="off" class="layui-input">
+
+                </div>
+
+                <div class="layui-input-inline">
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+        <div style="width: 100%">
+            <table class="layui-hide" id="ydljjbqkmx" lay-filter="test" style="text-align: center;"></table>
+
+        </div>
+</div>
+    
+</body>
+<script src="/gvo/hr/portal/js/jquery.js"></script>
+<script src="/js/layui/layui.all.js?1"></script>
+<script>
+    var JXData;
+    var table;
+    layui.use(['laypage', 'layer', 'table','element','form','laydate'], function(){
+      var layer = layui.layer //弹层
+
+          ,form = layui.form
+          ,element = layui.element;
+    table = layui.table //表格
+
+
+        var identitytype = jQuery("#identitytype").val();
+
+      //执行一个 table 实例
+      var tableJX=table.render({
+        elem: '#ydljjbqkmx'
+        ,height: 380
+        ,url: '/api/gvo/hr/portal/glz/jbqk/getYdljjbqkmx?identitytype='+identitytype //数据接口
+        ,id: 'ydljjbqkmx'
+        ,method:'post'
+        ,title:'月度累计加班情况'
+
+        ,page: true //开启分页
+        ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        ,defaultToolbar:['filter',{
+            title:'导出',
+              layEvent:'exportJXData',
+              icon:'layui-icon-export'
+          }]
+        ,cols: [[ //表头
+            {field:'workcode', width:60, title: '工号',hide:true},
+            {field:'name', width:55, title: '姓名'},
+            {field:'companyname', minWidth:90, title: '公司'},
+            {field:'centername', minWidth:90, title: '中心',hide:true},
+            {field:'deptname',  minWidth:90,title:'部'},
+            {field:'groupname', minWidth:90, title: '组'},
+            {field:'identitytype',width:56,title:'身份类别'},
+            {field:'worktype',width:56,title:'工时类别'},
+            {field:'PS_HOURS',width:56,title:'平时加班'},
+            {field:'ZM_HOURS',width:56,title:'周末加班'},
+            {field:'FD_HOURS',width:70,title:'国假日加班'},
+            {field:'total_hours',width:56,title:'加班合计'},
+            {field:'st_tops',minWidth:90,title:'标准受限总时数'},
+            {field:'up_tops',minWidth:110,title:'调整后受限总时数'},
+            {field:'rate',width:70,title:'标准百分比'},
+            {field:'rate1',width:75,title:'调整后百分比'}
+
+        ]],
+          done:function (res,curr,count) {
+            JXData=res.data;
+          }
+    });
+
+      table.on('toolbar(test)',function (obj) {
+          var checkStatus = table.checkStatus(obj.config.id);
+          var orgcode = encodeURI(encodeURI(jQuery("#orgcode").val()));
+          var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+          var identitytype = encodeURI(encodeURI(jQuery("#identitytype").val()));
+          var worktype = encodeURI(encodeURI(jQuery("#worktype").val()));
+          var rygh = encodeURI(encodeURI(jQuery("#rygh").val()));
+          var jbsdqsstart = jQuery("#jbsdqsstart").val();
+          var jbsdqsend = jQuery("#jbsdqsend").val();
+          if(obj.event=='exportJXData'){
+              window.location.href="/api/gvo/hr/portal/glz/jbqk/OutExcel?orgcode="+orgcode+"&identitytype="+identitytype+"&worktype="+worktype+"&rygh="+rygh+"&jbsdqsstart="+jbsdqsstart+"&jbsdqsend="+jbsdqsend+"&sfbhxjzz="+sfbhxjzz;
+          }
+      });
+
+
+
+});
+    function zhzs(value){
+
+        value = value.replace(/[^\d]/g,'');
+        if(''!=value){
+            value = parseInt(value);
+        }
+        return value;
+    }
+    function refreshtable(){
+        var orgcode = encodeURI(encodeURI(jQuery("#orgcode").val()));
+        var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+        var identitytype = encodeURI(encodeURI(jQuery("#identitytype").val()));
+        var worktype = encodeURI(encodeURI(jQuery("#worktype").val()));
+        var rygh = encodeURI(encodeURI(jQuery("#rygh").val()));
+        var jbsdqsstart = jQuery("#jbsdqsstart").val();
+        var jbsdqsend = jQuery("#jbsdqsend").val();
+        table.reload('ydljjbqkmx',{
+            url:"/api/gvo/hr/portal/glz/jbqk/getYdljjbqkmx?orgcode="+orgcode+"&identitytype="+identitytype+"&worktype="+worktype+"&rygh="+rygh+"&jbsdqsstart="+jbsdqsstart+"&jbsdqsend="+jbsdqsend+"&sfbhxjzz="+sfbhxjzz
+            ,page:{
+                curr:1
+            }
+        });
+    }
+    $('#search').on('click',function () {
+        refreshtable();
+    });
+    function changery(type){
+        var identitytype = jQuery("#identitytype").val();
+        if(identitytype != type){
+            jQuery("#identitytype").val(type);
+            if(type == "0"){
+                jQuery("#jjrybtn").addClass("choose_btn");
+                jQuery("#zjrybtn").removeClass("choose_btn");
+            }else if(type == "1"){
+                jQuery("#zjrybtn").addClass("choose_btn");
+                jQuery("#jjrybtn").removeClass("choose_btn");
+            }
+            refreshtable();
+        }
+    }
+
+    function changewd(type){
+        if(type=="0"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkmx.html";
+        }else if(type=="1"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ndljjbqkmx.html";
+        }
+    }
+
+    function changeqk(type){
+        if(type=="0"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkhz.html";
+        }else if(type=="1"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkmx.html";
+        }
+    }
+</script>
+</html>

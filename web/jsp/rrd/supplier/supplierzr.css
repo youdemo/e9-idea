@@ -3,7 +3,7 @@
     font-family:'微软雅黑';
 }
 table{
-    FONT-SIZE: 9pt !important;
+    FONT-SIZE: 10pt !important;
 
 }
 td_bordtop
@@ -14,7 +14,7 @@ td_bordtop
     border-bottom-style: solid;
 }
 .tr_normal{
-    height: 30px; display: table-row;
+    height: 40px; display: table-row;
 }
 .tr_normal1{
     height: 42px; display: table-row;
@@ -44,7 +44,7 @@ td_bordtop
     border-right: 1px solid rgb(153, 153, 153);
     text-align: left;
     vertical-align: middle;
-    font-size: 9pt;
+    font-size: 10pt;
 
     padding-left: 8px;
     line-height: 1;
@@ -56,7 +56,7 @@ td_bordtop
     text-align: left;
     vertical-align: middle;
     font-weight: bold;
-    font-size: 9pt;
+    font-size: 10pt;
     color: rgb(183, 183, 183);
     padding-left: 8px;
     line-height: 1;
@@ -88,7 +88,14 @@ td_bordtop
 .td_fieldnameright{
     text-align: right;
     vertical-align: middle;
-    font-size: 9pt;
+    font-size: 10pt;
+    font-family: "Microsoft YaHei";
+    line-height: 1;
+}
+.td_fieldnamecenter{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 10pt;
     font-family: "Microsoft YaHei";
     line-height: 1;
 }
@@ -103,12 +110,12 @@ td_bordtop
 .td_fieldnameleft {
     text-align: left;
     vertical-align: middle;
-    font-size: 9pt;
+    font-size: 10pt;
     font-family: "Microsoft YaHei";
     line-height: 1;
 }
 .div_fieldname{
-    font-size: 9pt;
+    font-size: 10pt;
     overflow-wrap: break-word;
     word-break: break-word!important;
 }
@@ -118,8 +125,14 @@ td_bordtop
     color: black;
     line-height: 1;
 }
+.td_fieldcenter {
+    text-align: center;
+    vertical-align: middle;
+    color: black;
+    line-height: 1;
+}
 .div_fontstyle1{
-    font-size: 9pt;
+    font-size: 10pt;
     word-break: break-all;
     overflow-wrap: break-word;
 }

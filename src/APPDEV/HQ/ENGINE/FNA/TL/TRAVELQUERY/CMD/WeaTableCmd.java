@@ -10,14 +10,10 @@ import com.engine.common.entity.BizLogContext;
 import com.engine.core.interceptor.CommandContext;
 import org.apache.commons.lang.StringUtils;
 import weaver.conn.RecordSet;
-import weaver.general.BaseBean;
 import weaver.general.PageIdConst;
 import weaver.general.Util;
 import weaver.hrm.User;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +39,7 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
         try {
             //返回消息结构体
             WeaResultMsg result = new WeaResultMsg(false);
-            String pageID = "b6cf2566-2d20-4d71-944d-88160276e622";
+            String pageID = "13377be9-f66b-424e-8785-fec3bfbb66fb";
             String pageUid = pageID + "_" + user.getUID();
             String pageSize = PageIdConst.getPageSize(pageID, user.getUID());
             String userid = user.getUID()+"";
@@ -82,7 +78,7 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
             table.setPageID(pageID);
             table.setPagesize(pageSize);
 
-            String fileds = " requestid,sqdh,BTRWorkCode,(select lastname from hrmresource where id=a.BtrPER) as BtrPER,(select DEPARTMENTNAME from HRMDEPARTMENT where id=a.BtrDEP) as BtrDEP,BTRBEGDA,BTRENDDA,TavelDestCityALL,sqspzt,bxspzt,poststatus,bxdh,(select description from uf_wfstatus where code=a.WFStatus) as WFStatus ";
+            String fileds = " requestid,sqdh,BTRWorkCode,(select lastname from hrmresource where id=a.BtrPER) as BtrPER,(select DEPARTMENTNAME from HRMDEPARTMENT where id=a.BtrDEP) as BtrDEP,BTRBEGDA,BTRENDDA,BTRBEGDA||' '||BTRBEGTIME as kssj,BTRENDDA||' '||BTRENDTIME as jssj,TavelDestCityALL,sqspzt,bxspzt,poststatus,bxdh,(select description from uf_wfstatus where code=a.WFStatus) as WFStatus ";
             table.setBackfields(fileds);
 
             //搜索条件,这里可以放高级搜索的的条件 差率单号
@@ -91,12 +87,12 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
 //                sqlwhere += " and requestid like '%" + requestid + "%' ";
 //            }
 
-            String sqlfrom = " (select b.requestid,b.rqid as sqdh,b.BTRWorkCode,b.BtrPER,b.BtrDEP,b.BTRBEGDA,b.BTRENDDA,b.TavelDestCityALL,case when a.CURRENTNODETYPE=3 then '已审核' else '已提交' end sqspzt," +
+            String sqlfrom = " (select b.requestid,b.rqid as sqdh,b.BTRWorkCode,b.BtrPER,b.BtrDEP,b.BTRBEGDA,b.BTRENDDA,b.BTRBEGTIME,b.BTRENDTIME,b.TavelDestCityALL,case when a.CURRENTNODETYPE=3 then '已审核' else '已提交' end sqspzt," +
                     " case (select CURRENTNODETYPE from WORKFLOW_REQUESTBASE where REQUESTID=c.rqid) when '0' then '未提交' when '1' then '已提交' when '2' then '已提交' when '3' then '已审核' else '' end as bxspzt,c.poststatus,c.rqid as bxdh,b.WFStatus" +
                     " from WORKFLOW_REQUESTBASE a join "+tablesq+" b on a.REQUESTID=b.REQUESTID and a.CURRENTNODETYPE>0 left join "+tablebx+" c on b.REQUESTID=c.TRAAPPLI where 1=1 ";
-            String workcode =  Util.null2String(params.get("workcode"));
             String cxry =  Util.null2String(params.get("cxry"));
-            if("".equals(workcode)&&"".equals(cxry)){
+            String iscsh =  Util.null2String(params.get("iscsh"));
+            if("1".equals(iscsh)){
                 sqlfrom +=" and (b.BtrPER ='" + userid + "' or b.HanPER='" + userid + "') ";
             }else {
                 if (!"1".equals(userid) && !"1".equals(canSeeAll)) {
@@ -108,9 +104,7 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
                 }
             }
 
-            if (StringUtils.isNotBlank(workcode)) {
-                sqlfrom += " and b.BTRWorkCode = '"+workcode+"'";
-            }
+
             if (StringUtils.isNotBlank(cxry)) {
                 sqlfrom += " and b.BtrPER in("+cxry+") ";
             }
@@ -124,7 +118,16 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
                 sqlfrom += " and b.BTRBEGDA >='"+fromdate+"'";
             }
             if (StringUtils.isNotBlank(lenddate) && !"null".equals(lenddate)) {
-                sqlfrom += " and b.BTRENDDA <='"+lenddate+"'";
+                sqlfrom += " and b.BTRBEGDA <='"+lenddate+"'";
+            }
+
+            String fromdate1 =  Util.null2String(params.get("fromdate1"));
+            String lenddate1 =  Util.null2String(params.get("lenddate1"));
+            if (StringUtils.isNotBlank(fromdate1) && !"null".equals(fromdate1) ) {
+                sqlfrom += " and b.BTRENDDA >='"+fromdate1+"'";
+            }
+            if (StringUtils.isNotBlank(lenddate1) && !"null".equals(lenddate1)) {
+                sqlfrom += " and b.BTRENDDA <='"+lenddate1+"'";
             }
             sqlfrom +=") a";
             //new BaseBean().writeLog("TRAVELQUERYaaa","select "+fileds+" from "+sqlfrom);
@@ -134,12 +137,12 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
             table.setSqlprimarykey("requestid");
             table.setSqlisdistinct("false");
             table.getColumns().add(new WeaTableColumn("requestid").setDisplay(WeaBoolAttr.FALSE));   //设置为不显示
-            table.getColumns().add(new WeaTableColumn("8%", "申请单", "sqdh","sqdh","APPDEV.HQ.ENGINE.FNA.TL.TRAVELQUERY.CMD.WeaTableTransMethod.getRequestUrl","column:sqdh"));
-            table.getColumns().add(new WeaTableColumn("8%", "员工编号", "BTRWorkCode","BTRWorkCode"));
-            table.getColumns().add(new WeaTableColumn("8%", "姓名", "BtrPER","BtrPER"));
-            table.getColumns().add(new WeaTableColumn("8%", "部门", "BtrDEP","BtrDEP"));
-            table.getColumns().add(new WeaTableColumn("8%", "开始日期", "BTRBEGDA","BTRBEGDA"));
-            table.getColumns().add(new WeaTableColumn("8%", "结束日期", "BTRENDDA","BTRENDDA"));
+            table.getColumns().add(new WeaTableColumn("7%", "申请单", "sqdh","sqdh","APPDEV.HQ.ENGINE.FNA.TL.TRAVELQUERY.CMD.WeaTableTransMethod.getRequestUrl","column:sqdh"));
+            table.getColumns().add(new WeaTableColumn("7%", "员工编号", "BTRWorkCode","BTRWorkCode"));
+            table.getColumns().add(new WeaTableColumn("7%", "姓名", "BtrPER","BtrPER"));
+            table.getColumns().add(new WeaTableColumn("7%", "部门", "BtrDEP","BtrDEP"));
+            table.getColumns().add(new WeaTableColumn("10%", "开始时间", "kssj","kssj"));
+            table.getColumns().add(new WeaTableColumn("10%", "结束时间", "jssj","jssj"));
             table.getColumns().add(new WeaTableColumn("9%", "第一目的地", "TavelDestCityALL","TavelDestCityALL"));
             table.getColumns().add(new WeaTableColumn("9%", "申请审批状态", "sqspzt","sqspzt"));
             table.getColumns().add(new WeaTableColumn("9%", "报销审批状态", "bxspzt","bxspzt"));

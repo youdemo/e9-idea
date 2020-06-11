@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部门考勤</title>
+    <link rel="stylesheet" href="../../../../js/layui/css/layui.css" media="all">
+
+    <style>
+        body{margin: 10px; font-size: 12px;}
+        .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+        .layui-table td, .layui-table th {
+            position: relative;
+            padding: 9px 15px;
+            min-height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            font-family: "Microsoft YaHei";
+        }
+        .layui-table-tool {
+            position: relative;
+            z-index: 890;
+            width: 100%;
+            min-height: 35px;
+            line-height: 30px;
+            padding: 10px 15px;
+            border-width: 0 0 1px;
+        }
+        .layui-table-tool-self {
+            position: absolute;
+            right: 17px;
+            top: 2px;
+        }
+        .layui-table-cell {
+            height: 19px;
+            line-height: 19px;
+            padding: 0 3px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .layui-input{
+            height:30px;
+            line-height: 30px;
+        }
+        .layui-form-pane .layui-form-label {
+            height:30px;
+            padding: 4px 9px;
+        }
+        .layui-btn {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 12px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .layui-form-checkbox span {
+            padding: 0 10px;
+            height: 100%;
+            font-size: 9px;
+            border-radius: 2px 0 0 2px;
+            background-color: #d2d2d2;
+            color: #fff;
+            overflow: hidden;
+        }
+        .layui-form-pane .layui-form-checkbox {
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%;display: block;margin: auto">
+    <div style="height: 50px">
+        <a class="layui-btn dept-btn" style="width: 20%;background-color: #005492" href="kqdept.html">部门当前考勤异常</a>
+        <a class="layui-btn person-btn" style="width: 20%;background-color: #dcdcdc" href="kqperson.html">个人年度累计考勤异常</a>
+    </div>
+    <div>
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">组织</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:120px">
+                        <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                    </div>
+                    <label class="layui-form-label">员工：</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input id="workcode" type="text" name="workcode"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">身份类别：</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <select id="identitytype" name="identitytype" lay-verify="">
+                            <option value=""></option>
+                            <option value="直接人员">直接人员</option>
+                            <option value="间接人员">间接人员</option>
+                        </select>
+                    </div>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="width: 100%">
+        <table class="layui-hide" id="demo" lay-filter="test" style="text-align: center;"></table>
+    </div>
+</div>
+</body>
+<script src="../js/jquery.js"></script>
+<script src="../../../../js/layui/layui.all.js"></script>
+<script>
+    layui.use(['layer', 'table','form'], function() {
+        var layer = layui.layer //弹层
+        var form = layui.form
+        var table = layui.table //表格
+        var KqDeptData;
+        var orgcode=$("#orgcode").val();
+        var workcode=$("#workcode").val();
+        var identitytype=$("#identitytype").val();
+        var sfbhxjzz=$("#sfbhxjzz").is(":checked");
+        orgcode=encodeURI(encodeURI(orgcode));
+        workcode=encodeURI(encodeURI(workcode));
+        identitytype=encodeURI(encodeURI(identitytype));
+        //执行一个 table 实例
+        var KqDeptTable = table.render({
+            elem: '#demo'
+            , height: 420
+            , url: '/api/gvo/hr/portal/glz/kq/getKqData?orgcode='+orgcode+'&workcode='+workcode+'&identitytype='+identitytype+'&sfbhxjzz='+sfbhxjzz+'&flag=bm' //数据接口
+            , id: 'kqdeptreload'
+            , title: '部门考勤'
+            // ,data:[{
+            //     'workcode':'1',
+            //     'name':'zq',
+            //     'companyname':'xx',
+            //     'centername':'xx',
+            //     'deptname':'xx',
+            //     'groupname':'xx',
+            //     'jobtitlename':'xx',
+            //     'sequence':'2020',
+            //     'joblevel':'4-20',
+            //     'level':'5',
+            //     'rjtrq':'xx',
+            //     'halfyear':"xx"
+            // }]
+            , page: true //开启分页
+            , toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            , defaultToolbar: ['filter',{
+                title:"导出",
+                layEvent:"exportData",
+                icon:'layui-icon-export'
+            }]
+            , cols: [[ //表头
+                {field: 'workcode', width: 120, title: '工号', hide:true},
+                {field: 'name', width: 60, title: '姓名'},
+                {field: 'companyname', minWidth: 180, title: '公司'},
+                {field: 'centername', minWidth: 180, title: '中心'},
+                {field: 'deptname', minWidth: 161, title: '部门'},
+                {field: 'groupname', minWidth: 159, title: '组'},
+                {field: 'identitytype', width: 72, title: '身份类别'},
+                {field: 'belongdate', width: 102, title: '考勤归属日期'},
+                {field: 'bcmc', minWidth: 140, title: '班次名称'},
+                {field: 'bc', width: 120, title: '班次'},
+                {field: 'type', width: 117, title: '异常类型'}
+            ]],
+            done:function(res,curr,count) {
+                KqDeptData=res.data
+            }
+        });
+        form.on('submit(formDemo)', function(data){
+            orgcode=data.field.orgcode;
+            workcode=data.field.workcode;
+            sfbhxjzz=$("#sfbhxjzz").is(":checked");
+            identitytype=data.field.identitytype;
+            orgcode=encodeURI(encodeURI(orgcode));
+            workcode=encodeURI(encodeURI(workcode));
+            identitytype=encodeURI(encodeURI(identitytype));
+            table.reload('kqdeptreload',{
+                url:'/api/gvo/hr/portal/glz/kq/getKqData?orgcode='+orgcode+'&workcode='+workcode+'&identitytype='+identitytype+'&sfbhxjzz='+sfbhxjzz+'&flag=bm'
+                ,page:{
+                    curr:1
+                }
+            });
+            return false;
+        });
+        table.on('toolbar(test)',function (obj) {
+            orgcode=$("#orgcode").val();
+            workcode=$("#workcode").val();
+            sfbhxjzz=$("#sfbhxjzz").is(":checked");
+            identitytype=$("#identitytype").val();
+            orgcode=encodeURI(encodeURI(orgcode));
+            workcode=encodeURI(encodeURI(workcode));
+            identitytype=encodeURI(encodeURI(identitytype));
+            if(obj.event=='exportData'){
+                window.location.href='/api/gvo/hr/portal/glz/kq/OutExcel?orgcode='+orgcode+'&workcode='+workcode+'&identitytype='+identitytype+'&sfbhxjzz='+sfbhxjzz+'&flag=bm'
+            }
+        })
+    });
+</script>
+</html>

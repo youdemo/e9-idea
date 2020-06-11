@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="" style = "height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组织架构图</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+
+    <script type="text/javascript">
+        document.write("<link rel='stylesheet' type='text/css' href='css/bootstrap.min.css?random="+Math.random()+"'/>");
+
+        document.write("<link rel='stylesheet' type='text/css' href='css/orgtree.css?random="+Math.random()+"'/>");
+        document.write("<script type='text/javascript' src='js/jquery.lenchart.js?random="+Math.random()+"'></s"+"cript>");
+
+    </script>
+    <style type="text/css">
+        /*加减号样式*/
+        .orgWrap .content .plusMinus{
+        	position:absolute;
+        	bottom:3px;
+        	left: 3px;
+        	cursor:pointer;
+        	top: auto;
+        }
+        ul,ol{
+       	 	margin-left: 21px;
+        }
+        /*第一层减号图标去掉*/
+        .orgWrap .level1 i.plusMinus{
+            display: none;
+        }
+        .level2s {
+            position: relative;
+            z-index: 2;
+            background: rgb(244,244,244);
+            margin: 0;
+            padding: 0;
+        }
+        .level2s .level2{
+            position: relative;
+            vertical-align:top;
+            min-width:300px;
+            width: 100px;
+        }
+        /*新加的css*/
+        /*组织样式*/
+        .orgWrap .content.organization{
+            background:#F3F3F3;
+            width: 245px;
+            border-radius: 5px;
+            cursor:pointer;
+            /* height: 60px;
+             background-color: rgb(79,129,189);*/
+     }
+     .orgWrap .content .numWrap{
+       padding-left: 10px;
+       background: #D9D9D9;
+     }
+     .orgWrap .content .numWrap>div{
+         display:inline-block;
+         width:33.33%;
+     }
+     .orgWrap .content .name{
+         height:42px;
+         line-height: 42px;
+         font-weight:bold;
+         border-bottom: 1px solid #B9DC93;
+     }
+     /*岗位样式*/
+        .orgWrap .content.position{
+            background:#C3D7E9;
+        }
+        .orgWrap .content .person{
+            background:#E1EBF3;
+        }
+        .a{
+        	float: left;
+        	color: #ffffff;
+        }
+        .a img{
+        	width:60px;
+        	height:60px;
+        	border-radius: 5px 0px 0px 0px;
+        }
+        .zh-btn+.zh-btn {
+            margin-left: 10px;
+        }
+        .zh-btn:hover {
+            opacity: .8;
+            filter: alpha(opacity=80);
+            color: #fff;
+            background-color: #005492;
+        }
+        .zh-btn {
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            padding: 0 18px;
+            background-color: #bcc1c0;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: 0;
+            -webkit-appearance: none;
+            -webkit-transition: all .3s;
+            box-sizing: border-box;
+        }
+        .choose_btn{
+            background-color: #005492;
+        }
+    </style>
+</head>
+<body style = "background-color:rgb(244,244,244);overflow:auto;height: 100%;z-index: -1;margin-top: 0%;padding-top: 2px;">
+<div id="dzhxx">
+
+</div>
+<div class = "orgWrap" style = "background-color:rgb(244,244,244);z-index: 2"></div>
+    <script src="js/watermark.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //显示多账号信息
+            var workcode = "";
+            var recordid = "";
+            var params=window.location.search;
+            if(params.length>1){
+                params=params.substr(1);
+                var strs = params.split("&");
+                workcode = strs[0].split("=")[1];
+                recordid = strs[1].split("=")[1];
+
+            }
+            $.ajax({
+                type: "GET",
+                url: "/api/gvo/hr/portal/glz/org/getzhxx",
+                data: {},
+                dataType: "text",
+                async:false,//同步   true异步
+                success: function(data){
+                    data=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+                   var jsonarrr=JSON.parse(data)
+                    if(jsonarrr.length>0){
+                        var buttonstr="";
+                        for(var index=0;index<jsonarrr.length;index++){
+                            var jsonobj = jsonarrr[index];
+                            var btnclass = "zh-btn";
+                            if(jsonobj.recordid=="0"&&recordid==""){
+                                btnclass=btnclass+" choose_btn";
+                            }else{
+                                if(jsonobj.recordid==recordid){
+                                    btnclass=btnclass+" choose_btn";
+                                }
+                            }
+                            buttonstr =buttonstr+"<button class=\""+btnclass+"\" onclick=\"changezh('"+jsonobj.workcode+"','"+jsonobj.recordid+"')\">"+jsonobj.jobtitlename+"</button>";
+                        }
+                        buttonstr = "<div  style=\"margin-bottom: 6px;\">"+buttonstr+"</div>";
+                        jQuery("#dzhxx").html(buttonstr);
+
+                    }
+                }
+            });
+            var obj = {};
+            var systr = "";//水印
+            $.ajax({
+                type: "GET",
+                url: "/api/gvo/hr/portal/glz/org/getOrgdata",
+                data: {'workcode':workcode,'recordid':recordid},
+                dataType: "text",
+                async:false,//同步   true异步
+                success: function(data){
+                    data=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+                    obj=JSON.parse(data)
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/api/gvo/hr/portal/glz/org/getorgsy",
+                data: {},
+                dataType: "text",
+                async:false,//同步   true异步
+                success: function(data){
+                    systr=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+
+                }
+            });
+
+
+            $('.orgWrap').lenChart({
+                data:obj,
+                drag:false,
+                renderdata:function(data,$dom){
+                    var value = data.data;
+                    if (value && Object.keys(value).length) {
+                       
+                        	//部门
+                            var $department = $('<div><span>'+value.departmentlabel+' </span><span class="department"></span></div>')
+                           	!!(value.department) && $department.find('.department').text(value.department)
+
+                            //经理
+
+                            var $manager = $('<div><span>'+value.managerlabel+' </span><span class="num"></span></div>')
+                            !!(value.managerlabel) && $manager.find('.num').text(value.manager)
+                           
+                            //在职人数     
+                            var $zz = $('<div><span>'+value.zzlabel+' </span><span class="zz"></span></div>')
+                            !!(value.zz) && $zz.find('.zz').text(value.zz+'人')
+                            
+
+                            //联系方式 
+                            var $short = $('<div><span>'+value.llfslabel+':</span><span class="llfs"></span></div>')
+                            if (value.llfs) {
+                                $short.find('.llfs').text(value.llfs)
+                            }
+
+                            var $clearDiv = $('<div style = "clear:both"></div>')
+                            var $card = $('<div class = "card" value = '+value.id+'></div>')
+                            var imgurl="";
+                            if(value.imageid !=""){
+                                imgurl = "/download/weaver.file.getFileDownLoad?fileid="+value.imageid+"&download=1";
+                            }
+                            var $headImag = $('<div class ="a" style = "width:60px;height:58px;" ><img src = "'+imgurl+'"/></div>');
+                            var $wrap = $('<div class="a" style = "width:180px;padding-left:5px;background-color:rgb('+value.rgb+');line-height:15px;"></div>') ;
+                            $wrap.append($department,$manager,$zz, $short);
+                           	$card.append($headImag,$wrap,$clearDiv);
+                            $dom.addClass('organization')
+                            $dom.append($card)
+
+                       		var icon = '<i class="icon plusMinus icon-minus-sign"></i>';
+                        	var $icon = $(icon);
+                        	if (data.children && data.children.length) {
+                           		$dom.append($icon);
+                        	}
+
+                    }
+                },
+                callback:function(){
+                    $(".card").click(function(){
+                        var orgcode = $(this).attr('value')
+                        var cansee = "";
+                        $.ajax({
+                            type: "GET",
+                            url: "/api/gvo/hr/portal/glz/org/getcansee",
+                            data: {'orgcode':orgcode},
+                            dataType: "text",
+                            async:false,//同步   true异步
+                            success: function(data){
+                                cansee=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+
+                            }
+                        });
+                        if(cansee == "1"){
+                            window.parent.showryxx($(this).attr('value'));
+                        }
+                    })
+
+                    var level1_size = $(".level2").length;
+
+                    if(level1_size == '1'){
+                        $(".level1s .level1").css('left','0px');  
+                    }else if(level1_size == '2'){
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px'); 
+                        $(".level1s .level1").css('left','-110px');  
+                    }else if(level1_size == '3'){
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px');  
+                        $(".level1s .level1").css('left','-100px');  
+                    }else if (level1_size == '4'){
+                        $(".level1s .level1").css('left','-100px');
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px');      
+                    }else{
+                        $(".level1s .level1").css('left','-101px');
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px');     
+                    }
+
+                   
+
+                    for(var i = 0;i<10;i++){
+                        $(".level"+i).css("margin-top",'-2px'); 
+                        $(".level"+i).css("background-color","rgb(244,244,244)"); 
+                    }
+
+
+                    watermark({"watermark_txt":systr});
+                }
+            })
+            
+        })
+        function changezh(workcode,recordid){
+            window.location.href="/gvo/hr/portal/glz/org/index.html?workcode="+workcode+"&recordid="+recordid;
+        }
+    </script>
+
+</body>
+</html>

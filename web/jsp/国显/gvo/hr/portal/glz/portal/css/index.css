@@ -1,0 +1,298 @@
+ *{
+                padding:0px;
+                margin: 0px;
+                font-family:'Microsoft YaHei';
+            }
+            html,body{
+                width:100%;
+                height:100%;
+                background-color: #F5F5F5;
+            }
+            .HR-portal{
+                width:100%;
+                height:100%;
+            }
+            .structure{
+                background-color: #ffffff;
+                height:28%;
+                min-height: 170px
+            }
+            .HR-structure-title{
+                text-align: center;
+                color: #333333;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .HR-div{
+                width:15%;
+                height:85%;
+                float: left;
+                background-color: #FFFFFF;
+                margin-left: 25px;
+            }
+            .HR-gender-title{
+                text-align: center;
+                color:#333333;
+                font-size: 14px;
+                height: 25px;
+                line-height: 25px;
+            }
+            .HR-gender-div{
+                width:50%;
+                float: left;
+                height: 72%;
+            }
+            .HR-gender-t{
+                height: 72%;
+            }
+            .HR-gender-t .HR-gender-img{
+                text-align: center;
+                height: 100%;
+                width: 100%;  
+            }
+            .HR-gender-t .HR-gender-img img{
+                width:  39px;
+                height:100%; 
+                width: 45%;
+            }
+            .HR-gender-data{
+                text-align: center;
+                color: #666666;
+                font-size: 12px;
+                height: 25px;
+                line-height: 25px;
+            }
+            .HR-gender-g .HR-gender-img{
+                text-align: center; 
+                height: 100%;
+                width: 100%;
+            }
+            .HR-gender-g .HR-gender-img img{
+                width:  60px;
+                height: 127px;
+                height: 100%;
+                width: 62%;  
+            }
+            .age-title{
+                text-align: center;
+                color: #333333;
+                font-size:14px;
+                margin-top: 5px;
+            }
+            .HR-flow{
+            	margin-top: 5px;
+            	height: 212px;
+            	background-color: #FFFFFF;
+                height: 29%;
+                min-height: 175px;
+            }
+            .flow-title{
+            	height: 25px;
+            	line-height: 25px;
+            	font-size: 16px;
+            	color: #333333;
+            	font-weight:bold;
+            	text-align: center;
+            }
+            .mode-div{
+            	width: 50%;
+            	height: 145px;
+            	float: left;
+                /*border: 1px solid red;*/
+                height: 100%;
+            }
+            .flow-mode-title{
+            	height: 20px;
+            	font-size: 14px;
+            	text-align: center;
+            }
+            .flow-mode-data{
+            	height: 60px;
+            }
+            .flow-mode-ul{
+            	height:50px;
+            	margin-top: 5px;
+            }
+            .flow-mode-ul li{
+            	float: left;
+            	height: 100%;
+            	width: 18%;
+            	list-style: none;
+            	margin-left: 1.5%;
+            	border-radius: 10px;
+            	
+            }
+            .flow-mode-ul li:nth-child(1){
+            	background-color: #4594E7;
+            }
+             .flow-mode-ul li:nth-child(2){
+            	background-color: #6073EF;
+            }
+             .flow-mode-ul li:nth-child(3){
+            	background-color: #30CCAD;
+            }
+            .flow-mode-ul li:nth-child(4){
+            	background-color: #837BF5;
+            }
+            .flow-mode-ul li:nth-child(5){
+            	background-color: #2472C3;
+            }
+           
+            .flow-mode-label{
+            	width: 100%;
+            	height: 22px;
+            	border-radius: 10px;
+            	line-height: 27px;
+            	font-size: 12px;
+            	text-align: center;
+            	color: #FFFFFF;
+            }
+            .flow-mode-number{
+            	line-height: 24px;
+            	height: 35px;
+            	font-size: 18px;
+            	text-align: center;
+            	color: #FFFFFF;
+            }
+            .meter{
+            	height: 100px;
+                height: 65%;
+            }
+            .HR-attendance{
+            	width: 100%;
+            	margin-top: 5px;
+            	height: 190px;
+            	background-color: #ffffff;
+                height: 29%;
+                min-height: 150px;
+            }
+            .attendance-title{
+            	font-size: 16px;
+            	font-weight: 16px;
+            	text-align: center;
+            	font-weight: bold;
+                height: 20px;
+            }
+            .attendance-data{
+            	height: 87%;
+            }
+            .attendance-div{
+            	width: 32%;
+            	float: left;
+            	height: 100%;
+            }
+            .attendance-title-span{
+            	height: 20px;
+            	text-align: center;
+            	font-size: 14px;
+            	line-height: 20px;
+
+            }
+            .attendance-data-number{
+            	height: 50px;
+            	width: 100%;
+            	margin-top:10px;
+            }
+            .attendance-data-div{
+            	width: 50%;
+            	float:left;
+            	height: 100%;
+            }
+            .attendance-data-div div{
+            	height: 25px;
+            	width: 100%;
+            	text-align: center;
+            }
+            .atten-number{
+            	line-height: 20px;
+            	font-size: 20px;
+            	color: #467DFF;
+            }
+            .atten-label{
+            	font-size: 12px;
+            	color:#666666;
+            }
+            .meter-div{
+                width: 50%;
+                height: 100%;
+                float: left;
+            }
+
+.overtime-div{
+    width: 50%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+.overtime-div div{
+    height:130px;
+    width: 100%;
+    top: 50%;
+    position: absolute;
+    margin-top: -65px;
+
+}
+.HR-br{
+    width: 22%;
+    margin-left: 5%;
+    height: 87%;
+}
+.HR-gender{
+    height: 100%;
+    width: 100%;
+}
+.HR-gender-content{
+    height: 100%;
+    width: 100%;
+}
+.age_sum{
+    width: 30%;
+}
+.flow-mode{
+    height: 85%;
+/*    border: 1px solid red;*/
+}
+#age-title,#level,#education{
+    width: 100%;
+    height:160px;
+    height: 84%;
+}
+.clear{
+    clear: both;
+}
+#indirect_quit_all{
+    height:110px;
+    width: 250px;
+    margin:-12px auto;
+    height: 100%;
+}
+#indirect_quit_single{
+    height:110px;
+    width: 250px;
+    margin:-12px auto;
+    height: 100%;
+}
+#direct_quit_all{
+    height:130px;
+    width: 250px;
+    margin:-12px auto;
+    height: 100%;
+}
+#direct_quit_single{
+   height:130px;
+   width: 250px;
+   margin:-12px auto;
+   height: 100%; 
+}
+.attendance{
+    height: 100%;
+}
+#attend{
+    width: 95%;
+    height:160px;
+    height: 95%;
+}
+#overtime_than,#vacation_than{
+    height: 100%;
+    margin-top: -30%;
+}

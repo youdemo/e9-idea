@@ -1,7 +1,7 @@
 create or replace function f_fna_tl_getMealOtherCost(i_begindate in varchar2,i_enddate in varchar2,i_travelgroup  in varchar2,
-i_gncldj in varchar2,i_gwcldj in varchar2,i_mdd in varchar2,i_clfa in varchar2,i_type in varchar2,is_SENDCAR in varchar2,i_mainenddate in varchar2,i_mainstartdate in varchar2,i_mainstarttime in varchar2,i_mainendtime in varchar2)
+i_gncldj in varchar2,i_gwcldj in varchar2,i_mdd in varchar2,i_clfa in varchar2,i_type in varchar2,is_SENDCAR in varchar2,i_mainenddate in varchar2,i_mainstartdate in varchar2,i_mainstarttime in varchar2,i_mainendtime in varchar2,i_per in varchar2)
 --i_begindate 开始日期 i_enddate 结束日期 i_travelgroup 差旅组 i_gnw 国内外 i_gncldj国内差旅等级
---i_gwcldj 国外差旅等级 i_mdd 城市别 i_rswf 人事范围 i_clfa 差旅方案 i_type类型 0 单日 1 汇总 is_SENDCAR 是否全程派车 0否 1是  i_mainenddate主表差旅结束日期 i_mainstartdate主表差旅开始日期  i_mainstarttime 开始时间 i_mainendtime结束时间
+--i_gwcldj 国外差旅等级 i_mdd 城市别 i_rswf 人事范围 i_clfa 差旅方案 i_type类型 0 单日 1 汇总 is_SENDCAR 是否全程派车 0否 1是  i_mainenddate主表差旅结束日期 i_mainstartdate主表差旅开始日期  i_mainstarttime 开始时间 i_mainendtime结束时间 i_per出差人
 return  number is
 v_result number(10,2):=0.00;
 v_rgion varchar2(10):='';
@@ -18,6 +18,12 @@ begin
   if i_begindate = '' or i_enddate = '' or i_travelgroup= '' or i_gncldj = '' or i_gwcldj = '' or i_mdd=''  or i_clfa='' or is_SENDCAR='' then
     v_result :=0.00;
   else
+    select count(1) into v_count from (SELECT REGEXP_SUBSTR(citys, '[^,]+', 1, LEVEL, 'i') item
+            FROM uf_fna_PerCNosubsi where  per=i_per
+          CONNECT BY rownum <= regexp_count(citys, ',') + 1) a where a.item=i_mdd;
+    if v_count>0 then
+      return v_result;
+    end if;
 
     select count(1) into v_count from uf_fna_LOC where city=i_mdd;
     if v_count >0 then

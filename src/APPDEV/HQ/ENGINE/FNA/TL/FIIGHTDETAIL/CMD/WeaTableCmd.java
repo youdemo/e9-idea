@@ -1,16 +1,12 @@
 package APPDEV.HQ.ENGINE.FNA.TL.FIIGHTDETAIL.CMD;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloudstore.eccom.constant.WeaBoolAttr;
 import com.cloudstore.eccom.pc.table.WeaTable;
 import com.cloudstore.eccom.pc.table.WeaTableColumn;
 import com.cloudstore.eccom.result.WeaResultMsg;
-import com.ctrip.ecology.system.SettlemenFlightOrderCron;
 import com.engine.common.biz.AbstractCommonCommand;
 import com.engine.common.entity.BizLogContext;
 import com.engine.core.interceptor.CommandContext;
-import org.apache.commons.lang.StringUtils;
-import weaver.general.BaseBean;
 import weaver.general.PageIdConst;
 import weaver.general.Util;
 import weaver.hrm.User;
@@ -55,10 +51,12 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
 
             String fileds = " id,DefineFlag,OrderID,PassengerName,TakeOffTime||' '||TakeOffTime2 as TakeOffTime,case when FlightClass='I' then '国际' when FlightClass='N' then '国内' else '' end as  FlightClass," +
                     "DCityName||'-'||ACityName as OrderDesc,CostCenter3,tClass as Class,PriceRate,price,OilFee,Tax,SendTicketFee,InsuranceFee,ServiceFee,Coupon,RebookQueryFee,ReBookingServiceFee," +
-                    "RefundServiceFee,Refund,Amount as RealAmount ";
+                    "RefundServiceFee,Refund,Amount as RealAmount,ItineraryFee ";
             table.setBackfields(fileds);
             String journeyid =  Util.null2String(params.get("rqid"));
-            sqlwhere += " and DefineFlag='"+journeyid+"' ";
+            String FlightClass =  Util.null2String(params.get("FlightClass"));
+            String lastmonth =  Util.null2String(params.get("lastmonth"));
+            sqlwhere += " and DefineFlag='"+journeyid+"' and FlightClass='"+FlightClass+"' and OrderType='1' and substr(AccCheckBatchNo,instr(AccCheckBatchNo,'_',-1)+1,6) ='"+lastmonth+"'";
 
 
 
@@ -82,7 +80,7 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
             table.getColumns().add(new WeaTableColumn("100px", "燃油税", "OilFee","OilFee"));
             table.getColumns().add(new WeaTableColumn("100px", "民航基金", "Tax","Tax"));
             table.getColumns().add(new WeaTableColumn("100px", "送票费", "SendTicketFee","SendTicketFee"));
-            //table.getColumns().add(new WeaTableColumn("100px", "配送服务费", "ItineraryServiceFee","ItineraryServiceFee"));
+            table.getColumns().add(new WeaTableColumn("100px", "配送服务费", "ItineraryFee","ItineraryFee"));
             table.getColumns().add(new WeaTableColumn("100px", "保险费", "InsuranceFee","InsuranceFee"));
             table.getColumns().add(new WeaTableColumn("100px", "服务费", "ServiceFee","ServiceFee"));
             table.getColumns().add(new WeaTableColumn("100px", "优惠券", "Coupon","Coupon"));

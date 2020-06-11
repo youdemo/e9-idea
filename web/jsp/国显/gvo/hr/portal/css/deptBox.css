@@ -1,0 +1,50 @@
+#deptBox{
+	width: 450px;
+	height: 85%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	background-color: #FFFFFF;
+	cursor: pointer;
+}
+#deptBox .dept-box-header{
+	height: 30px;
+	background-color: #4f81bd;
+	width: 100%	;
+}
+#deptBox .dept-box-header span{
+	color: #FFFFFF;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 20px;
+}
+#deptBox .dept-box-header i{
+	float: right;
+	margin-right: 10px;
+	height: 30px;
+	line-height: 30px;
+	color: #FFFFFF;
+}
+#deptBox .dept-box-main{
+	position: relative;
+	height: 80%;
+}
+#deptBox .dept-box-main .dept-box-main-top{
+	height: 60px;
+	line-height: 60px;
+	border-bottom: 1px solid #CCCCCC;
+}
+#deptBox .dept-box-main .dept-box-main-top div{
+	height: 60px;
+	line-height: 60px;
+	float: left;
+	margin-left: 5px;
+}
+#deptBox .dept-box-main .dept-box-main-top .dept-box-div-img{
+	margin-left: 20px;
+}
+#deptBox .dept-box-main .dept-box-main-center{
+	overflow-y: auto;
+	height: 95%;
+}

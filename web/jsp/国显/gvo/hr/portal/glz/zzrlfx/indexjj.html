@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title></title>
+		<link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="css/highcharts.css" media="all">
+		<script type="text/javascript">
+			document.write("<link rel='stylesheet' type='text/css' href='css/index.css?random="+Math.random()+"'/>");
+		</script>
+		<style type="text/css">
+
+			.zh-btn+.zh-btn {
+				margin-left: 10px;
+			}
+			.zh-btn:hover {
+				opacity: .8;
+				filter: alpha(opacity=80);
+				color: #fff;
+				background-color: #005492;
+			}
+			.zh-btn {
+				display: inline-block;
+				height: 25px;
+				line-height: 25px;
+				padding: 0 18px;
+				background-color: #bcc1c0;
+				color: #fff;
+				white-space: nowrap;
+				text-align: center;
+				vertical-align: middle;
+				font-size: 14px;
+				border: none;
+				border-radius: 2px;
+				cursor: pointer;
+				outline: 0;
+				-webkit-appearance: none;
+				-webkit-transition: all .3s;
+				box-sizing: border-box;
+			}
+			.choose_btn{
+				background-color: #005492;
+			}
+			.layui-input{
+				height:30px;
+				line-height: 30px;
+			}
+			.layui-form-pane .layui-form-label {
+				height:30px;
+				padding: 4px 9px;
+			}
+			.layui-btn {
+				display: inline-block;
+				height: 30px;
+				line-height: 30px;
+				padding: 0 18px;
+				background-color: #009688;
+				color: #fff;
+				white-space: nowrap;
+				text-align: center;
+				font-size: 12px;
+				border: none;
+				border-radius: 2px;
+				cursor: pointer;
+			}
+			.layui-form-checkbox span {
+				padding: 0 10px;
+				height: 100%;
+				font-size: 9px;
+				border-radius: 2px 0 0 2px;
+				background-color: #d2d2d2;
+				color: #fff;
+				overflow: hidden;
+			}
+			.layui-form-pane .layui-form-checkbox {
+				margin: 0px;
+			}
+		</style>
+    </head> 
+    <body>
+        <div class="HR-portal">
+			<div id="dzhxx" style="margin-left: 1.5%;margin-bottom: 10px;margin-top: 5px">
+				<button class="zh-btn choose_btn">间接人员</button>
+				<button class="zh-btn" onclick="changezh('1')">直接人员</button>
+			</div>
+			<div style="margin-left: 1.5%;">
+				<form class="layui-form layui-form-pane" action="" onkeydown="if(event.keyCode==13){return false}">
+					<div class="layui-form-item">
+						<label class="layui-form-label">组织</label>
+						<div class="layui-input-inline">
+							<input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+						</div>
+						<div class="layui-input-inline" style="width:120px">
+							<input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+						</div>
+						<div class="layui-input-inline">
+							<button type="button" id="search" class="layui-btn" onclick="searchorg()">查询</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class = "HR-flow">
+				<div class = "flow-mode">
+					<div class = "mode-div">
+						<div class = "flow-mode-data">
+							<ul class = "flow-mode-ul">
+								<li>
+									<div class = "flow-mode-label">上月末总人数</div>
+									<div id="symrs" class = "flow-mode-number"></div>
+								</li>
+								<li>
+									<div class = "flow-mode-label">当月入职人数</div>
+									<div id="dyrzrs" class = "flow-mode-number"></div>
+								</li>
+								<li>
+									<div class = "flow-mode-label">当月调入总人数</div>
+									<div id="dydrzrs" class = "flow-mode-number"></div>
+								</li>
+								<li>
+									<div class = "flow-mode-label">当月调出总人数</div>
+									<div id="dydczrs" class = "flow-mode-number"></div>
+								</li>
+								<li>
+									<div class = "flow-mode-label">当月离职人数</div>
+									<div id="dylzrs" class = "flow-mode-number"></div>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+            <div class = "structure">
+                <!-- 性别分布 -->
+                <div class = "HR-div HR-br" style="margin-left: 1.5%">
+					<div class = "age-title">性别</div>
+					<div id="sexfb" class="chart_combo"></div>
+                </div>
+				<!-- 年龄分布 -->
+				<div class = "HR-div HR-br"style="margin-left: 3.5%">
+					<div class = "age-title">年龄</div>
+					<div id="age-title" class="chart_combo"></div>
+				</div>
+                 <!-- 职等分布 -->
+                <div class = "HR-div HR-br"style="margin-left: 3.5%">
+                	<div class = "age-title">职等</div>
+                   	<div id="level" class="chart_combo"></div>
+                </div>
+
+                <div class = "clear"></div>
+            </div>
+			<div class = "structure">
+				<!-- 学历分布 -->
+				<div class = "HR-div HR-br" style="margin-left: 1.5%">
+					<div class = "age-title">学历</div>
+					<div id="education" class="chart_combo"></div>
+				</div>
+				<!-- 职等分布 -->
+				<div class = "HR-div HR-br" style="margin-left: 3.5%">
+					<div class = "age-title">集团工龄</div>
+					<div id="jtglfb" class="chart_combo"></div>
+				</div>
+				<!-- 学历分布 -->
+				<div class = "HR-div HR-br" style="margin-left: 3.5%">
+					<div class = "age-title">社会工龄</div>
+					<div id="shglfb" class="chart_combo"></div>
+				</div>
+				<div class = "clear"></div>
+			</div>
+
+        </div>
+
+
+
+
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+		<script type="text/javascript" src="js/highcharts.js?1" ></script>
+        <script>
+			document.write("<script type='text/javascript' src='js/setBar.js?random="+Math.random()+"'></s"+"cript>");
+	       //console.log($("body").height());
+        </script>
+		<script src="/js/layui/layui.all.js?1"></script>
+		<script>
+			layui.use(['element','form'], function() {
+				varform = layui.form
+						, element = layui.element;
+			})
+			function changezh(type){
+				if(type == '0'){
+					window.location.href="/gvo/hr/portal/glz/zzrlfx/indexjj.html"
+				}else{
+					window.location.href="/gvo/hr/portal/glz/zzrlfx/indexzj.html"
+				}
+			}
+
+			function searchorg(){
+				var orgcode = jQuery("#orgcode").val();
+				var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+				window.location.href="/gvo/hr/portal/glz/zzrlfx/indexjj.html?orgcode="+orgcode+"&sfbhxjzz="+sfbhxjzz;
+			}
+		</script>
+    </body>
+
+</html>

@@ -1,32 +1,14 @@
 package rrd.supplier.service;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import weaver.general.BaseBean;
+import weaver.general.Util;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.api.integration.Base;
-import org.apache.commons.beanutils.BeanUtils;
-import weaver.conn.RecordSet;
-import weaver.general.BaseBean;
-import weaver.general.Util;
+import java.io.*;
+import java.net.URLDecoder;
 
 @SuppressWarnings("serial")
 public class SupplierDownload extends HttpServlet{
@@ -45,14 +27,18 @@ public class SupplierDownload extends HttpServlet{
 		}
 		String xzwd1 = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzwd1").getBytes("ISO-8859-1"),"UTF-8");
 		String xzwd2 = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzwd2").getBytes("ISO-8859-1"),"UTF-8");
-		String xzdj = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzdj").getBytes("ISO-8859-1"),"UTF-8");
+        String xzwd3 = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzwd3").getBytes("ISO-8859-1"),"UTF-8");
+
+        String xzdj = new String(weaver.file.Prop.getPropValue("rrdsupplierzr","xzdj").getBytes("ISO-8859-1"),"UTF-8");
 
 		String fileName = "";
         if("0".equals(type)){
 			fileName = xzwd1;
 		}else if("1".equals(type)){
 			fileName = xzwd2;
-		}
+		}else if("2".equals(type)){
+            fileName = xzwd3;
+        }
         new BaseBean().writeLog("testaaa","url:"+xzdj+fileName);
         File file = new File(xzdj+fileName);
 		 //log.writeLog(map.toString());

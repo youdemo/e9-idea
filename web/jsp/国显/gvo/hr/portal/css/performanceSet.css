@@ -1,0 +1,72 @@
+.fl{float:left;} .fr{float:right}
+.mt50{margin-top:50px;}
+body {font-family: "Microsoft YaHei";}
+.data-set-title{
+	margin: 30px 0;
+}
+.data-set-title h1{
+	text-align: center;
+}
+.data-set-title .logo-div{
+	position: absolute;
+	top: 20px;
+	left: 5%;
+	width: 10%;
+}
+.data-set-title .logo-div img{
+	width: 100%;
+}
+.separator{
+	width: 100%;
+	height: 10px;
+	background-color: #EEEEEE;
+}
+.data-set-main .data-set-form{
+	width: 80%;
+	margin: 0 auto;
+	margin-top:30px;	
+}
+.data-set-form .data-set-form-item{
+	width: 50%;
+	padding: 0 5%;
+	box-sizing: border-box;
+	clear: none;
+	float: left;
+}
+.data-set-form .dept-search-div{
+	width:40px;
+	height: 38px;
+	line-height: 38px;
+	float:right;
+	text-align: center;
+}
+.data-set-form .dept-search{
+	padding-top:8px;
+	font-size: 24px;
+}
+.data-set-form-item[pane]{
+	margin-left: 5%;
+	padding: 0;
+	width: 40%;
+}
+.layui-form-pane .layui-form-label{
+	background-color: #ebf5ff ;
+}
+.data-set-button{
+	padding: 10px 40px;
+	border-radius: 4px;
+	border: 1px solid #bbbbbb;
+}
+.btn-submit{
+	background-color: rgb(58, 192, 255);	
+	color: #ffffff;
+}
+.btn-cancel{
+	background-color: #FFFFFF;
+}
+.btn-submit:hover{
+	background-color: rgb(40, 166, 200);	
+}
+.btn-cancel:hover{
+	background-color: #EEEEEE;
+}

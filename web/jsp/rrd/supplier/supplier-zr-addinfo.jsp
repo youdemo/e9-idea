@@ -43,13 +43,13 @@
         out.print("供应商信息已提交，无法重复提交");
         return;
     }
-    String accsize ="10";
+    String accsize ="20";
     String accsec= Util.null2o(weaver.file.Prop.getPropValue("rrdsupplierzr", "zcsecid"));
     String sql = "";
     String chkFields = "gsxz,ssqy,gysmc,szhy,jyzx,ywfwgjyyzz,clsj,gsdh,gyszcdz,zczbw,nxsew,gysjydz,fddbr,glzlxr," +
-            "yddh,yxdz,rcswlxr,yddh1,yxdz1,tyshxydm,khh,yhzh,wb,yhzhwb,swiftcode,sfysjkfnl,sjryslr,kha,hya,zba,khb,hyb,zbb," +
+            "yddh,yxdz,rcswlxr,yddh1,yxdz1,tyshxydm,sfysjkfnl,sjryslr,kha,hya,zba,khb,hyb,zbb," +
             "khc,hyc,zbc,yyzzlysm,yhkhxxlysm,syddhlysm,sl," +
-            "bz,sfyyyzzjggz,sfyyhkhxxjggz,sfysyddhjggz,sfycwxgfj,cwrwqsmly,sfygsxgfj,gsrwqsmly";
+            "sfyyyzzjggz,sfyyhkhxxjggz,sfysyddhjggz,sfycwxgfj,cwrwqsmly,bz1,khh1,yhzh1";
 %>
 <head>
     <title>供应商信息收集</title>
@@ -105,8 +105,10 @@
             </div>
         </div>
         <div class="contentbody" id="divinner"style="width: 100%;overflow: auto;background-color: #cccccc73;height: 873px;overflow-x: hidden;overflow-y: auto;position: relative;z-index: 0;">
-            <div style="height: auto;">
-                <div  style="min-height: 1204px; padding: 30px 24px;">
+            <div style="height: 100%;overflow:hidden;display:block;margin:0;padding:0;">
+                <div style="height: 100%;overflow-x: hidden;overflow-y: auto;position: relative;">
+                   <div style="margin: 0 auto;">
+                    <div  style="margin: 30px 50px;padding:0;">
                     <FORM id=report name=report action="/rrd/supplier/supplier-zr-save.jsp" method=post>
                         <input type="hidden" name="yyzzjggz" id="yyzzjggz" value="<%=sid.getYyzzjggz() %>">
                         <input type="hidden" name="yhkhxxjggz" id="yhkhxxjggz" value="<%=sid.getYhkhxxjggz() %>">
@@ -123,74 +125,57 @@
                         <input type="hidden" name="chkFields" id="chkFields" value="<%=chkFields%>">
                         <input type="hidden" name="gysmccf" id="gysmccf" value="">
                         <input type="hidden" name="tyshxydmcf" id="tyshxydmcf" value="">
-                        <div style="overflow-x: auto; min-height: 1140px; padding-bottom: 20px;background-color: #fff;">
-                            <table class="excelMainTable" style="margin: 0px auto; width: 1204px;" _haspercent="true">
-                                <colgroup><col width="60px"><col width="120px"><col width="16px"><col width="233px"><col width="115px"><col width="15px"><col width="254"><col width="20"><col width="33px"><col width="94px"><col width="15px"><col width="200px"><col width="30px"></colgroup>
+                        <div style="margin: 0px auto 20px; background-color: #fff;-webkit-box-shadow: 0 0 5px #ddd;box-shadow: 0 0 5px #ddd;">
+                            <div style="margin:0;padding: 0">
+                            <table class="excelMainTable" style="margin: 0px auto; width: 100%;border:0;padding:0;">
+                                <colgroup><col style="width: 5%;"><col style="width: 14%;"><col style="width: 17%;"><col style="width: 14%;"><col style="width: 5%;"><col style="width: 11%;"><col style="width: 1%;"><col style="width: 12%;"><col style="width: 13%;"><col style="width: 1%;"></colgroup>
                                 <tbody>
-                                <tr style="height: 10px; display: table-row;">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+
                                 <tr style="height: 51px; display: table-row;">
-                                    <td valign="middle" colspan="13" class="" style="text-align: left; vertical-align: middle; font-size: 20pt;  padding-left: 36px; line-height: 1;">
+                                    <td valign="middle" colspan="10" class="" style="text-align: left; vertical-align: middle; font-size: 20pt;  padding-left: 36px; line-height: 1;">
                                         <div style="width: 100%;">
                                             <div style="font-size: 20pt; font-family:'Microsoft YaHei'; word-break: break-all; overflow-wrap: break-word;text-align: center;">供应商信息收集</div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr style="height: 21px; display: table-row;">
-                                    <td valign="middle" colspan="13" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
+                                    <td valign="middle" colspan="10" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
 
                                 </tr>
 
                                 <tr class="tr_normal">
-                                    <td rowspan="2" class="td_image" style="background-image: url('/filesystem/exceldesign/uploadimg/uploadImg_202022492458.jpg');"><div style="width: 100%;"></div></td>
-                                    <td valign="middle" class="td_title1" ><div style="width: 100%;"><div class="div_fontstyle2" >基本信息</div></div></td>
-                                    <td></td><td></td><td></td><td></td><td></td><td></td>
-                                    <td valign="middle" colspan="5" class="" style="border-top: 2px solid rgb(153, 153, 153); background-color: rgb(239, 239, 239); text-align: left; vertical-align: middle; font-weight: bold; font-size: 12pt; color: black;  padding-left: 8px; line-height: 1;"><div style="width: 100%;"><div class="div_fontstyle2" >供应商关键信息</div></div></td>
+                                    <td rowspan="2" class="td_image" style="background-image: url(/filesystem/exceldesign/uploadimg/uploadImg_2020225103936.jpg) !important;"><div style="width: 100%;"></div></td>
+                                    <td valign="middle" class="td_title2"colspan="2" ><div style="width: 100%;"><div class="div_fontstyle2" >基本信息</div></div></td>
+                                    <td></td><td></td><td></td>
+                                    <td valign="middle" colspan="4" class="" style="border-top: 2px solid rgb(153, 153, 153); background-color: rgb(239, 239, 239); text-align: left; vertical-align: middle; font-weight: bold; font-size: 12pt; color: black;  padding-left: 8px; line-height: 1;"><div style="width: 100%;"><div class="div_fontstyle2" >供应商关键信息</div></div></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td class="td_fieldnameright"><div class="div_fieldname">公司性质</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue"><div width="100%"><%=tu.getSelectHtmlTable("gsxz",sid.getGsxz(),"1","uf_gsxz","gsxz","id","id","asc")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">所属行业</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable("szhy",sid.getSzhy(),"1","uf_khsshy","drdl01","id","DRKY","asc")%></div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">公司性质：</div></td>
+
+                                    <td class="td_fieldvalue"><div width="100%"><%=tu.getSelectHtmlTable2("gsxz",sid.getGsxz(),"1","uf_gsxz","gsxz","id","id","asc","180")%></div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">所属行业：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable2("szhy",sid.getSzhy(),"1","uf_khsshy","drdl01","id","DRKY","asc","180")%></div></td>
                                     <td class="td_grey" ></td>
-                                    <td valign="middle" colspan="3" class="td_bordtop" ><div style="width: 100%;"><div  class="div_fieldname" >供应商名称</div></div></td>
+                                    <td valign="middle" colspan="2" class="td_bordtop" ><div style="width: 100%;"><div  class="div_fieldname" >供应商名称</div></div></td>
                                     <td class="td_grey" ></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">经营属性</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">经营属性：</div></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                         <%=sisi.getFieldHtml("zzs",sid.getZzs(),"checkbox","1","制造商","")%>
                                         <%=sisi.getFieldHtml("fxs",sid.getFxs(),"checkbox","1","分销商","")%>
                                         <%=sisi.getFieldHtml("fws",sid.getFws(),"checkbox","1","服务商","")%>
                                     </div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">法定代表人</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">法定代表人：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("fddbr",sid.getFddbr(),"text","1","100","26")%></div></td>
                                     <td class="td_grey"></td>
-                                    <td valign="middle" colspan="3" class="td_bordbottom"><div width="100%"><%=sisi.getFieldHtml("gysmc",sid.getGysmc(),"text","1","150","35")%></div></td>
+                                    <td valign="middle" colspan="2" class="td_bordbottom"><div width="100%"><%=sisi.getFieldHtml("gysmc",sid.getGysmc(),"text","1","150","35")%></div></td>
                                     <td class="td_grey"></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">成立时间</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">成立时间：</div></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                         <button type="button" class=Calendar id="selectclsj" onclick="onshowPlanDate1('clsj','selectclsjSpan','1')"></BUTTON>
                                         <SPAN id="selectclsjSpan" >
@@ -200,74 +185,61 @@
                                                 <%=sid.getClsj()%></SPAN>
                                         <INPUT type="hidden" name="clsj" id="clsj" value="<%=sid.getClsj()%>">
                                     </div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">公司电话</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">公司电话：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("gsdh",sid.getGsdh(),"text","1","50","26")%></div></td>
                                     <td class="td_grey"></td>
-                                    <td valign="middle" colspan="3" class="td_bordtop"><div style="width: 100%;"><div  class="div_fieldname" >统一社会信用代码</div></div></td>
+                                    <td valign="middle" colspan="2" class="td_bordtop"><div style="width: 100%;"><div  class="div_fieldname" >统一社会信用代码</div></div></td>
                                     <td class="td_grey"></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">注册资本（万）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">注册资本（万）：</div></td>
                                     <td class="td_fieldvalue"><div width="100%"><%=sisi.getFieldHtml("zczbw",sid.getZczbw(),"float","1","2","")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">年销售额（万）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">年销售额（万）：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("nxsew",sid.getNxsew(),"float","1","2","")%></div></td>
                                     <td class="td_grey"></td>
-                                    <td valign="middle" colspan="3" class="td_bordbottom"><div width="100%"><%=sisi.getFieldHtml("tyshxydm",sid.getTyshxydm(),"text","1","20","35")%></div></td>
+                                    <td valign="middle" colspan="2" class="td_bordbottom"><div width="100%"><%=sisi.getFieldHtml("tyshxydm",sid.getTyshxydm(),"text","1","20","35")%></div></td>
                                     <td class="td_grey"></td>
                                 </tr>
 
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">供应商网址</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="5"><div width="100%"><%=sisi.getFieldHtml("gyswz",sid.getGyswz(),"text","0","100","70")%></div></td>
-                                    <td class=""  colspan="5" style="background-color: rgb(239, 239, 239); text-align: left; vertical-align: middle; color: black; line-height: 1;"></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">供应商网址：</div></td>
+                                    <td class="td_fieldvalue" colspan="4"><div width="100%"><%=sisi.getFieldHtml("gyswz",sid.getGyswz(),"text","0","100","70")%></div></td>
+                                    <td class=""  colspan="4" style="background-color: rgb(239, 239, 239); text-align: left; vertical-align: middle; color: black; line-height: 1;"></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">供应商注册地址</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("gyszcdz",sid.getGyszcdz(),"text","1","160","120")%></div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">供应商注册地址：</div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%"><%=sisi.getFieldHtml("gyszcdz",sid.getGyszcdz(),"text","1","160","120")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">供应商经营地址</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("gysjydz",sid.getGysjydz(),"text","1","160","120")%></div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">供应商经营地址：</div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%"><%=sisi.getFieldHtml("gysjydz",sid.getGysjydz(),"text","1","160","120")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">管理者联系人</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">管理者联系人：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("glzlxr",sid.getGlzlxr(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">移动电话</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">移动电话：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yddh",sid.getYddh(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">邮箱地址</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yxdz",sid.getYxdz(),"text","1","100","26")%></div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">邮箱地址：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yxdz",sid.getYxdz(),"text","1","100","22")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">日常事务联系人</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">日常事务联系人：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("rcswlxr",sid.getRcswlxr(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">移动电话</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">移动电话：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yddh1",sid.getYddh1(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">邮箱地址</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yxdz1",sid.getYxdz1(),"text","1","100","26")%></div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">邮箱地址：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yxdz1",sid.getYxdz1(),"text","1","100","22")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">业务范围<br/>（根据营业执照）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%">
+                                    <td class="td_fieldnameright"><div class="div_fieldname">业务范围（根据营业执照）：</div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%">
                                         <textarea class="Inputstyle" temptype="1" viewtype="1" temptitle="业务范围（根据营业执照）" id="ywfwgjyyzz" name="ywfwgjyyzz" rows="4" onchange="checkmustinput('ywfwgjyyzz','ywfwgjyyzzspan',this.getAttribute('viewtype'));" cols="40"  style="width:80%;word-break:break-all;word-wrap:break-word"><%=sid.getYwfwgjyyzz()%></textarea>
                                         <span id="ywfwgjyyzzspan">
                                                   <%if("".equals(sid.getYwfwgjyyzz())){%>
@@ -278,80 +250,80 @@
                                     </div></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td valign="middle" colspan="13" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
+                                    <td valign="middle" colspan="10" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td rowspan="2" class="td_image" style="background-image: url('/filesystem/exceldesign/uploadimg/uploadImg_202022492458.jpg');"><div style="width: 100%;"></div></td>
-                                    <td valign="middle" class="td_title1" ><div style="width: 100%;"><div class="div_fontstyle2" >财务信息</div></div></td>
-                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                    <td rowspan="3" class="td_image" style="background-image: url(/filesystem/exceldesign/uploadimg/uploadImg_2020225103954.jpg) !important;"><div style="width: 100%;"></div></td>
+                                    <td valign="middle" class="td_title2" colspan="2"><div style="width: 100%;"><div class="div_fontstyle2" >财务信息</div></div></td>
+                                    <td colspan="7"></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td class="td_fieldnameright"><div class="div_fieldname">交易货币</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue"><div width="100%"><%=sisi.getFieldHtml("bz",sid.getBz(),"select","1","","")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">税率</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+
+                                    <td class="td_fieldnameright"><div class="div_fieldname">税率：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable("sl",sid.getSl(),"1","uf_sl","tatxa","id","tatxa1","asc")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">关联公司</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("glgs",sid.getGlgs(),"text","0","100","26")%></div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">关联公司：</div></td>
+                                    <td class="td_fieldvalue" colspan="4"><div width="100%"><%=sisi.getFieldHtml("glgs",sid.getGlgs(),"text","0","100","26")%></div></td>
+
                                 </tr>
-                                <tr class="tr_normal" id="rmbhyc">
-                                    <td></td>
-                                    <td class="td_fieldnameright" ><div class="div_fieldname">银行账号</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("yhzh",sid.getYhzh(),"text","1","50","26")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">开户行</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="7"><div width="100%"><%=sisi.getFieldHtml("khh",sid.getKhh(),"text","1","100","60")%></div></td>
+                                <tr class="tr_normal">
+
+                                    <td class="td_fieldnamecenter" colspan="1"><div width="100%">币种（第1行为默认交易币种）</div></td>
+                                    <td class="td_fieldnamecenter" colspan="2"><div width="100%">开户行</div></td>
+                                    <td class="td_fieldnamecenter" colspan="4"><div width="100%">银行账号</div></td>
+                                    <td class="td_fieldnamecenter" colspan="2"><div width="100%">Swift Code</div></td>
                                 </tr>
-                                <tr class="tr_normal" id="wbhyc">
+                                <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">外币</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue"><div width="100%"><%=tu.getSelectHtmlTable("wb",sid.getWb(),"1","uf_jyhb","cvcrcd","id","cvcrcd","desc")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">银行账号（外币)</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("yhzhwb",sid.getYhzhwb(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">SWIFT CODE</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("swiftcode",sid.getSwiftcode(),"text","1","100","26")%></div></td>
+                                    <td class="td_fieldcenter" colspan="1" s><div width="100%"><%=tu.getSelectHtmlTable2("bz1",sid.getBz1(),"1","uf_jyhb","cvcrcd","id","cvcrcd","desc","120")%></div></td>
+                                    <td class="td_fieldcenter" colspan="2"><div width="100%"><%=sisi.getFieldHtml("khh1",sid.getKhh1(),"text","1","100","50")%></div></td>
+                                    <td class="td_fieldcenter" colspan="4"><div width="100%"><%=sisi.getFieldHtml("yhzh1",sid.getYhzh1(),"text","1","50","50")%></div></td>
+                                    <td class="td_fieldcenter" colspan="2"><div width="100%"><%=sisi.getFieldHtml("swiftcode1",sid.getSwiftcode1(),"text","0","200","20")%></div></td>
+                                </tr>
+                                <tr class="tr_normal">
+                                    <td></td>
+                                    <td class="td_fieldcenter" colspan="1"><div width="100%"><%=tu.getSelectHtmlTable2("bz2",sid.getBz2(),"0","uf_jyhb","cvcrcd","id","cvcrcd","desc","120")%></div></td>
+                                    <td class="td_fieldcenter" colspan="2"><div width="100%"><%=sisi.getFieldHtml("khh2",sid.getKhh2(),"text","0","100","50")%></div></td>
+                                    <td class="td_fieldcenter" colspan="4"><div width="100%"><%=sisi.getFieldHtml("yhzh2",sid.getYhzh2(),"text","0","50","50")%></div></td>
+                                    <td class="td_fieldcenter" colspan="2"><div width="100%"><%=sisi.getFieldHtml("swiftcode2",sid.getSwiftcode2(),"text","0","200","20")%></div></td>
+                                </tr>
+                                <tr class="tr_normal">
+                                    <td></td>
+                                    <td class="td_fieldcenter" colspan="1"><div width="100%"><%=tu.getSelectHtmlTable2("bz3",sid.getBz3(),"0","uf_jyhb","cvcrcd","id","cvcrcd","desc","120")%></div></td>
+                                    <td class="td_fieldcenter" colspan="2"><div width="100%"><%=sisi.getFieldHtml("khh3",sid.getKhh3(),"text","0","100","50")%></div></td>
+                                    <td class="td_fieldcenter" colspan="4"><div width="100%"><%=sisi.getFieldHtml("yhzh3",sid.getYhzh3(),"text","0","50","50")%></div></td>
+                                    <td class="td_fieldcenter" colspan="2"><div width="100%"><%=sisi.getFieldHtml("swiftcode3",sid.getSwiftcode3(),"text","0","200","20")%></div></td>
                                 </tr>
 
                                 <tr class="tr_normal">
-                                    <td valign="middle" colspan="13" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
+                                    <td valign="middle" colspan="10" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
                                 </tr>
                                 <tr class="tr_normal" id="zcs_1">
-                                    <td rowspan="2" class="td_image" style="background-image: url('/filesystem/exceldesign/uploadimg/uploadImg_202022492710.jpg');"><div style="width: 100%;"></div></td>
-                                    <td valign="middle" colspan="4" class="" style="border-top: 2px solid rgb(153, 153, 153); text-align: left; vertical-align: middle; font-weight: bold; font-size: 12pt;  padding-left: 24px; line-height: 1;"><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >生产和业务能力（制造商）</div></div></div></td>
-                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                    <td rowspan="2" class="td_image" style="background-image: url(/filesystem/exceldesign/uploadimg/uploadImg_2020225103936.jpg) !important;"><div style="width: 100%;"></div></td>
+                                    <td valign="middle" colspan="3" class="" style="border-top: 2px solid rgb(153, 153, 153); text-align: left; vertical-align: middle; font-weight: bold; font-size: 12pt;  padding-left: 24px; line-height: 1;"><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >生产和业务能力（制造商）</div></div></div></td>
+                                    <td colspan="6" ></td>
 
                                 </tr>
                                 <tr class="tr_normal" id="zcs_2">
-                                    <td class="td_fieldnameright" ><div class="div_fieldname">员工总数（人）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright" ><div class="div_fieldname">员工总数（人）：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("ygzsr",sid.getYgzsr(),"int","0","","")%></div></td>
-                                    <td class="td_fieldnameright" ><div class="div_fieldname">办公场所面积（㎡）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright" ><div class="div_fieldname">办公场所面积（㎡）：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("bgcsmjm2",sid.getBgcsmjm2(),"float","0","2","")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">生产场所面积（㎡）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">生产场所面积（㎡）：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("sccsmjm2",sid.getSccsmjm2(),"float","0","2","")%></div></td>
                                 </tr>
                                 <tr class="tr_normal" id="zcs_3">
                                     <td></td>
-                                    <td class="td_fieldnameright" ><div class="div_fieldname">管理人员总数（人）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright" ><div class="div_fieldname">管理人员总数（人）：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("glryzsr",sid.getGlryzsr(),"int","0","","")%></div></td>
-                                    <td class="td_fieldnameright" ><div class="div_fieldname">仓库面积（㎡）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="7"><div width="100%"><%=sisi.getFieldHtml("ckmjm2",sid.getCkmjm2(),"float","0","2","")%></div></td>
+                                    <td class="td_fieldnameright" ><div class="div_fieldname">仓库面积（㎡）：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("ckmjm2",sid.getCkmjm2(),"float","0","2","")%></div></td>
+                                    <td  colspan="2"></td>
+                                    <td  colspan="2"></td>
                                 </tr>
                                 <tr class="tr_normal" id="zcs_4">
                                     <td></td>
-                                    <td class="td_fieldnameright" ><div class="div_fieldname">设备和产品能力描述</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="7"><div width="100%">
+                                    <td class="td_fieldnameright" ><div class="div_fieldname">设备和产品能力描述：</div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%">
                                         <textarea class="Inputstyle" temptype="1" viewtype="0" temptitle="设备和产品能力描述" id="sbhcpnlms" name="sbhcpnlms" rows="4" onchange="checkmustinput('sbhcpnlms','sbhcpnlmsspan',this.getAttribute('viewtype'));" cols="40"  style="width:80%;word-break:break-all;word-wrap:break-word" value=""><%=sid.getSbhcpnlms()%></textarea>
                                         <span id="sbhcpnlmsspan">
 
@@ -361,82 +333,71 @@
 
 
                                 <tr class="tr_normal" id="zcs_5">
-                                    <td valign="middle" colspan="13" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
+                                    <td valign="middle" colspan="10" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td rowspan="2" class="td_image" style="background-image: url('/filesystem/exceldesign/uploadimg/uploadImg_202022492725.jpg');"><div style="width: 100%;"></div></td>
+                                    <td rowspan="2" class="td_image" style="background-image: url(/filesystem/exceldesign/uploadimg/uploadImg_2020225103954.jpg) !important;"><div style="width: 100%;"></div></td>
                                     <td valign="middle" colspan="4" class="td_title2" ><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >设计&开发能力</div></div></div></td>
-                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                    <td colspan="5"></td>
 
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td class="td_fieldnameright"><div class="div_fieldname">是否有设计开发能力</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue"><div width="100%"><%=sisi.getFieldHtml("sfysjkfnl",sid.getSfysjkfnl(),"select","1","","")%></div></td>
-                                    <td class="td_fieldnameright" id="sjrysl_1"><div class="div_fieldname">设计人员数量（人）</div></td>
-                                    <td class="td_fieldnameleft" id="sjrysl_2"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="7" id="sjrysl_3"><div width="100%"><%=sisi.getFieldHtml("sjryslr",sid.getSjryslr(),"int","1","","")%></div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">是否有设计开发能力：</div></td>
+                                    <td class="td_fieldvalue"><div width="100%"><%=sisi.getFieldHtml("sfysjkfnl",sid.getSfysjkfnl(),"select","1","180","")%></div></td>
+                                    <td class="td_fieldnameright" id="sjrysl_1"><div class="div_fieldname">设计人员数量（人）：</div></td>
+                                    <td class="td_fieldvalue" colspan="2" id="sjrysl_3"><div width="100%"><%=sisi.getFieldHtml("sjryslr",sid.getSjryslr(),"int","1","","")%></div></td>
+                                    <td colspan="4"></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td valign="middle" colspan="13" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
+                                    <td valign="middle" colspan="10" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td rowspan="2" class="td_image" style="background-image: url('/filesystem/exceldesign/uploadimg/uploadImg_202022492737.jpg');"><div style="width: 100%;"></div></td>
-                                    <td valign="middle" colspan="4" class="td_title2" ><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >主要客户情况</div></div></div></td>
-                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                    <td rowspan="2" class="td_image" style="background-image: url(/filesystem/exceldesign/uploadimg/uploadImg_2020225103936.jpg) !important;"><div style="width: 100%;"></div></td>
+                                    <td valign="middle" colspan="3" class="td_title2" ><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >主要客户情况</div></div></div></td>
+                                    <td colspan="6"></td>
 
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td class="td_fieldnameright"><div class="div_fieldname">客户A</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">客户A：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("kha",sid.getKha(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">行业A</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable("hya",sid.getHya(),"1","uf_khsshy","drdl01","id","DRKY","asc")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">占比A（%）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">行业：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable2("hya",sid.getHya(),"1","uf_khsshy","drdl01","id","DRKY","asc","180")%></div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">占比（%）：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("zba",sid.getZba(),"float","1","2","")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">客户B</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">客户B：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("khb",sid.getKhb(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">行业B</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable("hyb",sid.getHyb(),"1","uf_khsshy","drdl01","id","DRKY","asc")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">占比B（%）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">行业：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable2("hyb",sid.getHyb(),"1","uf_khsshy","drdl01","id","DRKY","asc","180")%></div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">占比（%）：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("zbb",sid.getZbb(),"float","1","2","")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
                                     <td></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">客户C</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">客户C：</div></td>
                                     <td class="td_fieldvalue" ><div width="100%"><%=sisi.getFieldHtml("khc",sid.getKhc(),"text","1","100","26")%></div></td>
-                                    <td class="td_fieldnameright"><div class="div_fieldname">行业C</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
-                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable("hyc",sid.getHyc(),"1","uf_khsshy","drdl01","id","DRKY","asc")%></div></td>
-                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">占比C（%）</div></td>
-                                    <td class="td_fieldnameleft"><div class="div_fieldname">：</div></td>
+                                    <td class="td_fieldnameright"><div class="div_fieldname">行业：</div></td>
+                                    <td class="td_fieldvalue" colspan="2"><div width="100%"><%=tu.getSelectHtmlTable2("hyc",sid.getHyc(),"1","uf_khsshy","drdl01","id","DRKY","asc","180")%></div></td>
+                                    <td class="td_fieldnameright" colspan="2"><div class="div_fieldname">占比（%）：</div></td>
                                     <td class="td_fieldvalue" colspan="2"><div width="100%"><%=sisi.getFieldHtml("zbc",sid.getZbc(),"float","1","2","")%></div></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td valign="middle" colspan="13" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
+                                    <td valign="middle" colspan="10" class="td_xh" style="text-align: left; vertical-align: middle; line-height: 1;" ></td>
                                 </tr>
                                 <tr class="tr_normal">
-                                    <td rowspan="2" class="td_image" style="background-image: url('/filesystem/exceldesign/uploadimg/uploadImg_202022492750.jpg');"><div style="width: 100%;"></div></td>
-                                    <td valign="middle" colspan="4" class="td_title2" ><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >相关文件上传 Supporting attachment </div></div></div></td>
-                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                    <td rowspan="2" class="td_image" style="background-image: url(/filesystem/exceldesign/uploadimg/uploadImg_2020225103954.jpg) !important;"><div style="width: 100%;"></div></td>
+                                    <td valign="middle" colspan="3" class="td_title2" ><div style="width: 100%;"><div style="width: 100%;"><div class="div_fontstyle2" >支持文件上传</div></div></div></td>
+                                    <td colspan="6" ></td>
 
                                 </tr>
                                 <tr class="tr_normal1">
                                     <td class="td_fieldnamemid"><div class="div_fieldname" >营业执照(加盖公章)</div></td>
-                                    <td></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                         <%=sisi.getFieldHtml("sfyyyzzjggz",sid.getSfyyyzzjggz(),"select","1","100","")%>
                                     </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%" id="yyzzfjyc">
                                             <%
                                                 if(!"".equals(sid.getYyzzjggz())){
@@ -463,7 +424,7 @@
                                                 }
                                             %>
                                      <div style="height: 32px;vertical-align:middle;">
-                                          <span id="uploadspan" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                          <span id="uploadspan" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                           <span id="yyzzjggzspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                               必填
                                           </span>
@@ -487,25 +448,24 @@
                                         <input type=hidden name=accessory_num_yyzzjggz value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="6"></td>
+                                    <td class="td_fieldnameright" colspan="5"></td>
 
                                 </tr>
                                 <tr class="tr_normal1" id="yyzzxzyc">
                                     <td></td>
-                                    <td class="td_fieldnamemid"  colspan="2" style="text-align: left"><div class="div_fieldname" style="color:#a4c2f4;">&nbsp;&nbsp;&nbsp;&nbsp;如无请说明理由</div></td>
+                                    <td class="td_fieldnamemid"  colspan="1" style="text-align: left;padding-left: 40px;"><div class="div_fieldname" style="color:#a4c2f4;">如无请说明理由：</div></td>
 
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("yyzzlysm",sid.getYyzzlysm(),"text","1","200","120")%></div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%"><%=sisi.getFieldHtml("yyzzlysm",sid.getYyzzlysm(),"text","1","200","120")%></div></td>
 
 
                                 </tr>
                                 <tr class="tr_normal1">
                                     <td></td>
                                     <td class="td_fieldnamemid"><div class="div_fieldname" >银行开户信息(加盖公章)</div></td>
-                                    <td></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                         <%=sisi.getFieldHtml("sfyyhkhxxjggz",sid.getSfyyhkhxxjggz(),"select","1","100","")%>
                                     </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%" id="yhkhfjyc">
                                             <%
                                                 if(!"".equals(sid.getYhkhxxjggz())){
@@ -532,7 +492,7 @@
                                                 }
                                             %>
                                             <div style="height: 32px;vertical-align:middle;">
-                                                <span id="uploadspan1" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                <span id="uploadspan1" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                 <span id="yhkhxxjggzspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                               必填
                                           </span>
@@ -556,24 +516,23 @@
                                             <input type=hidden name=accessory_num_yhkhxxjggz value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="6"></td>
+                                    <td class="td_fieldnameright" colspan="5"></td>
                                 </tr>
                                 <tr class="tr_normal1" id="yhkhxzyc">
                                     <td></td>
-                                    <td class="td_fieldnamemid"  colspan="2" style="text-align: left"><div class="div_fieldname" style="color:#a4c2f4;">&nbsp;&nbsp;&nbsp;&nbsp;如无请说明理由</div></td>
+                                    <td class="td_fieldnamemid"  colspan="1" style="text-align: left;padding-left:40px;"><div class="div_fieldname" style="color:#a4c2f4;">如无请说明理由：</div></td>
 
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("yhkhxxlysm",sid.getYhkhxxlysm(),"text","1","200","120")%></div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%"><%=sisi.getFieldHtml("yhkhxxlysm",sid.getYhkhxxlysm(),"text","1","200","120")%></div></td>
 
 
                                 </tr>
                                 <tr class="tr_normal1">
                                     <td></td>
                                     <td class="td_fieldnamemid"><div class="div_fieldname" >商业道德函(加盖公章)</div></td>
-                                    <td></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                         <%=sisi.getFieldHtml("sfysyddhjggz",sid.getSfysyddhjggz(),"select","1","100","")%>
                                     </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%" id="syddfjyc">
                                             <%
                                                 if(!"".equals(sid.getSyddhjggz())){
@@ -600,7 +559,7 @@
                                                 }
                                             %>
                                             <div style="height: 32px;vertical-align:middle;">
-                                                <span id="uploadspan2" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                <span id="uploadspan2" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                 <span id="syddhjggzspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                               必填
                                           </span>
@@ -624,24 +583,26 @@
                                             <input type=hidden name=accessory_num_syddhjggz value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="6"></td>
+                                    <td class="td_fieldnameright" colspan="1"><div class="div_fieldname"></div></td>
+                                    <td class="td_fieldvalue" colspan="4"><div width="100%">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="/rrd/supplier/SupplierDownload?type=2&urlKey=<%=URLEncoder.encode(Util.null2String(request.getParameter("urlKey")),"UTF-8")%>" target="_blank">致供应商的一封信</a>
+                                    </div></td>
                                 </tr>
                                 <tr class="tr_normal1" id="syddxzyc">
                                     <td></td>
-                                    <td class="td_fieldnamemid"  colspan="2" style="text-align: left"><div class="div_fieldname" style="color:#a4c2f4;">&nbsp;&nbsp;&nbsp;&nbsp;如无请说明理由</div></td>
+                                    <td class="td_fieldnamemid"  colspan="1" style="text-align: left;padding-left: 40px;"><div class="div_fieldname" style="color:#a4c2f4;">如无请说明理由：</div></td>
 
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("syddhlysm",sid.getSyddhlysm(),"text","1","200","120")%></div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%"><%=sisi.getFieldHtml("syddhlysm",sid.getSyddhlysm(),"text","1","200","120")%></div></td>
 
 
                                 </tr>
                                 <tr class="tr_normal1">
                                     <td></td>
                                     <td class="td_fieldnamemid"><div class="div_fieldname" >财务关键信息</div></td>
-                                    <td></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                         <%=sisi.getFieldHtml("sfycwxgfj",sid.getSfycwxgfj(),"select","1","100","")%>
                                     </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%" id="cwxxfjyc">
                                             <%
                                                 if(!"".equals(sid.getCwgjxx())){
@@ -668,7 +629,7 @@
                                                 }
                                             %>
                                             <div style="height: 32px;vertical-align:middle;">
-                                                <span id="uploadspan3" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                <span id="uploadspan3" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                 <span id="cwgjxxspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                               必填
                                           </span>
@@ -692,17 +653,17 @@
                                             <input type=hidden name=accessory_num_cwgjxx value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="3"><div class="div_fieldname"></div></td>
-                                    <td class="td_fieldvalue" colspan="3"><div width="100%">
+                                    <td class="td_fieldnameright" colspan="1"><div class="div_fieldname"></div></td>
+                                    <td class="td_fieldvalue" colspan="4"><div width="100%">
                                         &nbsp;&nbsp;&nbsp;&nbsp;<a href="/rrd/supplier/SupplierDownload?type=0&urlKey=<%=URLEncoder.encode(Util.null2String(request.getParameter("urlKey")),"UTF-8")%>" target="_blank">供应商财务关键信息清单_中文</a>
                                     </div></td>
 
                                 </tr>
                                 <tr class="tr_normal1" id="cwxxxzyc">
                                     <td></td>
-                                    <td class="td_fieldnamemid"  colspan="2" style="text-align: left"><div class="div_fieldname" style="color:#a4c2f4;">&nbsp;&nbsp;&nbsp;&nbsp;如无请说明理由</div></td>
+                                    <td class="td_fieldnamemid"  colspan="1" style="text-align: left;padding-left: 40px;"><div class="div_fieldname" style="color:#a4c2f4;">如无请说明理由：</div></td>
 
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("cwrwqsmly",sid.getCwrwqsmly(),"text","1","200","120")%></div></td>
+                                    <td class="td_fieldvalue" colspan="8"><div width="100%"><%=sisi.getFieldHtml("cwrwqsmly",sid.getCwrwqsmly(),"text","1","200","120")%></div></td>
 
 
                                 </tr>
@@ -711,13 +672,8 @@
                                     <td></td>
                                     <td class="td_fieldnamemid" ><div class="div_fieldname" >公司基本信息截屏要求</div>
                                     </td>
-
                                     <td></td>
-                                    <td class="td_fieldvalue"><div width="100%">
-                                            <%=sisi.getFieldHtml("sfygsxgfj",sid.getSfygsxgfj(),"select","1","100","")%>
-
-                                    </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%" id="gsjbxxfjyc">
                                             <%
                                                 if(!"".equals(sid.getGsjbxxjpyq())){
@@ -744,7 +700,7 @@
                                                 }
                                             %>
                                                 <div style="height: 32px;vertical-align:middle;">
-                                                    <span id="uploadspan5" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                    <span id="uploadspan5" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                     <span id="gsjbxxjpyqspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                               必填
                                           </span>
@@ -769,29 +725,22 @@
                                             <input type=hidden name=accessory_num_gsjbxxjpyq value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="3"><div class="div_fieldname"></div></td>
-                                    <td class="td_fieldvalue" colspan="3"><div width="100%"stye>
+                                    <td class="td_fieldnameright" colspan="1"><div class="div_fieldname"></div></td>
+                                    <td class="td_fieldvalue" colspan="4"><div width="100%"stye>
                                         &nbsp;&nbsp;&nbsp;&nbsp;<a href="/rrd/supplier/SupplierDownload?type=1&urlKey=<%=URLEncoder.encode(Util.null2String(request.getParameter("urlKey")),"UTF-8")%>" target="_blank">公司基本信息截屏要求（境内企业）</a>
 
                                     </div></td>
 
                                 </tr>
-                                <tr class="tr_normal1" id="gsjbxxxzyc">
-                                    <td></td>
-                                    <td class="td_fieldnamemid"  colspan="2" style="text-align: left"><div class="div_fieldname" style="color:#a4c2f4;">&nbsp;&nbsp;&nbsp;&nbsp;如无请说明理由</div></td>
 
-                                    <td class="td_fieldvalue" colspan="10"><div width="100%"><%=sisi.getFieldHtml("gsrwqsmly",sid.getGsrwqsmly(),"text","1","200","120")%></div></td>
-
-
-                                </tr>
                                 <tr class="tr_normal1">
                                     <td></td>
                                     <td class="td_fieldnamemid"><div class="div_fieldname" >资质授权</div></td>
-                                    <td></td>
+
                                     <td class="td_fieldvalue"><div width="100%">
 
                                     </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%">
                                             <%
                                                 if(!"".equals(sid.getZzsq())){
@@ -818,7 +767,7 @@
                                                 }
                                             %>
                                             <div style="height: 32px;vertical-align:middle;">
-                                                <span id="uploadspan4" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                <span id="uploadspan4" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                 <span id="zzsqspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                           </span>
                                             </div>
@@ -841,15 +790,14 @@
                                             <input type=hidden name=accessory_num_zzsq value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="3"><div class="div_fieldname"></div></td>
-                                    <td class="td_fieldvalue" colspan="3"><div width="100%"></div></td>
+                                    <td colspan="5"></td>
 
                                 </tr>
                                 <tr class="tr_normal1">
                                     <td></td>
-                                    <td class="td_fieldnamemid" colspan="3"><div class="div_fieldname" >如补充信息可以添加表下</div></td>
-
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldnamemid" colspan="1"><div class="div_fieldname" >补充信息</div></td>
+                                    <td></td>
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%">
                                             <%
                                                 if(!"".equals(sid.getRbcxxkytjbx())){
@@ -876,7 +824,7 @@
                                                 }
                                             %>
                                                 <div style="height: 32px;vertical-align:middle;">
-                                                    <span id="uploadspan6" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                    <span id="uploadspan6" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                     <span id="rbcxxkytjbxspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                           </span>
                                                 </div>
@@ -899,18 +847,16 @@
                                             <input type=hidden name=accessory_num_rbcxxkytjbx value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="3"><div class="div_fieldname"></div></td>
-                                    <td class="td_fieldvalue" colspan="3"><div width="100%">
-                                    </div></td>
+                                    <td colspan="5"></td>
+
 
                                 </tr>
                                 <tr class="tr_normal1">
                                     <td></td>
                                     <td class="td_fieldnamemid"><div class="div_fieldname" >设备清单</div></td>
-                                    <td></td>
                                     <td class="td_fieldvalue"><div width="100%">
                                     </div></td>
-                                    <td class="td_fieldvalue" colspan="3">
+                                    <td class="td_fieldvalue" colspan="2">
                                         <div width="100%">
                                             <%
                                                 if(!"".equals(sid.getSbqd())){
@@ -937,7 +883,7 @@
                                                 }
                                             %>
                                                 <div style="height: 32px;vertical-align:middle;">
-                                                    <span id="uploadspan7" style="display:inline-block;line-height: 32px;">最大10M/个</span>
+                                                    <span id="uploadspan7" style="display:inline-block;line-height: 32px;">最大20M/个</span>
                                                     <span id="sbqdspan" style="display:inline-block;line-height: 32px;color:red !important;font-weight:normal;">
                                           </span>
                                                 </div>
@@ -960,8 +906,7 @@
                                             <input type=hidden name=accessory_num_sbqd value="1">
                                         </div>
                                     </td>
-                                    <td class="td_fieldnameright" colspan="3"><div class="div_fieldname"></div></td>
-                                    <td class="td_fieldvalue" colspan="3"><div width="100%"></div></td>
+                                    <td colspan="5"></td>
 
                                 </tr>
 
@@ -971,8 +916,10 @@
                             </table>
 
                         </div>
-
+                        </div>
                     </FORM>
+                </div>
+                   </div>
                 </div>
             </div>
         </div>
@@ -1645,15 +1592,23 @@
         jQuery("#sfysjkfnl").bind("change",function(){
             changemustfield("4");
         })
+
         jQuery("#sfycwxgfj").bind("change",function(){
             changemustfield("6");
         })
-        jQuery("#sfygsxgfj").bind("change",function(){
+        jQuery("#gsxz").bind("change",function(){
             changemustfield("7");
         })
-        jQuery("#bz").bind("change",function(){
-            changemustfield("5");
+        jQuery("#bz1").bind("change",function(){
+            changemustfield("8");
         })
+        jQuery("#bz2").bind("change",function(){
+            changemustfield("9");
+        })
+        jQuery("#bz3").bind("change",function(){
+            changemustfield("10");
+        })
+
         jQuery("#gysmc").bind("change",function(){
             checknameandcode("0");
             var gysmccf_val = jQuery("#gysmccf").val();
@@ -1749,8 +1704,11 @@
         var sfysyxgfj_val = jQuery("#sfysyddhjggz").val();//是否有商业相关附件
         var sfysjkfnl_val = jQuery("#sfysjkfnl").val();//是否涉及开发能力
         var sfycwxgfj_val = jQuery("#sfycwxgfj").val();//是否有财务相关附件
-        var sfygsxgfj_val = jQuery("#sfygsxgfj").val();//是否有公司相关附件
-        var bz_val = jQuery("#bz").val();//币种
+        var gsxz_val = jQuery("#gsxz").val();//公司性质
+        var bz1_val = jQuery("#bz1 option:selected").text();//币种1
+        var bz2_val = jQuery("#bz2 option:selected").text();//币种1
+        var bz3_val = jQuery("#bz3 option:selected").text();//币种1
+
         if(type == "0" || type=="1") {
             addremovefjcheck(sfyyyxgfj_val,"yyzzlysm","yyzzjggz","yyzzxzyc","yyzzfjyc",oUpload_yyzzjggz);
         }
@@ -1765,10 +1723,23 @@
             addremovefjcheck(sfycwxgfj_val,"cwrwqsmly","cwgjxx","cwxxxzyc","cwxxfjyc",oUpload_cwgjxx);
         }
         if(type == "0" || type=="7") {
-            addremovefjcheck(sfygsxgfj_val,"gsrwqsmly","gsjbxxjpyq","gsjbxxxzyc","gsjbxxfjyc",oUpload_gsjbxxjpyq);
+
+            if (gsxz_val == "36" || gsxz_val == "32") {
+                removecheck("gsjbxxjpyq", "1");
+
+
+            }else{
+                addcheck("gsjbxxjpyq", "1");
+                if(jQuery("#gsjbxxjpyq").val()==""){
+                    jQuery("#gsjbxxjpyqspan").html("必填");
+                }else{
+                    jQuery("#gsjbxxjpyqspan").html("");
+                }
+
+            }
         }
         if(type == "0" || type=="4"){
-            if(sfysjkfnl_val == "1"){
+            if(sfysjkfnl_val == "1" || sfysjkfnl_val == ""){
                 removecheck("sjryslr","0")
                 jQuery("#sjryslr").val("");
                 jQuery("#sjrysl_1").hide();
@@ -1781,31 +1752,62 @@
                 jQuery("#sjrysl_3").show();
             }
         }
+        if(type == "0" || type=="8"){
+            if(bz1_val=="RMB"){
+                removecheck("swiftcode1","0")
+                jQuery("#swiftcode1").val("");
+                jQuery("#swiftcode1").attr('disabled',true);
 
-        if(type == "0" || type=="5"){
-            if(bz_val == "0"){
-                removecheck("wb","0")
-                removecheck("yhzhwb","0")
-                removecheck("swiftcode","0")
-                jQuery("#wb").val("");
-                jQuery("#yhzhwb").val("");
-                jQuery("#swiftcode").val("");
-                addcheck("khh","0");
-                addcheck("yhzh","0");
-                jQuery("#rmbhyc").show();
-                jQuery("#wbhyc").hide();
-            }else if(bz_val == "1"){
-                removecheck("khh","0")
-                removecheck("yhzh","0")
-                jQuery("#khh").val("");
-                jQuery("#yhzh").val("");
-                addcheck("wb","0");
-                addcheck("yhzhwb","0");
-                addcheck("swiftcode","0");
-                jQuery("#rmbhyc").hide();
-                jQuery("#wbhyc").show();
+            }else if(bz1_val==""){
+                removecheck("swiftcode1","0")
+                jQuery("#swiftcode1").attr('disabled',false);
+            }else{
+                jQuery("#swiftcode1").attr('disabled',false);
+                addcheck("swiftcode1","0")
             }
         }
+        if(type == "0" || type=="9"){
+            if(bz2_val=="RMB"){
+                addcheck("khh2","0");
+                addcheck("yhzh2","0");
+                removecheck("swiftcode2","0")
+                jQuery("#swiftcode2").val("");
+                jQuery("#swiftcode2").attr('disabled',true);
+
+            }else if(bz2_val==""){
+                removecheck("khh2","0");
+                removecheck("yhzh2","0");
+                removecheck("swiftcode2","0")
+                jQuery("#swiftcode2").attr('disabled',false);
+            }else{
+                addcheck("khh2","0");
+                addcheck("yhzh2","0");
+                jQuery("#swiftcode2").attr('disabled',false);
+                addcheck("swiftcode2","0")
+            }
+        }
+        if(type == "0" || type=="10"){
+            if(bz3_val=="RMB"){
+                addcheck("khh3","0");
+                addcheck("yhzh3","0");
+                removecheck("swiftcode3","0")
+                jQuery("#swiftcode3").val("");
+                jQuery("#swiftcode3").attr('disabled',true);
+
+            }else if(bz3_val==""){
+                removecheck("khh3","0");
+                removecheck("yhzh3","0");
+                removecheck("swiftcode3","0")
+                jQuery("#swiftcode3").attr('disabled',false);
+            }else{
+                addcheck("khh3","0");
+                addcheck("yhzh3","0");
+                jQuery("#swiftcode3").attr('disabled',false);
+                addcheck("swiftcode3","0")
+            }
+        }
+
+
     }
     function addcheck(btid,flag){
         var btid_val = jQuery("#"+btid).val();
@@ -1851,6 +1853,7 @@
 
     var flag = "0"
     function save(type){
+        var wjge=",.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.jepg,.jif,.txt,.htm,.html,.ppt,.pptx,.pdf,.png,";
         jQuery("#submittype").val(type);
         var flag_yyzzjggz="1";
         var flag_yhkhxxjggz="1";
@@ -1870,12 +1873,35 @@
         }//report.submit();
         var chkFields = jQuery("#chkFields").val();
         if(type =="submit"){
+            var bz1_val = jQuery("#bz1").val();
+            var bz2_val = jQuery("#bz2").val();
+            var bz3_val = jQuery("#bz3").val();
+            if(bz1_val != "" && bz2_val != "" && bz1_val == bz2_val){
+                alert("币种选择有重复，请检查后再提交");
+                return;
+            }
+            if(bz1_val != "" && bz3_val != "" && bz1_val == bz3_val){
+                alert("币种选择有重复，请检查后再提交");
+                return;
+            }
+            if(bz2_val != "" && bz3_val != "" && bz2_val == bz3_val){
+                alert("币种选择有重复，请检查后再提交");
+                return;
+            }
             checknameandcode("0");
             checknameandcode("1");
             var gysmccf_val= jQuery("#gysmccf").val();
             var tyshxydmcf_val= jQuery("#tyshxydmcf").val();
-            if(gysmccf_val == "1" || tyshxydmcf_val=="1"){
-                alert("供应商名称或统一社会信用代码重复，请检查");
+            if(gysmccf_val == "1" && tyshxydmcf_val=="1"){
+                alert("供应商名称和统一社会信用代码重复，请检查");
+                return;
+            }
+            if(gysmccf_val == "1"){
+                alert("供应商名称重复，请检查");
+                return;
+            }
+            if(tyshxydmcf_val == "1"){
+                alert("统一社会信用代码重复，请检查");
                 return;
             }
             var zzs_val = jQuery("#zzs").val();//制造商
@@ -1887,12 +1913,34 @@
             }
             if(!check_form(report,chkFields)) return false;
         }
+        var flaggs = "0";
+        jQuery(".progressWrapper").each(function () {
+            if(typeof(jQuery(this).attr("style")) == "undefined"){
+                jQuery(this).find(".progressName").each(function () {
+                    var hz=jQuery(this).text();
+                    hz=","+hz.substring(hz.lastIndexOf("."))+",";
+                    if(wjge.indexOf(hz)<0){
+                        alert("所传附件中有非常用格式，请删除");
+                        flaggs = "1";
+                        return false;
+                    }
+                });
+                if(flaggs == "1"){
+                    return false;
+                }
+
+            }
+
+        });
+        if(flaggs == "1"){
+            return;
+        }
 
         var sfyyyxgfj_val = jQuery("#sfyyyzzjggz").val();//是否有营业相关附件
         var sfyyhxgfj_val = jQuery("#sfyyhkhxxjggz").val();//是否有银行相关附件
         var sfysyxgfj_val = jQuery("#sfysyddhjggz").val();//是否有商业相关附件
         var sfycwxgfj_val = jQuery("#sfycwxgfj").val();//是否有财务相关附件
-        var sfygsxgfj_val = jQuery("#sfygsxgfj").val();//是否有公司相关附件
+        var gsxz_val = jQuery("#gsxz").val();//公司性质
         if(type =="submit"){
             if(sfyyyxgfj_val == "1"){
                 jQuery("#yyzzjggz").val("");
@@ -1906,9 +1954,7 @@
             if(sfycwxgfj_val == "1"){
                 jQuery("#cwgjxx").val("");
             }
-            if(sfygsxgfj_val == "1"){
-                jQuery("#gsjbxxjpyq").val("");
-            }
+
         }
         var yyzzjggz_val = jQuery("#yyzzjggz").val();
         var yhkhxxjggz_val = jQuery("#yhkhxxjggz").val();
@@ -1928,7 +1974,7 @@
             && (!oUpload_rbcxxkytjbx || oUpload_rbcxxkytjbx.getStats().files_queued === 0)
             && (!oUpload_gsjbxxjpyq || oUpload_gsjbxxjpyq.getStats().files_queued === 0)){
             if(type =="submit") {
-                if ((yyzzjggz_val == "" && sfyyyxgfj_val == "0") || (yhkhxxjggz_val == "" && sfyyhxgfj_val == "0") || (syddhjggz_val == "" && sfysyxgfj_val == "0")|| (cwgjxx_val == "" && sfycwxgfj_val == "0")|| (gsjbxxjpyq_val == "" && sfygsxgfj_val == "0")) {
+                if ((yyzzjggz_val == "" && sfyyyxgfj_val == "0") || (yhkhxxjggz_val == "" && sfyyhxgfj_val == "0") || (syddhjggz_val == "" && sfysyxgfj_val == "0")|| (cwgjxx_val == "" && sfycwxgfj_val == "0")|| (gsjbxxjpyq_val == "" && gsxz_val !="36" && gsxz_val!="32")) {
                     alert("有附件信息没上传，请上传相关附件");
                     return;
                 }
@@ -2008,7 +2054,7 @@
             if(!oUpload_gsjbxxjpyq || oUpload_gsjbxxjpyq.getStats().files_queued === 0){
                 count = count+1;
                 flag_gsjbxxjpyq = "0";
-                if(type =="submit" && gsjbxxjpyq_val == ""&& sfygsxgfj_val == "0"){
+                if(type =="submit" && gsjbxxjpyq_val == ""&& gsxz_val !="36" && gsxz_val!="32"){
                     alert("有附件信息没上传，请上传相关附件");
                     return;
                 }

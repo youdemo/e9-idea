@@ -1,0 +1,211 @@
+{
+	"data":[{ 
+		"name":"公司", 
+		"icon":"/images/treeimages/global_wev8.gif", 
+		"id":"com_0", 
+		"pId":"0", 
+		"nodeid":"com_0", 
+		"target":"_self", 
+		"nocheck":true, 
+		"childs":[{ 
+			"name":"V1", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_24", 
+			"pId":"com_0", 
+			"nodeid":"com_24", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=24&level=1&nodeid=com_24", 
+			"ajaxParam":"type=com&id=24&level=1&nodeid=com_24", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"V2", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_221", 
+			"pId":"com_0", 
+			"nodeid":"com_221", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=221&level=1&nodeid=com_221", 
+			"ajaxParam":"type=com&id=221&level=1&nodeid=com_221", 
+			"isParent":true,
+			"nocheck":true
+		}, { 
+			"name":"V3", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_401",
+			"pId":"com_0", 
+			"nodeid":"com_401", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=401&level=1&nodeid=com_401", 
+			"ajaxParam":"type=com&id=401&level=1&nodeid=com_401", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"V计划项目部", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_1481", 
+			"pId":"com_0", 
+			"nodeid":"com_1481", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=1481&level=1&nodeid=com_1481", 
+			"ajaxParam":"type=com&id=1481&level=1&nodeid=com_1481", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"创新研究院", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_381", 
+			"pId":"com_0", 
+			"nodeid":"com_381", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=381&level=1&nodeid=com_381", 
+			"ajaxParam":"type=com&id=381&level=1&nodeid=com_381", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"维信诺股份", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_201", 
+			"pId":"com_0", 
+			"nodeid":"com_201", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=201&level=1&nodeid=com_201", 
+			"ajaxParam":"type=com&id=201&level=1&nodeid=com_201", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"M2", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_2481", 
+			"pId":"com_0", 
+			"nodeid":"com_2481", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=2481&level=1&nodeid=com_2481", 
+			"ajaxParam":"type=com&id=2481&level=1&nodeid=com_2481", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"M4项目指挥部", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_2482", 
+			"pId":"com_0", 
+			"nodeid":"com_2482", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=2482&level=1&nodeid=com_2482", 
+			"ajaxParam":"type=com&id=2482&level=1&nodeid=com_2482", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"模组平台", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_241", 
+			"pId":"com_0", 
+			"nodeid":"com_241", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=241&level=1&nodeid=com_241", 
+			"ajaxParam":"type=com&id=241&level=1&nodeid=com_241", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"维信诺集团", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_421", 
+			"pId":"com_0", 
+			"nodeid":"com_421", 
+			"nocheck":true
+		}, { 
+			"name":"枣庄睿诺光电信息有限公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_461", 
+			"pId":"com_0", 
+			"nodeid":"com_461", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=461&level=1&nodeid=com_461",
+			"ajaxParam":"type=com&id=461&level=1&nodeid=com_461", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"北京光电", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_41", 
+			"pId":"com_0", 
+			"nodeid":"com_41", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=41&level=1&nodeid=com_41", 
+			"ajaxParam":"type=com&id=41&level=1&nodeid=com_41", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"云谷（固安）科技北京分公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_301", 
+			"pId":"com_0", 
+			"nodeid":"com_301",
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=301&level=1&nodeid=com_301", 
+			"ajaxParam":"type=com&id=301&level=1&nodeid=com_301", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"九江维信诺科技有限公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_181", 
+			"pId":"com_0", 
+			"nodeid":"com_181",
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=181&level=1&nodeid=com_181", 
+			"ajaxParam":"type=com&id=181&level=1&nodeid=com_181", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"昆山工研院新型平板显示技术中心有限公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_43", 
+			"pId":"com_0", 
+			"nodeid":"com_43",
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=43&level=1&nodeid=com_43", 
+			"ajaxParam":"type=com&id=43&level=1&nodeid=com_43", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"北京维信诺科技有限公司",
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_28", 
+			"pId":"com_0", 
+			"nodeid":"com_28", 		
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=28&level=1&nodeid=com_28", 
+			"ajaxParam":"type=com&id=28&level=1&nodeid=com_28", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"昆山维信诺科技有限公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_1", 
+			"pId":"com_0", 
+			"nodeid":"com_1", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=1&level=1&nodeid=com_1",
+			"ajaxParam":"type=com&id=1&level=1&nodeid=com_1", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"枣庄维信诺电子科技有限公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_261", 
+			"pId":"com_0", 
+			"nodeid":"com_261",
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=261&level=1&nodeid=com_261", 
+			"ajaxParam":"type=com&id=261&level=1&nodeid=com_261", 
+			"isParent":true, 
+			"nocheck":true
+		}, { 
+			"name":"昆山梦显电子科技有限公司", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_981", 
+			"pId":"com_0", 
+			"nodeid":"com_981", 
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=981&level=1&nodeid=com_981", 
+			"ajaxParam":"type=com&id=981&level=1&nodeid=com_981", 
+			"isParent":true, 
+			"nocheck":true
+		}, {
+			"name":"集团管理", 
+			"icon":"/images/treeimages/Home_wev8.gif", 
+			"id":"com_23", 
+			"pId":"com_0",
+			"nodeid":"com_23",
+			"NodeXmlSrc":"/hrm/tree/DepartmentSingleXML.jsp?type=com&id=23&level=1&nodeid=com_23", 
+			"ajaxParam":"type=com&id=23&level=1&nodeid=com_23", 
+			"isParent":true, 
+			"nocheck":true
+		}]
+	}]
+}
+
+

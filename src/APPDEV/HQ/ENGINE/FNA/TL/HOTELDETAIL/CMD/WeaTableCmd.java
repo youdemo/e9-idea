@@ -4,7 +4,6 @@ import com.cloudstore.eccom.constant.WeaBoolAttr;
 import com.cloudstore.eccom.pc.table.WeaTable;
 import com.cloudstore.eccom.pc.table.WeaTableColumn;
 import com.cloudstore.eccom.result.WeaResultMsg;
-import com.ctrip.ecology.system.SettlementHotelOrderCron;
 import com.engine.common.biz.AbstractCommonCommand;
 import com.engine.common.entity.BizLogContext;
 import com.engine.core.interceptor.CommandContext;
@@ -56,7 +55,9 @@ public class WeaTableCmd extends AbstractCommonCommand<Map<String,Object>> {
                     "case when IsDomestic='true' then '国内' when IsDomestic='false' then '海外酒店' else '' end as HtlClass";
             table.setBackfields(fileds);
             String HOTELRELATEDJOURNEYNO =  Util.null2String(params.get("rqid"));
-            sqlwhere += " and DEFINETITLECONTENT='"+HOTELRELATEDJOURNEYNO+"' ";
+            String IsDomestic =  Util.null2String(params.get("IsDomestic"));
+            String lastmonth =  Util.null2String(params.get("lastmonth"));
+            sqlwhere += " and DEFINETITLECONTENT='"+HOTELRELATEDJOURNEYNO+"' and IsDomestic='"+IsDomestic+"' and paytype='Y' and substr(AccCheckBatchNo,instr(AccCheckBatchNo,'_',-1)+1,6) ='"+lastmonth+"'";
 
 
 

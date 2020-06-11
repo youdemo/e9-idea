@@ -87,8 +87,10 @@ var PCURR_dt6= WfForm.convertFieldNameToId("PCURR", "detail_6");//币别
 
 //明细11
 var RecDate_dt11= WfForm.convertFieldNameToId("RecDate", "detail_11");//请假调休日期
-
+var projectType = WfForm.convertFieldNameToId("IncPro");//项目类型
+var APLUS = WfForm.convertFieldNameToId("APLUS");//系统属性
 jQuery(document).ready(function(){
+    showhidesm680();
     jQuery("[name=copybutton3]").css('display','none');
     jQuery("[name=addbutton3]").css('display','none');
     jQuery("[name=delbutton3]").css('display','none');
@@ -329,7 +331,18 @@ jQuery(document).ready(function(){
     })
 
 })
+function showhidesm680(){
+    var projectType_val = WfForm.getFieldValue(projectType);
+    var APLUS_val = WfForm.getFieldValue(APLUS);
+    if(projectType_val == "1"){
+        if(APLUS_val == "1"){
 
+            jQuery("#prj666").hide();
+
+        }
+
+    }
+}
 //变化4个明细汇率
 function changealldthl(){
     var PayInDoll_val = WfForm.getFieldValue(PayInDoll);
@@ -714,11 +727,11 @@ function showhidecbz(){
 }
 function showhidesfcts(){
     var MoreThan90D_val =  WfForm.getFieldValue(MoreThan90D);
-     if(MoreThan90D_val == "0" ){
-         jQuery("#sfcts").hide();
-     }else{
-         jQuery("#sfcts").show();
-     }
+    if(MoreThan90D_val == "0" ){
+        jQuery("#sfcts").hide();
+    }else{
+        jQuery("#sfcts").show();
+    }
 
 }
 //校验各明细的发票号码  index开始的行下标

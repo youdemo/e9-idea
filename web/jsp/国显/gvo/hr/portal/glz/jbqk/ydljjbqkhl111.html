@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>月度累计加班情况汇总</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/highcharts.css" media="all">
+    <script type="text/javascript">
+        document.write("<link rel='stylesheet' type='text/css' href='css/index.css?random="+Math.random()+"'/>");
+    </script>
+  <style>
+    body{margin: 10px; font-size: 12px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    .layui-table td, .layui-table th {
+        position: relative;
+        padding: 9px 15px;
+        min-height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        font-family: "Microsoft YaHei";
+    }
+    .layui-table-tool {
+        position: relative;
+        z-index: 890;
+        width: 100%;
+        min-height: 35px;
+        line-height: 30px;
+        padding: 10px 15px;
+        border-width: 0 0 1px;
+    }
+
+    .layui-table-tool-self {
+        position: absolute;
+        right: 17px;
+        top: 2px;
+    }
+    .layui-table-cell {
+        height: 16px;
+        line-height: 16px;
+        padding: 0 3px;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .layui-input{
+        height:25px;
+    }
+    .layui-form-pane .layui-form-label {
+        height:25px;
+        padding: 4px 9px;
+        line-height:15px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 18px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 12px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .zh-btn+.zh-btn {
+        margin-left: 10px;
+    }
+    .zh-btn:hover {
+        opacity: .8;
+        filter: alpha(opacity=80);
+        color: #fff;
+        background-color: #005492;
+    }
+    .zh-btn {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 18px;
+        background-color: #bcc1c0;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        outline: 0;
+        -webkit-appearance: none;
+        -webkit-transition: all .3s;
+        box-sizing: border-box;
+    }
+    .choose_btn{
+        background-color: #005492;
+    }
+    .layui-form-item {
+        margin-bottom: 7px;
+        clear: both;
+        *zoom: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="HR-portal">
+    <div >
+        <div  >
+            <button class="zh-btn choose_btn">部门月度累计加班情况</button>
+            <button class="zh-btn" onclick="changewd('1')">个人年度累计加班情况</button>
+        </div>
+        <div style="margin-top: 2px">
+            <button class="zh-btn choose_btn" id="jjrybtn" onclick="changery('0')">间接人员</button>
+            <button class="zh-btn" id="zjrybtn" onclick="changery('1')">直接人员</button>
+        </div>
+        <div style="margin-top: 2px">
+            <button class="zh-btn choose_btn" >汇总情况</button>
+            <button class="zh-btn " onclick="changeqk('1')">明细情况</button>
+        </div>
+        <form class="layui-form layui-form-pane" action="" onkeydown="if(event.keyCode==13){return false}">
+            <input type="hidden" id="identitytype" value="0"></input>
+            <div class="layui-form-item" style="margin-top:2px;margin-buttom:2px">
+                <label class="layui-form-label">组织</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+
+                <div class="layui-input-inline">
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class = "HR-flow">
+        <div class = "flow-mode">
+            <div class = "mode-div">
+                <div class = "flow-mode-data">
+                    <ul class = "flow-mode-ul">
+                        <li>
+                            <div class = "flow-mode-label">标准工时人数</div>
+                            <div id="bzgsrs" class = "flow-mode-number"></div>
+                        </li>
+                        <li>
+                            <div class = "flow-mode-label">标准加班受限总时数</div>
+                            <div id="bzjbsxzss" class = "flow-mode-number"></div>
+                        </li>
+                        <li>
+                            <div class = "flow-mode-label">调整后加班受限总时数</div>
+                            <div id="tzhjbsxzss" class = "flow-mode-number"></div>
+                        </li>
+                        <li>
+                            <div class = "flow-mode-label">当月申请加班总时数</div>
+                            <div id="dysqjbzss" class = "flow-mode-number"></div>
+                        </li>
+                        <li>
+                            <div class = "flow-mode-label">已加班总时数占比</div>
+                            <div id="yjbzsszb" class = "flow-mode-number"></div>
+                        </li>
+                         <li>
+                            <div class = "flow-mode-label">人均时数</div>
+                            <div id="rjss" class = "flow-mode-number"></div>
+                       </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class = "structure">
+        <div class = "HR-div HR-br" style="margin-left: 1.5%">
+            <div class = "age-title">各累计加班时数段人数</div>
+            <div id="jbsdrs" class="chart_combo"></div>
+        </div>
+        <div class = "clear"></div>
+    </div>
+
+</div>
+    
+</body>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="js/highcharts.js?1" ></script>
+<script>
+    document.write("<script type='text/javascript' src='js/setBar.js?random="+Math.random()+"'></s"+"cript>");
+    //console.log($("body").height());
+</script>
+<script src="/js/layui/layui.all.js?1"></script>
+<script>
+    var JXData;
+    layui.use(['laypage', 'layer', 'table','element','form','laydate'], function(){
+      var layer = layui.layer //弹层
+
+          ,form = layui.form
+          ,element = layui.element;
+
+
+
+
+
+});
+
+
+
+    function changewd(type){
+        if(type=="0"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkhl.html";
+        }else if(type=="1"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ndljjbqkmx.html";
+        }
+    }
+
+    function changeqk(type){
+        if(type=="0"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkhl.html";
+        }else if(type=="1"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkmx.html";
+        }
+    }
+</script>
+</html>

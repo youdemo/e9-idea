@@ -19,9 +19,13 @@ begin
        v_zfje :=v_zfje+i_zf;
    end if;
     if i_jtcheck = '1' then
-        v_zfje :=v_zfje+i_jt;
+        if i_begintime > '12:00' or i_endtime<='12:00' then
+           v_result:=v_result+nvl(i_jt,0.0)/2;
+        else
+           v_result:=v_result+nvl(i_jt,0.0);
+        end if;
     end if;
-    if i_zfcheck = '1' or i_jtcheck = '1'  then
+    if i_zfcheck = '1' then
         if i_begintime > '12:00' or i_endtime<='12:00' then
             v_zfje := nvl(v_zfje,0.0)/2*nvl(i_cfzk,1);
         else

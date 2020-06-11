@@ -30,6 +30,7 @@
     String ERKLA = "";//国外差旅等级
     String BTRCon = "";//国内外
     String SENDCAR = "";//是否全程派车
+    String BtrPER = "";//出差人
     sql = "select * from "+tableName+" where requestid="+rqid;
     rs.execute(sql);
     if(rs.next()){
@@ -44,6 +45,7 @@
         ERKLA = Util.null2String(rs.getString("ERKLA"));
         BTRCon = Util.null2String(rs.getString("BTRCon"));
         SENDCAR = Util.null2String(rs.getString("SENDCAR"));
+        BtrPER = Util.null2String(rs.getString("BtrPER"));
 
     }
     String cldj = "";
@@ -211,6 +213,30 @@
             jo.put("cfzk","1");
         }
         jo.put("jtf",jtf);
+        int countper = 0;
+        sql_dt = "select  count(1) as count from uf_fna_PerCNosubsi where   per="+BtrPER+" and citys is not null";
+        rs_dt.execute(sql_dt);
+        if(rs_dt.next()){
+            countper = rs_dt.getInt("count");
+        }
+        if(countper>0) {
+            countper = 0;
+            sql_dt = "select count(1) as count from (SELECT REGEXP_SUBSTR(citys, '[^,]+', 1, LEVEL, 'i') item" +
+                    "            FROM (select citys from uf_fna_PerCNosubsi where  per="+BtrPER+") " +
+                    "          CONNECT BY rownum <= regexp_count(citys, ',') + 1) a where a.item=" + TavelDestCity;
+            rs_dt.execute(sql_dt);
+            if (rs_dt.next()) {
+                countper = rs_dt.getInt("count");
+            }
+            if (countper > 0) {
+                jo.put("zccheck", "0");
+                jo.put("wuccheck", "0");
+                jo.put("wanccheck", "0");
+                jo.put("zfcheck", "0");
+                jo.put("jtcheck", "0");
+            }
+        }
+
         ja.put(jo);
         count++;
 

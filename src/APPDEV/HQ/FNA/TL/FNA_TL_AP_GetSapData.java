@@ -4,7 +4,6 @@ package APPDEV.HQ.FNA.TL;
 
 import APPDEV.HQ.UTIL.BringMainAndDetailByMain;
 import APPDEV.HQ.UTIL.GetMachineUtil;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import weaver.general.BaseBean;
 
@@ -34,6 +33,7 @@ public class FNA_TL_AP_GetSapData {
             String EV_KTEXT = "";//成本中心描述
             String EV_ERGRU_TEXT= "";//国内差旅等级描述
             String EV_ERKLA_TEXT= "";//国外差旅等级描述
+            String EV_APLUS = "";//1A+,0非A+
             JSONObject json = new JSONObject(result);
             JSONObject data = json.getJSONObject("type");
             EV_ERGRU = data.getString("EV_ERGRU");
@@ -47,6 +47,7 @@ public class FNA_TL_AP_GetSapData {
             EV_KTEXT = data.getString("EV_KTEXT");
             EV_ERGRU_TEXT = data.getString("EV_ERGRU_TEXT");
             EV_ERKLA_TEXT = data.getString("EV_ERKLA_TEXT");
+            EV_APLUS = data.getString("EV_APLUS");
 
             jo.put("EV_ERGRU",EV_ERGRU);
             jo.put("EV_ERKLA",EV_ERKLA);
@@ -59,6 +60,7 @@ public class FNA_TL_AP_GetSapData {
             jo.put("EV_KTEXT",EV_KTEXT);
             jo.put("EV_ERGRU_TEXT",EV_ERGRU_TEXT);
             jo.put("EV_ERKLA_TEXT",EV_ERKLA_TEXT);
+            jo.put("EV_APLUS",EV_APLUS);
         } catch (Exception e) {
             log.writeLog(e);
             log.writeLog("解析json格式异常：" + result);

@@ -88,7 +88,7 @@ public class FlightOrderDataAction {
         try {
             User user = HrmUserVarify.getUser(request, response);
             InputStream input = getService(user).WeaReportOutExcel(request,response);
-            String filename="携程机票对账表";
+            String filename="携程国内机票对账表";
             filename = java.net.URLEncoder.encode(filename, "UTF-8");
             filename = StringUtils.replace(filename, "/", "");
             filename = StringUtils.replace(filename, "%2F", "");
@@ -103,5 +103,45 @@ public class FlightOrderDataAction {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 调用sap付款接口
+     * @param request
+     * @param response
+     * @return
+     */
+    @GET
+    @Path("/sendtosap")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String sendToSap(@Context HttpServletRequest request, @Context HttpServletResponse response){
+        Map<String, Object> apidatas = new HashMap<String, Object>();
+        String result = "";
+        //获取当前用户
+        User user = HrmUserVarify.getUser(request, response);
+        result = getService(user).sendToSap(ParamUtil.request2Map(request));
+
+
+        return result;
+    }
+
+    /**
+     * 调用sap付款接口
+     * @param request
+     * @param response
+     * @return
+     */
+    @GET
+    @Path("/createtplc")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String createTpLc(@Context HttpServletRequest request, @Context HttpServletResponse response){
+        Map<String, Object> apidatas = new HashMap<String, Object>();
+        String result = "";
+        //获取当前用户
+        User user = HrmUserVarify.getUser(request, response);
+        result = getService(user).createTpLc(ParamUtil.request2Map(request));
+
+
+        return result;
     }
 }

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三期人员信息</title>
+    <link rel="stylesheet" href="../../../../js/layui/css/layui.css" media="all">
+    <style>
+        body{margin: 10px; font-size: 12px;}
+        .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+        .layui-table td, .layui-table th {
+            position: relative;
+            padding: 9px 15px;
+            min-height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            font-family: "Microsoft YaHei";
+        }
+        .layui-table-tool {
+            position: relative;
+            z-index: 890;
+            width: 100%;
+            min-height: 35px;
+            line-height: 30px;
+            padding: 10px 15px;
+            border-width: 0 0 1px;
+        }
+        .layui-table-tool-self {
+            position: absolute;
+            right: 17px;
+            top: 2px;
+        }
+        .layui-table-cell {
+            height: 19px;
+            line-height: 19px;
+            padding: 0 3px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .layui-input{
+            height:30px;
+            line-height: 30px;
+        }
+        .layui-form-pane .layui-form-label {
+            height:30px;
+            padding: 4px 9px;
+        }
+        .layui-btn {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 12px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .layui-form-checkbox span {
+            padding: 0 10px;
+            height: 100%;
+            font-size: 9px;
+            border-radius: 2px 0 0 2px;
+            background-color: #d2d2d2;
+            color: #fff;
+            overflow: hidden;
+        }
+        .layui-form-pane .layui-form-checkbox {
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%;display: block;margin: auto">
+    <div>
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">组织</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="orgcode" name="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:120px">
+                        <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                    </div>
+                    <label class="layui-form-label">姓名：</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input id="realname" type="text" name="realname"  placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="width: 100%">
+        <table class="layui-hide" id="demo" lay-filter="test" style="text-align: center;"></table>
+    </div>
+</div>
+</body>
+<script src="../js/jquery.js"></script>
+<script src="/js/layui/layui.all.js"></script>
+<script>
+    var sqryData;
+    layui.use(['form', 'layer', 'table'], function(){
+        var table = layui.table //表格
+        var form = layui.form
+        var org=$("#orgcode").val();
+        var name=$("#realname").val();
+        name=encodeURI(encodeURI(name));
+        org=encodeURI(encodeURI(org));
+        var sfbhxjzz=$("#sfbhxjzz").is(":checked");
+        //执行一个 table 实例
+        var tableSQRY=table.render({
+            elem: '#demo'
+            ,height: 420
+            ,method: 'post'
+            ,url: '/api/gvo/hr/portal/glz/sqry/getSQRYData?orgcode='+org+'&realname='+name+'&sfbhxjzz='+sfbhxjzz//数据接口
+            ,id: 'sqryreload'
+            ,title:'上岗证信息'
+            // ,data:[{
+            //     'workcode':'1',
+            //     'name':'zq',
+            //     'companyname':'xx',
+            //     'centername':'xx',
+            //     'deptname':'xx',
+            //     'groupname':'xx',
+            //     'jobtitlename':'xx',
+            //     'sequence':'2020',
+            //     'joblevel':'4-20',
+            //     'level':'5',
+            //     'rjtrq':'xx',
+            //     'halfyear':"xx"
+            // }]
+            ,page: true //开启分页
+            ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            ,defaultToolbar:['filter',{
+                title:'导出',
+                layEvent:'exportSQRYData',
+                icon:'layui-icon-export'
+            }]
+            ,cols: [[ //表头
+                {field:'workcode', title: '工号',hide:true,align: 'center', width: 66},
+                {field:'name',  title: '姓名',align: 'center', width: 55},
+                {field:'companyname',  title: '公司',align: 'center', minWidth: 71},
+                {field:'centername', title: '中心',align: 'center', minWidth: 82},
+                {field:'deptname',  title:'部',align: 'center', minWidth: 82},
+                {field:'groupname',  title: '组',align: 'center', minWidth: 72},
+                {field:'jobtitlename',  title: '岗位名称',align: 'center', minWidth: 148},
+                {field:'identitytype',title:'身份类别',align: 'center', width: 77},
+                {field:'yc', title: '预产期',align: 'center', width: 96},
+                {field:'yr',  title:'婴儿出生日期',align: 'center', Width: 96},
+                {field:'begindate',  title: '产假开始日',align: 'center', width: 96},
+                {field:'endate',  title: '产假结束日',align: 'center', width: 96},
+                {field:'br_end',  title: '哺乳期结束日',align: 'center', width: 96},
+                {field:'db', title: '多胞胎数',align: 'center', width: 96},
+            ]],
+        });
+
+        $("#search").on('click',function (){
+            org=$("#orgcode").val();
+            name=$("#realname").val();
+            sfbhxjzz=$("#sfbhxjzz").is(":checked");
+            table.reload('sqryreload',{
+                url:"/api/gvo/hr/portal/glz/sqry/getSQRYData?orgcode="+org+"&realname="+name+'&sfbhxjzz='+sfbhxjzz
+                ,method: 'post'
+                ,page:{
+                    curr:1
+                }
+            });
+        });
+
+        table.on('toolbar(test)',function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            if(obj.event=='exportSQRYData'){
+                org=$("#orgcode").val();
+                name=$("#realname").val();
+                var sfbhxjzz=$("#sfbhxjzz").is(":checked");
+                var url="/api/gvo/hr/portal/glz/sqry/OutExcel?orgcode="+org+"&realname="+name+'&sfbhxjzz='+sfbhxjzz;
+                url=encodeURI(encodeURI(url));
+                window.location.href=url;
+            }
+        });
+
+    });
+</script>
+</html>

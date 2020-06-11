@@ -22,9 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 
@@ -96,11 +93,11 @@ public class TravelQueryServcieImpl extends Service implements TravelQueryDataSe
             cell.setCellStyle(sheetStyle);
 
             cell=row0.createCell(4);
-            cell.setCellValue("开始日期");
+            cell.setCellValue("开始时间");
             cell.setCellStyle(sheetStyle);
 
             cell=row0.createCell(5);
-            cell.setCellValue("结束日期");
+            cell.setCellValue("结束时间");
             cell.setCellStyle(sheetStyle);
 
             cell=row0.createCell(6);
@@ -151,14 +148,14 @@ public class TravelQueryServcieImpl extends Service implements TravelQueryDataSe
                     }
                 }
             }
-            sql = "select requestid,sqdh,BTRWorkCode,(select lastname from hrmresource where id=a.BtrPER) as BtrPER,(select DEPARTMENTNAME from HRMDEPARTMENT where id=a.BtrDEP) as BtrDEP,BTRBEGDA,BTRENDDA,TavelDestCityALL,sqspzt,bxspzt,poststatus,bxdh,(select description from uf_wfstatus where code=a.WFStatus) as WFStatus ";
-            String sqlfrom = " from (select b.requestid,b.rqid as sqdh,b.BTRWorkCode,b.BtrPER,b.BtrDEP,b.BTRBEGDA,b.BTRENDDA,b.TavelDestCityALL,case when a.CURRENTNODETYPE=3 then '已审核' else '已提交' end sqspzt," +
+            sql = "select requestid,sqdh,BTRWorkCode,(select lastname from hrmresource where id=a.BtrPER) as BtrPER,(select DEPARTMENTNAME from HRMDEPARTMENT where id=a.BtrDEP) as BtrDEP,BTRBEGDA,BTRENDDA,BTRBEGDA||' '||BTRBEGTIME as kssj,BTRENDDA||' '||BTRENDTIME as jssj,TavelDestCityALL,sqspzt,bxspzt,poststatus,bxdh,(select description from uf_wfstatus where code=a.WFStatus) as WFStatus ";
+            String sqlfrom = " from (select b.requestid,b.rqid as sqdh,b.BTRWorkCode,b.BtrPER,b.BtrDEP,b.BTRBEGDA,b.BTRENDDA,b.BTRBEGTIME,b.BTRENDTIME,b.TavelDestCityALL,case when a.CURRENTNODETYPE=3 then '已审核' else '已提交' end sqspzt," +
                     " case (select CURRENTNODETYPE from WORKFLOW_REQUESTBASE where REQUESTID=c.rqid) when '0' then '未提交' when '1' then '已提交' when '2' then '已提交' when '3' then '已审核' else '' end as bxspzt,c.poststatus,c.rqid as bxdh,b.WFStatus" +
                     " from WORKFLOW_REQUESTBASE a join "+tablesq+" b on a.REQUESTID=b.REQUESTID and a.CURRENTNODETYPE>0 left join "+tablebx+" c on b.REQUESTID=c.TRAAPPLI where 1=1 ";
 
-            String workcode =  Util.null2String(params.get("workcode"));
             String cxry =  Util.null2String(params.get("cxry"));
-            if("".equals(workcode)&&"".equals(cxry)){
+            String iscsh =  Util.null2String(params.get("iscsh"));
+            if("1".equals(iscsh)){
                 sqlfrom +=" and (b.BtrPER ='" + userid + "' or b.HanPER='" + userid + "') ";
             }else {
                 if (!"1".equals(userid) && !"1".equals(canSeeAll)) {
@@ -170,9 +167,7 @@ public class TravelQueryServcieImpl extends Service implements TravelQueryDataSe
                 }
             }
 
-            if (StringUtils.isNotBlank(workcode)) {
-                sqlfrom += " and b.BTRWorkCode = '"+workcode+"'";
-            }
+
             if (StringUtils.isNotBlank(cxry)) {
                 sqlfrom += " and b.BtrPER in("+cxry+") ";
             }
@@ -186,7 +181,16 @@ public class TravelQueryServcieImpl extends Service implements TravelQueryDataSe
                 sqlfrom += " and b.BTRBEGDA >='"+fromdate+"'";
             }
             if (StringUtils.isNotBlank(lenddate) && !"null".equals(lenddate)) {
-                sqlfrom += " and b.BTRENDDA <='"+lenddate+"'";
+                sqlfrom += " and b.BTRBEGDA <='"+lenddate+"'";
+            }
+
+            String fromdate1 =  Util.null2String(params.get("fromdate1"));
+            String lenddate1 =  Util.null2String(params.get("lenddate1"));
+            if (StringUtils.isNotBlank(fromdate1) && !"null".equals(fromdate1) ) {
+                sqlfrom += " and b.BTRENDDA >='"+fromdate1+"'";
+            }
+            if (StringUtils.isNotBlank(lenddate1) && !"null".equals(lenddate1)) {
+                sqlfrom += " and b.BTRENDDA <='"+lenddate1+"'";
             }
             sqlfrom +=") a";
             sql = sql+sqlfrom+" where 1=1 ";
@@ -212,11 +216,11 @@ public class TravelQueryServcieImpl extends Service implements TravelQueryDataSe
                 cell.setCellStyle(sheetStyle2);
 
                 cell=rowdt.createCell(4);
-                cell.setCellValue(Util.null2String(rs.getString("BTRBEGDA")));
+                cell.setCellValue(Util.null2String(rs.getString("kssj")));
                 cell.setCellStyle(sheetStyle2);
 
                 cell=rowdt.createCell(5);
-                cell.setCellValue(Util.null2String(rs.getString("BTRENDDA")));
+                cell.setCellValue(Util.null2String(rs.getString("jssj")));
                 cell.setCellStyle(sheetStyle2);
 
                 cell=rowdt.createCell(6);

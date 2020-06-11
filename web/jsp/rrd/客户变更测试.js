@@ -48,6 +48,19 @@ var sqxded= WfForm.convertFieldNameToId("sqxded");//申请信贷额度
 var gxxdkhh1= WfForm.convertFieldNameToId("gxxdkhh1");//共享信贷客户号
 
 var pdsfxg= WfForm.convertFieldNameToId("pdsfxg");//判断是否修改
+var khdm = WfForm.convertFieldNameToId("khdm");//客户代码
+var khmc= WfForm.convertFieldNameToId("khmc");//客户名称
+var szgj= WfForm.convertFieldNameToId("szgj");//客户国家
+var szsf= WfForm.convertFieldNameToId("szsf");//省份
+var khdz= WfForm.convertFieldNameToId("khdz");//客户地址
+var fplx= WfForm.convertFieldNameToId("fplx");//发票类型
+var khyhmc= WfForm.convertFieldNameToId("khyhmc");//开户银行名称
+var khyhzh= WfForm.convertFieldNameToId("khyhzh");//开户银行账号
+var fptt= WfForm.convertFieldNameToId("fptt");//发票抬头
+var fpjsdz= WfForm.convertFieldNameToId("fpjsdz");//发票寄送地址
+var kpdh= WfForm.convertFieldNameToId("kpdh");//开票电话
+var kpdz= WfForm.convertFieldNameToId("kpdz");//开票地址
+
 
 function changeattrfj(){
     var showvalue = WfForm.getBrowserShowName(khlx);
@@ -77,9 +90,48 @@ function changeattrfj(){
 
 }
 
+function checkchange(){
+    var khdm_val = WfForm.getFieldValue(khdm);//客户代码
+    var khmc_val= WfForm.getFieldValue(khmc);//客户名称
+    var szgj_val= WfForm.getFieldValue(szgj);//客户国家
+    var szsf_val= WfForm.getFieldValue(szsf);//省份
+    var khdz_val= WfForm.getFieldValue(khdz);//客户地址
+    var fplx_val= WfForm.getFieldValue(fplx);//发票类型
+    var khyhmc_val= WfForm.getFieldValue(khyhmc);//开户银行名称
+    var khyhzh_val= WfForm.getFieldValue(khyhzh);//开户银行账号
+    var fptt_val= WfForm.getFieldValue(fptt);//发票抬头
+    var fpjsdz_val= WfForm.getFieldValue(fpjsdz);;//发票寄送地址
+    var kpdh_val= WfForm.getFieldValue(kpdh);;//开票电话
+    var kpdz_val= WfForm.getFieldValue(kpdz);;//开票地址
+    var checkresult = "";
+    jQuery.ajax({
+        type: "POST",
+        url: "/rrd/custom/checkchange.jsp",
+        data: {"khdm":khdm_val,"khmc":khmc_val,"szgj":szgj_val,"szsf":szsf_val,"khdz":khdz_val,"fplx":fplx_val,"khyhmc":khyhmc_val,"khyhzh":khyhzh_val,"fptt":fptt_val,"fpjsdz":fpjsdz_val,"kpdh":kpdh_val,"kpdz":kpdz_val},
+        dataType: "text",
+        async:false,//同步 true异步
+        success: function(data){
+            data=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+            checkresult = data;
+
+        }
+
+    });
+    return checkresult;
+}
+
 
 jQuery(document).ready(function() {
     changeattrfj();
+
+    var changefieldid = khmc+","+szgj+","+szsf+","+khdz+","+fplx+","+khyhmc+","+khyhzh+","+fptt+","+fpjsdz+","+kpdh+","+kpdz;
+    WfForm.bindFieldChangeEvent(changefieldid, function(obj,id,value){
+        var pdsfxg_val = "";
+        pdsfxg_val =checkchange();
+        WfForm.changeFieldValue(pdsfxg, {value:pdsfxg_val});
+
+    });
+
     WfForm.bindFieldChangeEvent(pdsfxg, function(obj,id,value){
         changeattrfj();
 

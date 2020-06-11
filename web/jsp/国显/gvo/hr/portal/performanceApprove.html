@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>绩效审批清单</title>
+		<link rel="stylesheet" href="../../js/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="css/layui.css" media="all">
+		<link rel="stylesheet" href="css/deptBox.css" media="all">
+		<link rel="stylesheet" href="css/performanceDetail.css" media="all">
+		<link rel="stylesheet" href="css/performanceApprove.css" media="all">
+	</head>
+	<body class="">
+		<div class="container performance-approve">
+<!-- 			<div class="detail-title">
+				<h1>绩效审批清单</h1>
+				<div class="logo-div"><img src="img/logo-new.png" /></div>
+			</div> -->
+			<div>
+				<div class="performance-approve-top">
+					<div class="perf-approve-top-title">
+						<i class="layui-icon layui-icon-form"></i> 
+						<div>审批清单</div>
+					</div>
+				</div>
+				<div class="layui-tab layui-tab-brief">
+					<div class="layui-tab-title">
+						<ul class="tab-ul">
+							<li class="layui-this">待审批</li>
+							<li>已审批</li>
+						</ul>
+						<div class="layui-inline ysprl-inline dn">
+							<!-- <input type="text" class="layui-input " id="ysprl"> -->
+							<div>
+								<span class="dib search-span-btn search-btn" id="search-btn">高级搜索</span><div class="dib w20 search-input-div">
+									<i class="w5 i-search layui-icon layui-icon-search"></i>
+									<span class="dib w90 search-input"><input id="search-input" class="layui-input" type="text" placeholder="" /></span>
+								</div>
+							</div>
+						</div>	
+						<div class="gjsearch layui-container dn">
+							<button class="advanced-gjsearch">高级搜索</button>
+							<div class="gjsearch-container">
+								<div class="gjsearch-container-title">常用查询</div>
+								<div class="layui-row gjsearch-container-content">
+									<div class="layui-col-sm6">
+										<label class="layui-form-label layui-col-sm4">金额基数</label>
+										<div class="layui-input-block layui-col-sm8">
+											<input type="text" class="layui-input " id="ysprl">
+										</div>
+									</div>
+									<div class="layui-col-sm6">
+										<label class="layui-form-label layui-col-sm4">部门</label>
+										<div class="layui-input-block layui-col-sm8">
+											<input type="text" class="layui-input " id="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+							<div style="width: 95%;margin: 0 auto;">
+								<table id="dspTable" class="" lay-filter="dsp"></table>
+							</div>
+						</div>
+						<div class="layui-tab-item">
+							<div style="width: 95%;margin: 0 auto;">
+								
+								<table id="yspTable" class="layui-hide"  lay-filter="ysp"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="dialogMask" style="display:none;position: absolute; top: 0; left: 0; background-color: rgb(51, 51, 51); opacity: 0.4; width: 100%; height: 100%;"></div>
+		<div id="deptBox" style="display:none;">
+			<div class="dept-box-header">
+				<span>请选择部门</span>
+				<i class="layui-icon layui-icon-close" onclick="closeDeptBox();"></i>
+			</div>
+			<div class="dept-box-main">
+				<div class="dept-box-main-top">
+					<div class="dept-box-div-img"><img src="img/mnav2_wev8.png"/></div>
+					<div class="dept-box-div-text">部门</div>
+				</div>
+				<div class="dept-box-main-center">
+					<div id="deptTree"></div>
+				</div>
+			</div>
+		</div>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="edit">处理</a>
+		</script>
+		<script  type="text/javascript" src="js/jquery.js"></script>
+		<script  type="text/javascript" src="../../js/layui/layui.all.js"></script>
+		<script  type="text/javascript" src="../../js/layui/lay/modules/tree.js"></script>
+		<!-- <script  type="text/javascript" src="js/deptBox.js"></script> -->
+		<script>
+			layui.use(['form','tree','element','table','laydate'], function(){
+				var form = layui.form;
+				var tree = layui.tree;
+				var element = layui.element;
+				var table = layui.table;
+				var laydate = layui.laydate;
+				
+				var dspTable = table.render({
+					elem: '#dspTable'
+					,url: '/api/gvo/hr/portal/doGetPendingList'//数据接口
+					,where:{"emplid" : "32256"}
+					,title: '待审核清单'
+					,page: {
+						limit: 5
+						,limits: [5,10,20,50]
+						,groups:1
+					}//开启分页			
+					,method:'post'  //提交方式
+					,text: {none: '暂无相关数据' }//默认：无数据。
+					,cols: [[ //一级表头
+							{type:'numbers', title: '序号', width:'5%'}
+							,{field: 'year', title: '考核年份', sort: true,width:'9%',align:'center'}
+							,{field: 'month', title: '考核月份', sort: true, width:'9%',align:'center'} 
+							,{field: 'center_name', title: '归属中心', sort: true, width:'10%',align:'center'}
+							,{field: 'center_code', title: '归属中心Id', align:'center',hide:true}
+							,{field: 'department_name', title: '考核部门', sort: true, width:'10%',align:'center'}
+							,{field: 'department_code', title: '考核部门Id',align:'center',hide:true}	
+							,{field: 'node_name', title: '当前审批节点',width:'12%',align:'center'}
+							,{field: 'approver_name', title: '当前审批人', width:'10%',align:'center'}
+							,{field: 'receive_date', title: '流程到达时间', width:'14%',align:'center'}
+							,{field: 'create_date', title: '流程创建时间', width:'14%',align:'center'} 
+							,{field: 'requestid', title: '流程ID', align:'center',hide:true}
+							,{field: 'route_type', title: '类型', align:'center',hide:true}
+							,{ title:'操作', toolbar: '#barDemo', width:'65',align:'center'}
+						]]
+				});  
+				
+				var yspTable = table.render({
+					elem: '#yspTable'
+					// ,url: '/api/gvo/hr/portal/doGetDoneList'//数据接口
+					// ,where:{}
+					,title: '已审核清单'
+					// ,page: {
+					// 	limit: 5
+					// 	,limits: [5,10,20,50]
+					// 	,groups:1
+					// }//开启分页			
+					,method:'post'  //提交方式
+					,text: {none: '暂无相关数据' }//默认：无数据。
+					,cols: [[ //一级表头
+							{type:'numbers', title: '序号', width:'5%'}
+							,{field: 'year', title: '考核年份', sort: true, width:'9%',align:'center'}
+							,{field: 'month', title: '考核月份', sort: true, width:'9%',align:'center'} 
+							,{field: 'center_name', title: '归属中心', sort: true, width:'10%',align:'center'}
+							,{field: 'center_code', title: '归属中心Id', align:'center',hide:true}
+							,{field: 'department_name', title: '考核部门', sort: true, width:'10%',align:'center'}
+							,{field: 'department_code', title: '考核部门Id',align:'center',hide:true}	
+							,{field: 'node_name', title: '当前审批节点',width:'12%',align:'center'}
+							,{field: 'approver_name', title: '当前审批人', width:'10%',align:'center'}
+							,{field: 'receive_date', title: '流程到达时间', width:'14%',align:'center'}
+							,{field: 'create_date', title: '流程创建时间', width:'14%',align:'center'} 
+							,{field: 'requestid', title: '流程ID', align:'center',hide:true}
+							,{field: 'route_type', title: '类型', align:'center',hide:true}
+						]]
+				});  
+				
+				table.on('row(ysp)', function(obj){
+				  console.log(obj.tr) //得到当前行元素对象
+				  console.log(obj.data) //得到当前行数据
+				  //obj.del(); //删除当前行
+				  //obj.update(fields) //修改当前行数据
+				  alert("1")
+				});
+				
+				table.on('tool(dsp)', function(obj){
+				    var data = obj.data;
+				    if(obj.event === 'edit'){
+				     // window.location.href = "/gvo/hr/portal/performanceDept.html?requestid="+ data.requestid;
+					  window.open("/gvo/hr/portal/performanceDept.html?requestid="+ data.requestid,'_blank');
+				    }
+				  });
+				
+				
+				element.on('tab', function(data){
+					var thisTableId = $(data.elem).find(".layui-show").find("table").attr("id");
+					var apiUrl = "";
+					if(thisTableId == "yspTable"){
+						apiUrl = '/api/gvo/hr/portal/doGetDoneList';
+						$(".ysprl-inline").css("display","inline");
+					} else {
+						apiUrl = '/api/gvo/hr/portal/doGetPendingList';
+						$(".ysprl-inline").hide();
+					}
+					table.reload(thisTableId,{
+						url: apiUrl
+						,where:{}
+						,done:function(res){
+						}
+						,page: {
+							curr: 1
+						}
+					});		
+				});
+				
+				//执行一个laydate实例
+				var myDate = new Date();
+				var year=myDate.getFullYear();
+				var month=myDate.getMonth()+1;
+				var nowMonth = year + "-" + month;
+				laydate.render({
+					elem: '#ysprl' ,//指定元素
+					type: 'month',
+					isInitValue: true,
+					value: nowMonth, 
+					format:"yyyy-M",
+					ready: function(date){ // 控件在打开时触发，回调返回一个参数：初始的日期时间对象
+						initYear = date.year;
+					},
+					change: function(value, date, endDate){ // 年月日时间被切换时都会触发。回调返回三个参数，分别代表：生成的值、日期时间对象、结束的日期时间对象
+						var selectYear = date.year;
+						var differ = selectYear-initYear;
+						if (differ == 0) {
+							if($(".layui-laydate").length){
+								$("#ysprl").val(value);
+								yspTable.reload({
+									url: '/api/gvo/hr/portal/doGetDoneList'
+									,where:{}
+									,done:function(res){
+									}
+									,page: {
+										curr: 1
+									}
+								});		
+								$(".layui-laydate").remove();
+							}
+						}
+						initYear = selectYear;
+					}
+			    });
+			
+				$.ajax({
+					type: "post",
+					url: "dept.json",
+					data: {},
+					dataType: "json",
+					success: function(dataList){
+						var treeData = formatData(dataList.data);
+						var deptTree = tree.render({
+							elem: '#deptTree'  //绑定元素
+							,showCheckbox: false //是否显示复选框
+							,showLine: true //是否开启连接线。默认 true，若设为 false，则节点左侧出现三角图标。
+							,accordion: false //是否开启手风琴模式，默认 false
+							,onlyIconControl: true //是否仅允许节点左侧图标控制展开收缩。默认 false
+							,isJump: false //是否允许点击节点时弹出新窗口跳转。默认 false
+							,id:"deptTreeId"
+							,data: treeData	
+							,text: {
+								defaultNodeName: '无数据',
+								none: '加载数据失败！'
+							}
+							,spread: function (obj) {
+								console.log(obj);
+								if(obj.state=='open'){
+									getTreeJson(obj)
+								}
+							}
+						})
+					}
+				})
+					
+				function getTreeJson(obj){
+					layer.load();
+					var childrenNodeData;
+					$.ajax({
+						type: "post",
+						url: "dept2.json",
+						data: {},
+						dataType: "json",
+						success: function(dataList){
+							var fmtData = formatData(dataList.data)
+							tree.lazytree('deptTreeId', obj.elem, fmtData);
+							layer.closeAll('loading');
+						},
+					})
+				}
+				
+				function formatData(deptData){
+					var formatArry = [];	
+					for(let i = 0;i < deptData.length;i++){
+						var data = {
+							"title": ""
+							,"id": ""
+							,"field": ""
+							,"spread": true
+							,"lazy": true
+							,"children": []
+						}
+						//判断是否含有子节点
+						if(deptData[i].hasOwnProperty("childs")){			
+							for(let j = 0;j < deptData[i].childs.length;j++){
+								let childData = {};
+								childData.title = deptData[i].childs[j].name;
+								childData.id = deptData[i].childs[j].id;
+								childData.field = deptData[i].childs[j].nodeid
+								if(deptData[i].childs[j].isParent){
+									childData.lazy = deptData[i].childs[j].isParent
+								}
+								data.children.push(childData);
+							}	
+						}
+						data.title = deptData[i].name;
+						data.id = deptData[i].id;
+						data.field = deptData[i].nodeid
+						if(deptData[i].isParent){
+							data.lazy = deptData[i].isParent
+						}
+						formatArry.push(data);
+					}
+					return formatArry;
+				}
+			})
+			function closeDeptBox(){
+				$("#dialogMask").hide();
+				$("#deptBox").hide();
+			}
+			$(function(){
+				$("#search-btn").on("click",function(){
+					$(".gjsearch").removeClass("dn");
+				})
+				$(".advanced-gjsearch").on("click",function(){
+					$(".gjsearch").addClass("dn");
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -158,6 +158,19 @@ public class SupplierInfoServiceImpl implements SupplierInfoService{
             sid.setCwrwqsmly(Util.null2String(rs.getString("cwrwqsmly")));//财务如无请说明理由
             sid.setSfygsxgfj(Util.null2String(rs.getString("sfygsxgfj")));//是否有公司相关附件
             sid.setGsrwqsmly(Util.null2String(rs.getString("gsrwqsmly")));//公司如无请说明理由
+
+             sid.setBz1(Util.null2String(rs.getString("bz1")));//币种1
+             sid.setBz2(Util.null2String(rs.getString("bz2")));//币种1
+             sid.setBz3(Util.null2String(rs.getString("bz3")));//币种1
+             sid.setKhh1(Util.null2String(rs.getString("khh1")));//开户行1
+             sid.setKhh2(Util.null2String(rs.getString("khh2")));//开户行2
+             sid.setKhh3(Util.null2String(rs.getString("khh3")));//开户行3
+             sid.setYhzh1(Util.null2String(rs.getString("yhzh1")));//银行账号1
+             sid.setYhzh2(Util.null2String(rs.getString("yhzh2")));//银行账号2
+             sid.setYhzh3(Util.null2String(rs.getString("yhzh3")));//银行账号3
+             sid.setSwiftcode1(Util.null2String(rs.getString("swiftcode1")));//swiftcode1
+             sid.setSwiftcode2(Util.null2String(rs.getString("swiftcode2")));//swiftcode2
+             sid.setSwiftcode3(Util.null2String(rs.getString("swiftcode3")));//swiftcode3
         }
         return sid;
     }
@@ -257,9 +270,15 @@ public class SupplierInfoServiceImpl implements SupplierInfoService{
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
             String nowDate = sdf.format(new Date());
             String nowTime = sdf1.format(new Date());
+            String txsj = sdf2.format(new Date());
             String modeid = tu.getModeId("uf_gysxxsj");
+            String sbhcpnlms = map.get("sbhcpnlms").replaceAll("\\r\\n", "<br/>").replaceAll("\\n", "<br/>").replaceAll("\\s", " ").replaceAll("<br/>","\\\n");
+            String ywfwgjyyzz =  map.get("ywfwgjyyzz").replaceAll("\\r\\n", "<br/>").replaceAll("\\n", "<br/>").replaceAll("\\s", " ").replaceAll("<br/>","\\\n");
+            map.put("sbhcpnlms",sbhcpnlms);
+            map.put("ywfwgjyyzz",ywfwgjyyzz);
             map.put("status","2");
             map.put("rqid",rqid);
             sql = "select * from uf_gysxxsj_zc where id="+zcid;
@@ -275,7 +294,8 @@ public class SupplierInfoServiceImpl implements SupplierInfoService{
                // map.put("ygbh",Util.null2String(rs.getString("ygbh")));
                 map.put("sfyxcshbg","0");
                 map.put("sfysbqd","0");
-
+                map.put("txrq",nowDate);
+                map.put("txsj",txsj);
                 map.put("modedatacreatedate",nowDate);
                 map.put("modedatacreatetime",nowTime);
                 map.put("modedatacreater",sqr);
@@ -298,6 +318,8 @@ public class SupplierInfoServiceImpl implements SupplierInfoService{
                 map.put("sbqd",sbqd);
                 map.put("rbcxxkytjbx",rbcxxkytjbx);
                 map.put("gsjbxxjpyq",gsjbxxjpyq);
+                new BaseBean().writeLog("SupplierInfoServiceImpl save："+com.alibaba.fastjson.JSONObject.toJSONString(map).toString());
+
                 iu.insert(map,"uf_gysxxsj");
                 String billid = "";
                 sql = "select max(id) as billid from uf_gysxxsj where rqid='" + rqid + "'";

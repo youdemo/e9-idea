@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>绩效考核录入</title>
+		<link rel="stylesheet" href="../../js/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="css/layui.css" media="all">
+		<link rel="stylesheet" href="css/deptBox.css" media="all">
+		<link rel="stylesheet" href="css/performanceDetail.css" media="all">
+		
+	</head>
+	<body class="ibody">
+		<div class="container">
+			<div class="detail-title">
+				<div class="fl">
+					<div class="detail-title-icon"></div>
+					<div class="detail-title-text">流程-绩效审批</div>
+				</div>
+				<div class="ovh fr">
+					<div class="btn_group">
+						<button id="p_submit">提交
+						</button><button id="p_save">保存
+						</button><button id="p_return">授权
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+			  <ul class="layui-tab-title">
+				<li class="layui-this">流程表单</li>
+				<li>流程图</li>
+			  </ul>
+			  <div class="layui-tab-content">
+				  <div class="layui-tab-item layui-show">
+						<div class="detail-search">
+							<div class="gjsearch-div">
+								<span class="dib search-span-btn search-btn detail-search-title" id="search-btn">高级搜索</span><div class="dib w20 search-input-div">
+									<i class="w5 i-search layui-icon layui-icon-search"></i>
+									<span class="dib w90 search-input"><input id="search-input" class="layui-input" type="text" placeholder="" /></span>
+								</div>
+							</div>
+							<form id="detail-search-form" class="detail-form layui-form layui-form-pane ovh" action="">
+								<div class="layui-form-item detail-form-item">
+									<label class="layui-form-label">员工ID</label>
+									<div class="layui-input-block" >
+										<input type="text" lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-form-item detail-form-item">
+									<label class="layui-form-label">员工姓名</label>
+									<div class="layui-input-block" >
+										<input type="text" lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-form-item detail-form-item">
+									<label class="layui-form-label">组织ID</label>
+									<div class="layui-input-block" >
+										<input type="text" lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-form-item detail-form-item">
+									<label class="layui-form-label">岗位名称</label>
+									<div class="layui-input-block" >
+										<input type="text" lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-form-item detail-form-item">
+									<label class="layui-form-label">职等</label>
+									<div class="layui-input-block" >
+										<input type="text" lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-form-item detail-form-item">
+									<label class="layui-form-label">员工ID</label>
+									<div class="layui-input-block" >
+										<input type="text" lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="detail-main"> 
+							<div class="detail-statistic">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top:20px;">
+									<legend>绩效录入统计</legend>
+								</fieldset>
+								<div class="ovh">
+									<div class="fl" style="margin-left: 5%;">
+										<span class="statistic-deptType" style="padding-right: 20px;">部门类型：<span></span></span>
+										<span class="statistic-deptName">部门名称：<span></span></span>
+									</div>
+									<div class="fr" style="margin-right: 5%;">
+										<div class="btn_group">
+											<button id="mbxz">模板下载
+											</button><button id="">excel数据上传
+											</button><button id="">全部数据下载
+											</button>
+										</div>
+									</div>
+								</div>
+								<div style="width: 90%;margin: 0 auto;">
+									<table id="statisticTable" class="layui-hide" ></table>
+								</div>
+							</div>
+							<div class="detail-grade-enter">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top:20px;">
+									<legend>明细表（1 ~ 3等）</legend>
+								</fieldset>
+								<div style="width: 90%;margin: 0 auto;">
+									<table id="detailGrade1" class="layui-hide"  lay-filter="detailGrade13" ></table>
+								</div>
+							</div>
+							<div class="detail-grade-enter">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top:20px;">
+									<legend>明细表（4 ~ 6等）</legend>
+								</fieldset>
+								<div style="width: 90%;margin: 0 auto;">
+									<table id="detailGrade2" class="layui-hide" lay-filter="detailGrade46"></table>
+								</div>
+							</div>
+						</div>
+				  </div>
+			  </div>
+			</div>
+				
+<!-- 				<h1>绩效考核录入</h1>
+				<div class="logo-div"><img src="img/logo-new.png" /></div> -->
+
+			
+		</div>
+		<script type="text/html" id="perfLevel13">
+			<form class="layui-form">
+				<select id="select-perfLevel13" style="width: 100%;height: 100%;border: none;" lay-ignore name="perfLevel" lay-filter="perfLevel">
+				  <option value="">请选择</option>
+				  <option value="A">A</option>
+				  <option value="B">B</option>
+				</select>
+			</form>
+		</script>
+		<script type="text/html" id="perfLevel46">
+			<form class="layui-form">
+				<select id="select-perfLevel46" style="width: 100%;height: 100%;border: none;" lay-ignore name="perfLevel" lay-filter="perfLevel">
+				  <option value="">请选择</option>
+				  <option value="A">A</option>
+				  <option value="B">B</option>
+				</select>
+			</form>
+		</script>
+		<script  type="text/javascript" src="js/jquery.js"></script>
+		<script  type="text/javascript" src="../../js/layui/layui.all.js"></script>
+		<script  type="text/javascript" src="../../js/layui/lay/modules/tree.js"></script>
+		<script>
+			var thisData = {
+				ja_1_3:[],
+				ja_4_6:[],
+				suminfo:[]
+			};
+			//var requestid = parent.document.getElementById("mainFrame").contentWindow.location.search.split("=")[1];
+			var requestid = window.location.search.split("=")[1];
+			layui.use(['form','tree','element','table','laydate','layer'], function(){
+				var form = layui.form;
+				var tree = layui.tree;
+				var element = layui.element;
+				var table = layui.table;
+				var laydate = layui.laydate;
+				var layer = layui.layer;
+
+			    //第一个实例
+				getApproveData();
+				var statisticTable = table.render({
+					elem: '#statisticTable'
+					,title: '绩效录入统计'	
+					,method:'post' //提交方式
+					,data: thisData.suminfo
+					,text: {none: '暂无相关数据' }//默认：无数据。
+					,cols: [
+						[ //一级表头
+							{field:'type', title: '直接人员',rowspan:3, width:'10%',align:'center',unresize:true}
+							,{ title: '应考核',colspan:4, width:'30%',align:'center',unresize:true}
+							,{title: '已考核',colspan:4, width:'30%',align:'center',unresize:true}
+							,{title: '未考核',colspan:4, width:'30%',align:'center',unresize:true} 
+						],
+						[
+							{field:'qtyTotal', title: '人数',rowspan:2, width: '8%',align:'center',unresize:true}
+							,{ title: '等级',colspan:2, width: '12%',align:'center',unresize:true}
+							,{field: 'moneyTotal', title: '金额',rowspan:2, width: '10%',align:'center',unresize:true}
+							,{field:'qtyAlready', title: '人数',rowspan:2, width: '8%',align:'center',unresize:true}
+							,{title: '等级',colspan:2,width: '12%',align:'center',unresize:true}
+							,{field: 'moneyAlready', title: '金额',rowspan:2, width: '10%',align:'center',unresize:true}
+							,{field:'qtyWaiting', title: '人数',rowspan:2,width: '8%',align:'center',unresize:true}
+							,{ title: '等级',colspan:2, width: '12%',align:'center',unresize:true}
+							,{field: 'moneyWaiting', title: '金额',rowspan:2, width: '10%',align:'center',unresize:true}
+						],
+						[
+							{field:'ATotal', title: 'A', width: '6%',align:'center' ,unresize:true}
+							,{field: 'BTotal', title: 'B',width: '6%',align:'center',unresize:true}
+							,{field: 'AAlready', title: 'A', width: '6%',align:'center',unresize:true}
+							,{field:'BAlready', title: 'B',width: '6%',align:'center',unresize:true}
+							,{field: 'AWaiting', title: 'A', width: '6%',align:'center',unresize:true}
+							,{field:'BWaiting', title: 'B',width: '6%',align:'center',unresize:true}
+						]
+					]
+				});  
+				
+				var detailGrade1 = table.render({
+					elem: '#detailGrade1'
+					,title: '绩效录入统计'
+					,method:'post'  //提交方式
+					,data: thisData.ja_1_3
+					,text: {none: '暂无相关数据' }//默认：无数据。
+					,cols: [
+						[
+							{type:'numbers', title: '序号',width:'4%',align:'center'}
+							,{field: 'year', title: '年份', width:'5%',align:'center'}
+							,{field: 'type', title: '类型', width:'5%',align:'center'}
+							,{field: 'month', title: '周期', width:'5%',align:'center'} 
+							,{field: 'workCode', title: '工号', width:'5%',align:'center'} 
+							,{field: 'name', title: '姓名', width:'5%',align:'center'} 
+							,{field: 'company', title: '公司', width:'7%',align:'center'} 
+							,{field: 'center', title: '中心', width:'7%',align:'center'} 
+							,{field: 'department', title: '部', width:'5%',align:'center'} 
+							,{field: 'deptCode', title: '部门编码', width:'5%',align:'center',hide:true} 
+							,{field: 'team', title: '组', width:'5%',align:'center'} 
+							,{field: 'position', title: '职位名称', width:'7%',align:'center'} 
+							,{field: 'level', title: '职等', width:'5%',align:'center'} 
+							,{field: 'entryDate', title: '入集团日期', width:'6%',align:'center'} 
+							,{field: 'perfLevel', title: '绩效等级', width:'8%',align:'center',templet: '#perfLevel13'} 
+							,{field: 'perfBonus', title: '绩效奖金', width:'8%',align:'center',edit :true} 
+							,{field: 'perfScore', title: '绩效分数', width:'8%',align:'center',edit:true} 
+							,{field: 'remark', title: '备注', width:'5%',align:'center',edit:true} 
+						],
+					]
+				});
+				
+				var detailGrade2 = table.render({
+					elem: '#detailGrade2'
+					,title: '明细表（4~6等）'
+					,data: thisData.ja_4_6
+					,method:'post'  //提交方式
+					,text: {none: '暂无相关数据' }//默认：无数据。
+					,cols: [
+						[
+							{type:'numbers', title: '序号',width:'4%',align:'center'}
+							,{field: 'year', title: '年份', width:'5%',align:'center'}
+							,{field: 'type', title: '类型', width:'5%',align:'center'}
+							,{field: 'month', title: '周期', width:'5%',align:'center'} 
+							,{field: 'workCode', title: '工号', width:'5%',align:'center'} 
+							,{field: 'name', title: '姓名', width:'5%',align:'center'} 
+							,{field: 'company', title: '公司', width:'7%',align:'center'} 
+							,{field: 'center', title: '中心', width:'7%',align:'center'} 
+							,{field: 'department', title: '部', width:'5%',align:'center'} 
+							,{field: 'deptCode', title: '部门编码', width:'5%',align:'center',hide:true} 
+							,{field: 'team', title: '组', width:'5%',align:'center'} 
+							,{field: 'position', title: '职位名称', width:'7%',align:'center'} 
+							,{field: 'level', title: '职等', width:'5%',align:'center'} 
+							,{field: 'entryDate', title: '入集团日期', width:'6%',align:'center'} 
+							,{field: 'perfLevel', title: '绩效等级', width:'8%',align:'center',templet: '#perfLevel46'} 
+							,{field: 'perfBonus', title: '绩效奖金', width:'8%',align:'center',edit :true} 
+							,{field: 'perfScore', title: '绩效分数', width:'8%',align:'center',edit :true} 
+							,{field: 'remark', title: '备注', width:'5%',align:'center',edit :true} 
+						],
+					]
+				});
+				// $.ajax({
+				// 	type: "post",
+				// 	url: "/api/gvo/hr/portal/doGetDeptApproveInfo",
+				// 	data: {"page": "1","limit": "5"},
+				// 	dataType: "json",
+				// 	success: function(dataList){
+						
+				// 	}
+				// });
+				
+				function getApproveData(){
+					
+					$.ajax({
+						type: "post",
+						url: "/api/gvo/hr/portal/doGetDeptApproveInfo",
+						data: {"page": "1","limit": "5","requestid":requestid},
+						dataType: "json",
+						success: function(dataList){
+							thisData = dataList;
+							$(".statistic-deptType span").text(thisData.deptType);
+							$(".statistic-deptName span").text(thisData.deptName);
+							statisticTable.reload({
+								url: ''
+								,done:function(res){
+								}
+								,data : thisData.suminfo
+							});
+							detailGrade1.reload({
+								url: ''
+								,done:function(res){
+									for(var i = 0;i<res.data.length;i++){
+										$("#select-perfLevel13").eq(i).val(res.data[i].perfLevel)
+									}
+								}
+								,data : thisData.ja_1_3
+								,page: {
+									curr: 1
+									,limit: 5
+									,limits: [5,10,20,50]
+									,groups:3
+								}
+							});
+							detailGrade2.reload({
+								url: ''
+								,done:function(res){
+									for(var i = 0;i<res.data.length;i++){
+										$("#select-perfLevel46").eq(i).val(res.data[i].perfLevel)
+									}
+								}
+								,data : thisData.ja_4_6
+								,page: {
+									curr: 1
+									,limit: 5
+									,limits: [5,10,20,50]
+									,groups:3
+								}
+							})
+							
+						}
+					});
+				}
+				
+				table.on('edit(detailGrade13)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+				  for(var i = 0;i < thisData.ja_1_3.length;i++){
+					  if(thisData.ja_1_3[i].workCode == obj.data.workCode){
+						 thisData.ja_1_3[i][obj.field] = obj.value;
+					  }
+				  }
+				});
+				
+				form.on('select', function(data){
+					
+				});
+				
+				table.on('edit(detailGrade13)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+				  for(var i = 0;i < thisData.ja_1_3.length;i++){
+					  if(thisData.ja_1_3[i].workCode == obj.data.workCode){
+						 thisData.ja_1_3[i][obj.field] = obj.value;
+					  }
+				  }
+				});
+				
+				table.on('edit(detailGrade46)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+				  for(var i = 0;i < thisData.ja_4_6.length;i++){
+					  if(thisData.ja_4_6[i].workCode == obj.data.workCode){
+						 thisData.ja_4_6[i][obj.field] = obj.value;
+					  }
+				  }
+				});
+				
+				
+				$("#mbxz").on("click",function(){
+					window.location.href="/api/gvo/hr/portal/doDownLoadDept?requestid="+requestid;
+					// $.ajax({
+					// 	type: "get",
+					// 	url: "/api/gvo/hr/portal/doDownLoadDept",
+					// 	data: {"requestid":requestid},
+					// 	dataType: "json",
+					// 	success: function(dataList){
+					// 	}
+					// });
+				})
+				
+				$("#select-perfLevel13").on("change",function(){
+					
+					var thisWorkCode = $(this).parents("tr").children("td[data-field='workCode']").children("div").text();
+					for(var i = 0;i < thisData.ja_1_3.length;i++){
+						if(thisData.ja_1_3[i].workCode == thisWorkCode){
+							thisData.ja_1_3[i][$(this).parents("td").attr("data-field")] = $(this).val();
+						}
+					}
+				})
+				$("#select-perfLevel46").on("change",function(){
+					
+					var thisWorkCode = $(this).parents("tr").children("td[data-field='workCode']").children("div").text();
+					for(var i = 0;i < thisData.ja_4_6.length;i++){
+						if(thisData.ja_4_6[i].workCode == thisWorkCode){
+							thisData.ja_4_6[i][$(this).parents("td").attr("data-field")] = $(this).val();
+						}
+					}
+				})
+				function getSubmitData(){
+					var submitja13 = [];
+					var submitja46 = [];
+					
+					for(var i = 0;i < thisData.ja_1_3.length;i++){
+						var ja13Data={
+							workCode:"",
+							level:"",
+							perfLevel:"",
+							perfBonus:"",
+							perfScore:"",
+							remark:"",
+						}
+						ja13Data.workCode = thisData.ja_1_3[i].workCode;
+						ja13Data.level = thisData.ja_1_3[i].level;
+						ja13Data.perfLevel = thisData.ja_1_3[i].perfLevel;
+						ja13Data.perfBonus = thisData.ja_1_3[i].perfBonus;
+						ja13Data.perfScore = thisData.ja_1_3[i].perfScore;
+						ja13Data.remark = thisData.ja_1_3[i].remark;
+						submitja13.push(ja13Data);
+					}
+					for(var i = 0;i < thisData.ja_4_6.length;i++){
+						var ja46Data={
+							workCode:"",
+							level:"",
+							perfLevel:"",
+							perfBonus:"",
+							perfScore:"",
+							remark:"",
+						}
+						ja46Data.workCode = thisData.ja_4_6[i].workCode;
+						ja46Data.level = thisData.ja_4_6[i].level;
+						ja46Data.perfLevel = thisData.ja_4_6[i].perfLevel;
+						ja46Data.perfBonus = thisData.ja_4_6[i].perfBonus;
+						ja46Data.perfScore = thisData.ja_4_6[i].perfScore;
+						ja46Data.remark = thisData.ja_4_6[i].remark;
+						submitja46.push(ja46Data);
+					}
+					var detailInfo={
+						ja_1_3:submitja13,
+						ja_4_6:submitja46,
+						requestid:requestid
+					}
+					
+					return detailInfo;
+				}
+				$("#p_submit").on("click",function(){
+					var detailInfo = getSubmitData();
+					$.ajax({
+						type: "post",
+						url: "/api/gvo/hr/portal/doOperateRoute",
+						data: {
+							type:"3",
+							detailInfo:JSON.stringify(detailInfo)
+						},
+						dataType: "json",
+						success: function(dataList){
+							layer.alert(dataList.msg, {
+								closeBtn: 0
+							}, function(index){
+								if(dataList.status == "0"){
+									window.close();
+								} else {
+									layer.close(index);
+								}
+								
+							});
+						}
+					});
+				})
+				$("#p_save").on("click",function(){
+					var detailInfo = getSubmitData();
+					$.ajax({
+						type: "post",
+						url: "/api/gvo/hr/portal/doOperateRoute",
+						data: {
+							type:"1",
+							detailInfo:JSON.stringify(detailInfo)
+						},
+						dataType: "json",
+						success: function(dataList){
+							layer.alert(dataList.msg, {
+								closeBtn: 0
+							}, function(index){
+								if(dataList.status == "0"){
+									getApproveData();
+								} 
+								layer.close(index);
+							});
+						}
+					});
+				})
+			})
+			$(function(){
+				$(".detail-search-title").on("click",function(){
+					$("#detail-search-form").slideToggle(500);
+				})
+				
+				setTimeout(function(){ 
+					$("#select-perfLevel13").on("change",function(){
+						
+						var thisWorkCode = $(this).parents("tr").children("td[data-field='workCode']").children("div").text();
+						for(var i = 0;i < thisData.ja_1_3.length;i++){
+							if(thisData.ja_1_3[i].workCode == thisWorkCode){
+								thisData.ja_1_3[i][$(this).parents("td").attr("data-field")] = $(this).val();
+							}
+						}
+					})
+				}, 1000);
+				
+				setTimeout(function(){ 
+					$("#select-perfLevel46").on("change",function(){
+						
+						var thisWorkCode = $(this).parents("tr").children("td[data-field='workCode']").children("div").text();
+						for(var i = 0;i < thisData.ja_4_6.length;i++){
+							if(thisData.ja_4_6[i].workCode == thisWorkCode){
+								thisData.ja_4_6[i][$(this).parents("td").attr("data-field")] = $(this).val();
+							}
+						}
+					})
+				}, 1000);
+				
+			})
+			
+			
+			
+		</script>
+	</body>
+</html>

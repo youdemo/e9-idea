@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>请休假汇总</title>
+    <link rel="stylesheet" href="../../../../js/layui/css/layui.css" media="all">
+    <style>
+        body{margin: 10px; font-size: 12px;}
+        .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+        .layui-table td, .layui-table th {
+            position: relative;
+            padding: 9px 15px;
+            min-height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            font-family: "Microsoft YaHei";
+        }
+        .layui-table-tool {
+            position: relative;
+            z-index: 890;
+            width: 100%;
+            min-height: 35px;
+            line-height: 30px;
+            padding: 10px 15px;
+            border-width: 0 0 1px;
+        }
+        .layui-table-tool-self {
+            position: absolute;
+            right: 17px;
+            top: 2px;
+        }
+        .layui-table-cell {
+            height: 19px;
+            line-height: 19px;
+            padding: 0 3px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .layui-input{
+            height:30px;
+            line-height: 30px;
+        }
+        .layui-form-pane .layui-form-label {
+            height:30px;
+            padding: 4px 9px;
+        }
+        .layui-btn {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 12px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .layui-form-checkbox span {
+            padding: 0 10px;
+            height: 100%;
+            font-size: 9px;
+            border-radius: 2px 0 0 2px;
+            background-color: #d2d2d2;
+            color: #fff;
+            overflow: hidden;
+        }
+        .layui-form-pane .layui-form-checkbox {
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%;display: block;margin: auto">
+
+    <div>
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">组织</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="org" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:120px">
+                        <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                    </div>
+                    <label class="layui-form-label">员工：</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input id="emp" type="text" name="title"  placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="width: 100%">
+        <table class="layui-hide" id="demo" lay-filter="test" style="text-align: center;"></table>
+    </div>
+</div>
+
+</body>
+<script src="../js/jquery.js"></script>
+<script src="/js/layui/layui.all.js"></script>
+<script>
+    function jumpYxjxq(currWc,currNf,currYf){
+        window.parent.jumpYxjxqfym(currWc,currNf,currYf);
+    //    window.location.href='http://10.1.96.59:8083/gvo/hr/portal/glz/yxjxq.html?currWc='+currWc+'&currNf='+currNf+'&currYf='+currYf
+    }
+    layui.use(['laypage', 'layer', 'table','form'], function(){
+        var layer = layui.layer //弹层
+        var form = layui.form
+        var table = layui.table //表格
+        var org=$("#org").val();
+        var emp=$("#emp").val();
+        var sfbhxjzz=$("#sfbhxjzz").is(":checked");
+        org=encodeURI(encodeURI(org));
+        emp=encodeURI(encodeURI(emp));
+        //执行一个 table 实例
+        var tableJX=table.render({
+            elem: '#demo'
+            ,height: 420
+            ,url: '/api/gvo/hr/portal/glz/qxjhz/getQxjhzData?orgcode='+org+'&workcode='+emp+'&sfbhxjzz='+sfbhxjzz//数据接口
+            ,id: 'reload'
+            ,title:'请休假汇总'
+            // ,data:[{
+            //     'workcode':'1',
+            //     'name':'zq',
+            //     'companyname':'xx',
+            //     'centername':'xx',
+            //     'deptname':'xx',
+            //     'groupname':'xx',
+            //     'jobtitlename':'xx',
+            //     'sequence':'2020',
+            //     'joblevel':'4-20',
+            //     'level':'5',
+            //     'rjtrq':'xx',
+            //     'halfyear':"xx"
+            // }]
+            ,page: true //开启分页
+            ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            ,defaultToolbar:['filter',{
+                title:'导出',
+                layEvent:'export',
+                icon:'layui-icon-export'
+            }]
+            ,cols: [[ //表头
+                {field:'workcode', width:66, title: '工号',hide:true,rowspan:3},
+                {field:'name', width:50, title: '姓名',rowspan:3},
+                {field:'companyname', minWidth:71, title: '公司',rowspan:3},
+                {field:'centername', minWidth:83, title: '中心',hide:true,rowspan:3},
+                {field:'deptname',  minWidth:83,title:'部',rowspan:3},
+                {field:'groupname', minWidth:72, title: '组',rowspan:3},
+                {field:'jobtitlename', minWidth:150, title: '岗位名称',rowspan:3,hide:true},
+                {field:'sanqi', width:93, title: '是否为三期人员',rowspan:3},
+                {field:'yxjhj', width:92, title: '有薪假余额合计',rowspan:3},
+                {field:'dnxjzss',width:92,title:'当年休假总时数',rowspan:3},
+                {title:'已休时数',colspan:48,align: 'center'},
+            ],[
+                {title:'1月',colspan:4,align: 'center'},
+                {title:'2月',colspan:4,align: 'center'},
+                {title:'3月',colspan:4,align: 'center'},
+                {title:'4月',colspan:4,align: 'center'},
+                {title:'5月',colspan:4,align: 'center'},
+                {title:'6月',colspan:4,align: 'center'},
+                {title:'7月',colspan:4,align: 'center'},
+                {title:'8月',colspan:4,align: 'center'},
+                {title:'9月',colspan:4,align: 'center'},
+                {title:'10月',colspan:4,align: 'center'},
+                {title:'11月',colspan:4,align: 'center'},
+                {title:'12月',colspan:4,align: 'center'},
+            ],[
+                {field:'01yxj',width:45,title:'有薪假'},
+                {field:'01wxj',width:45,title:'无薪假'},
+                {field:'01qt',width:35,title:'其他'},
+                {field:'01hj',width:35,title:'合计'},
+
+                {field:'02yxj',width:45,title:'有薪假'},
+                {field:'02wxj',width:45,title:'无薪假'},
+                {field:'02qt',width:35,title:'其他'},
+                {field:'02hj',width:35,title:'合计'},
+
+                {field:'03yxj',width:45,title:'有薪假'},
+                {field:'03wxj',width:45,title:'无薪假'},
+                {field:'03qt',width:35,title:'其他'},
+                {field:'03hj',width:35,title:'合计'},
+
+                {field:'04yxj',width:45,title:'有薪假'},
+                {field:'04wxj',width:45,title:'无薪假'},
+                {field:'04qt',width:35,title:'其他'},
+                {field:'04hj',width:35,title:'合计'},
+
+                {field:'05yxj',width:45,title:'有薪假'},
+                {field:'05wxj',width:45,title:'无薪假'},
+                {field:'05qt',width:35,title:'其他'},
+                {field:'05hj',width:35,title:'合计'},
+
+                {field:'06yxj',width:45,title:'有薪假'},
+                {field:'06wxj',width:45,title:'无薪假'},
+                {field:'06qt',width:35,title:'其他'},
+                {field:'06hj',width:35,title:'合计'},
+
+                {field:'07yxj',width:45,title:'有薪假'},
+                {field:'07wxj',width:45,title:'无薪假'},
+                {field:'07qt',width:35,title:'其他'},
+                {field:'07hj',width:35,title:'合计'},
+
+                {field:'08yxj',width:45,title:'有薪假'},
+                {field:'08wxj',width:45,title:'无薪假'},
+                {field:'08qt',width:35,title:'其他'},
+                {field:'08hj',width:35,title:'合计'},
+
+                {field:'09yxj',width:45,title:'有薪假'},
+                {field:'09wxj',width:45,title:'无薪假'},
+                {field:'09qt',width:35,title:'其他'},
+                {field:'09hj',width:35,title:'合计'},
+
+                {field:'10yxj',width:45,title:'有薪假'},
+                {field:'10wxj',width:45,title:'无薪假'},
+                {field:'10qt',width:35,title:'其他'},
+                {field:'10hj',width:35,title:'合计'},
+
+                {field:'11yxj',width:45,title:'有薪假'},
+                {field:'11wxj',width:45,title:'无薪假'},
+                {field:'11qt',width:35,title:'其他'},
+                {field:'11hj',width:35,title:'合计'},
+
+                {field:'12yxj',width:45,title:'有薪假'},
+                {field:'12wxj',width:45,title:'无薪假'},
+                {field:'12qt',width:35,title:'其他'},
+                {field:'12hj',width:35,title:'合计'},
+            ]],
+            done:function (res,curr,count) {
+            }
+        });
+        table.on('toolbar(test)',function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            if(obj.event=='export'){
+                org=$("#org").val();
+                emp=$("#emp").val();
+                sfbhxjzz=$("#sfbhxjzz").is(":checked");
+                org=encodeURI(encodeURI(org));
+                emp=encodeURI(encodeURI(emp));
+                window.location.href="/api/gvo/hr/portal/glz/qxjhz/qxjhzOutExcel?orgcode="+org+"&workcode="+emp+'&sfbhxjzz='+sfbhxjzz;
+            }
+        });
+
+        $("#search").on('click',function (){
+            org=$("#org").val();
+            emp=$("#emp").val();
+            sfbhxjzz=$("#sfbhxjzz").is(":checked");
+            org=encodeURI(encodeURI(org));
+            emp=encodeURI(encodeURI(emp));
+            table.reload('reload',{
+                url:"/api/gvo/hr/portal/glz/qxjhz/getQxjhzData?orgcode="+org+"&workcode="+emp+'&sfbhxjzz='+sfbhxjzz
+                ,page:{
+                    curr:1
+                }
+            });
+        });
+    });
+</script>
+</html>

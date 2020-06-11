@@ -134,6 +134,8 @@ public class ChangeSupplierInfo implements Action {
 			baseMap.put("cwrwqsmly", Util.null2String(rs.getString("cwrwqsmly")));//财务如无请说明理由
 			baseMap.put("sfygsxgfj", Util.null2String(rs.getString("sfygsxgfj")));//是否有公司相关附件
 			baseMap.put("gsrwqsmly", Util.null2String(rs.getString("gsrwqsmly")));//公司如无请说明理由
+			baseMap.put("xywdr", Util.null2String(rs.getString("xywdr")));//新业务导入
+			baseMap.put("xqykf", Util.null2String(rs.getString("xqykf")));//新区域开发
 			
 			
 
@@ -266,6 +268,8 @@ public class ChangeSupplierInfo implements Action {
 			baseMapMode.put("cwrwqsmly", Util.null2String(rs.getString("cwrwqsmly")));//财务如无请说明理由
 			baseMapMode.put("sfygsxgfj", Util.null2String(rs.getString("sfygsxgfj")));//是否有公司相关附件
 			baseMapMode.put("gsrwqsmly", Util.null2String(rs.getString("gsrwqsmly")));//公司如无请说明理由
+			baseMapMode.put("xywdr", Util.null2String(rs.getString("xywdr")));//新业务导入
+			baseMapMode.put("xqykf", Util.null2String(rs.getString("xqykf")));//新区域开发
 			
 			
 

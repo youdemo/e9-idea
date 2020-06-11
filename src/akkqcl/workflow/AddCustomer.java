@@ -1,6 +1,5 @@
 package akkqcl.workflow;
 
-import org.h2.command.dml.Insert;
 import weaver.conn.RecordSet;
 import weaver.general.Util;
 import weaver.interfaces.workflow.action.Action;
@@ -41,10 +40,13 @@ public class AddCustomer implements Action {
         String cgl = "";//成功率
         String yjxsje = "";//预计销售金额
         String yjddsj = "";//预计得单时间
-        String jsfzr = "";//技术负责人
+        String xsjszc = "";//销售技术支持
         String qxxrcpd = "";//其它信息（如产品，等）
         String xmjbfl = "";//项目级别分类：
         String creater = "";
+        String ksm = "";//ks码
+        String cpxl = "";//产品系列
+        String yzmc = "";//业主名称
         tu.writeLog("AddCustomer","start "+requestid);
         String sql = "select * from "+tableName+" where requestid="+requestid;
         rs.execute(sql);
@@ -57,15 +59,15 @@ public class AddCustomer implements Action {
             szhy = Util.null2String(rs.getString("szhy"));
             xsqd1 = Util.null2String(rs.getString("xsqd1"));
             yzgb = Util.null2String(rs.getString("yzgb"));
-            if(!"".equals(yzgb)){
-                yzgb = String.valueOf(Util.getIntValue(yzgb)+1);
-            }
             cgl = Util.null2String(rs.getString("cgl"));
             yjxsje = Util.null2String(rs.getString("yjxsje"));
             yjddsj = Util.null2String(rs.getString("yjddsj"));
-            jsfzr = Util.null2String(rs.getString("jsfzr"));
+            xsjszc = Util.null2String(rs.getString("xsjszc"));
             qxxrcpd = Util.null2String(rs.getString("qxxrcpd"));//.replaceAll("<br>","\\\\n")
             xmjbfl = Util.null2String(rs.getString("xmjbfl"));
+            ksm = Util.null2String(rs.getString("ksm"));
+            cpxl = Util.null2String(rs.getString("cpxl"));
+            yzmc = Util.null2String(rs.getString("yzmc"));
         }
         sql = "select creater from workflow_requestbase where requestid="+requestid;
         rs.execute(sql);
@@ -76,16 +78,19 @@ public class AddCustomer implements Action {
         map.put("crmcode",xmhm);
         map.put("name",xmmc);
         map.put("address1",xmdz);
-        map.put("khmc",khmc);
+        map.put("khmcnew",khmc);
         map.put("sector",szhy);
         map.put("source",xsqd1);
-        map.put("yzgb",yzgb);
+        map.put("yzgb1",yzgb);
         map.put("cgl",cgl);
         map.put("yjxsje",yjxsje);
         map.put("yjddsj",yjddsj);
-        map.put("jsfzr",jsfzr);
+        map.put("xsjszcnew",xsjszc);
         map.put("qxxrcpd",qxxrcpd);
         map.put("xmjbfl",xmjbfl);
+        map.put("ksm",ksm);
+        map.put("cpxl",cpxl);
+        map.put("yzmc",yzmc);
 
 
         map.put("language","7");
@@ -148,6 +153,57 @@ public class AddCustomer implements Action {
         maps.put("joblevel", "0");
         maps.put("scopeid", "0");
         iu.insert(maps, "crm_shareinfo");
+
+        sql = "select distinct operator from workflow_requestlog where logtype in('0','2') and operator <> "+creater+" and requestid="+requestid;
+        rs.execute(sql);
+        while(rs.next()){
+            String operator = Util.null2String(rs.getString("operator"));
+            maps = new HashMap<String, String>();
+            maps.put("relateditemid", relateditemid);
+            maps.put("sharetype", "1");
+            maps.put("seclevel", "0");
+            maps.put("sharelevel", "1");
+            maps.put("crmid", "0");
+            maps.put("deptorcomid", "");
+            maps.put("contents",operator);
+            maps.put("subcompanyid", "");//分部
+            maps.put("deleted", "0");
+            maps.put("seclevelMax", "100");
+            maps.put("jobtitleid", "0");
+            maps.put("joblevel", "0");
+            maps.put("scopeid", ",0,");
+            iu.insert(maps, "crm_shareinfo");
+        }
+
+        sql = "select * from uf_khqx";
+        rs.execute(sql);
+        while(rs.next()){
+            String gxry = Util.null2String(rs.getString("gxry"));
+            String qxlx = Util.null2String(rs.getString("qxlx"));
+            if("".equals(gxry) || "".equals(qxlx)){
+                continue;
+            }
+            if("0".equals(qxlx)){
+                qxlx = "1";
+            }else{
+                qxlx = "3";
+            }
+            maps = new HashMap<String, String>();
+            maps.put("relateditemid", relateditemid);
+            maps.put("sharetype", "1");
+            maps.put("seclevel", "0");
+            maps.put("sharelevel", qxlx);
+            maps.put("crmid", "0");
+            maps.put("deptorcomid", "");
+            maps.put("contents",gxry);
+            maps.put("subcompanyid", "");//分部
+            maps.put("deleted", "0");
+            maps.put("seclevelMax", "100");
+            maps.put("jobtitleid", "0");
+            maps.put("joblevel", "0");
+            maps.put("scopeid", ",0,");
+            iu.insert(maps, "crm_shareinfo");
+        }
 
         return SUCCESS;
     }

@@ -199,6 +199,9 @@ public class ReimbursementForTravelnew  implements Action{
 			zdf = Util.null2String(rs.getString("zdf"));
 			ccbz = Util.null2String(rs.getString("ccbz"));
 
+//			if("".equals(ryf)){
+//				ryf = "0";
+//			}
 			if(a>0) {
 				sb.append(",");
 			}
@@ -230,8 +233,8 @@ public class ReimbursementForTravelnew  implements Action{
 			
 			sb.append("{\"FExpID\": {\"FNUMBER\": \""+gu.getFieldVal("uf_clbxd", "fyxmbm", "id", fyxmu)+"\"}, \"FTravelStartDate\": \""+ksrq+"\", \"FTravelEndDate\": \""+
 			jsrq+"\",\"FTravelStartSite\": \""+cfd+"\",\"FTravelEndSite\": \""+mdd+"\",\"FDays\": "+days+",\"FTravelType\": {\"FNUMBER\": \""+gu.getFieldVal("uf_clbxd", "clflxbm", "id", fyxmu)+"\"},\"FTravelAmount\": \""+pmje+"\",");
-			sb.append(" \"FCivilAviationFund\": \"+snjqt+\",\"FFlyAmount\": 0,  \"FCityTrafficFee\": 0,\"FOtherExpense\": 0,");
-			sb.append("\"FInvoiceType\": \""+gu.getFieldVal("uf_clbxd", "bm", "id", fyxmu)+"\", \"FTaxRate\": "+fpsl+", \"FTaxAmt\": "+ryf+", \"FExpenseAmount\": "+pmje+",\"FExpenseDeptEntryID\": {  \"FNUMBER\": \""+fycdbmbm+"\"  }, \"FRequestAmount\": "+pmje+",  \"FExpSubmitAmount\":"+pmje+",  \"FReqSubmitAmount\": "+pmje+", \"FTaxSubmitAmt\": "+glsl+", \"FLOCTAXAMOUNT\": "+zs+", \"FLOCNOTAXAMOUNT\": "+zdf+", \"FLocReqSubmitAmount\": "+ccbz+", \"FLocExpSubmitAmount\": "+ccbz+",\"F_ORA_INVOICENO\": \""+dzfph+"\",");
+			sb.append(" \"FCivilAviationFund\": \""+snjqt+"\",\"FFlyAmount\": 0,  \"FCityTrafficFee\": 0,\"FOtherExpense\": 0,");
+			sb.append("\"FInvoiceType\": \""+gu.getFieldVal("uf_clbxd", "fpbm", "id", fyxmu)+"\", \"FTaxRate\": "+fpsl+", \"FTaxAmt\": "+ryf+", \"FExpenseAmount\": "+pmje+",\"FExpenseDeptEntryID\": {  \"FNUMBER\": \""+fycdbmbm+"\"  }, \"FRequestAmount\": "+pmje+",  \"FExpSubmitAmount\":"+pmje+",  \"FReqSubmitAmount\": "+pmje+", \"FLOCTAXAMOUNT\": "+zs+", \"FLOCNOTAXAMOUNT\": "+zdf+", \"FLocReqSubmitAmount\": "+ccbz+", \"FLocExpSubmitAmount\": "+ccbz+",\"F_ORA_INVOICENO\": \""+dzfph+"\",");
 			sb.append("\"FOnlineBank\": \"false\", \"FBankAccountName\": \"\",\"FTravelSeq\": 1");
 			sb.append("}");
 			a++;

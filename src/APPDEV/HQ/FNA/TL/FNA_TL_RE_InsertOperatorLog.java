@@ -2,7 +2,6 @@ package APPDEV.HQ.FNA.TL;
 
 import APPDEV.HQ.FNA.UTIL.TransUtil;
 import weaver.conn.RecordSet;
-import weaver.general.BaseBean;
 import weaver.general.Util;
 import weaver.interfaces.workflow.action.Action;
 import weaver.soa.workflow.request.RequestInfo;
@@ -13,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 更新酒店机票预订类型
+ * 插入审批记录
  */
 public class FNA_TL_RE_InsertOperatorLog implements Action {
     @Override
@@ -55,7 +54,7 @@ public class FNA_TL_RE_InsertOperatorLog implements Action {
             if("1".equals(isstart)){
                 nowlogtype="提交";
             }else{
-                nowlogtype="审批";
+                nowlogtype="批准";
             }
         }
         nowremark = removeHtmlTag(nowremark);

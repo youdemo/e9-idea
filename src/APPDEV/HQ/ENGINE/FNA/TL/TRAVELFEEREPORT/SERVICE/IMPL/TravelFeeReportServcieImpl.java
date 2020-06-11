@@ -234,9 +234,9 @@ public class TravelFeeReportServcieImpl extends Service implements TravelFeeRepo
                     ",nvl(MEEXP,0)-nvl(AccMEEXPB,0) as MEEXP,nvl(HoAmo,0)+nvl(TolAmoOfCH,0)-nvl(AccHoAmoB,0) as HoAmo,nvl(OthTraCost,0)-nvl(AccOthTraCostB,0) as OthTraCost,nvl(AirAmo,0)+nvl(TolAmoOfCA,0) as AirAmo,nvl(OthCost,0)-nvl(AccOthCostB,0) as OthCost" +
                     ",AccMEEXPB,AccHoAmoB,AccOthTraCostB,AccOthCostB,nvl(ExcAmo,0) as ExcAmo,ECEDES,TolCos,b.WFStatus" +
                     " from WORKFLOW_REQUESTBASE a,"+tablebx+" b where a.REQUESTID=b.REQUESTID and a.CURRENTNODETYPE>0 ";
-            String workcode =  Util.null2String(params.get("workcode"));
             String cxry =  Util.null2String(params.get("cxry"));
-            if("".equals(workcode)&&"".equals(cxry)){
+            String iscsh =  Util.null2String(params.get("iscsh"));
+            if("1".equals(iscsh)){
                 sqlfrom +=" and (b.BtrPER ='" + userid + "' or b.HanPER='" + userid + "') ";
             }else {
                 if (!"1".equals(userid) && !"1".equals(canSeeAll)) {
@@ -248,9 +248,6 @@ public class TravelFeeReportServcieImpl extends Service implements TravelFeeRepo
                 }
             }
 
-            if (StringUtils.isNotBlank(workcode)) {
-                sqlfrom += " and b.BTRWorkCode = '"+workcode+"'";
-            }
             if (StringUtils.isNotBlank(cxry)) {
                 sqlfrom += " and b.BtrPER in("+cxry+") ";
             }
@@ -264,7 +261,16 @@ public class TravelFeeReportServcieImpl extends Service implements TravelFeeRepo
                 sqlfrom += " and b.BTRBEGDA >='"+fromdate+"'";
             }
             if (StringUtils.isNotBlank(lenddate) && !"null".equals(lenddate)) {
-                sqlfrom += " and b.BTRENDDA <='"+lenddate+"'";
+                sqlfrom += " and b.BTRBEGDA <='"+lenddate+"'";
+            }
+
+            String fromdate1 =  Util.null2String(params.get("fromdate1"));
+            String lenddate1 =  Util.null2String(params.get("lenddate1"));
+            if (StringUtils.isNotBlank(fromdate1) && !"null".equals(fromdate1) ) {
+                sqlfrom += " and b.BTRENDDA >='"+fromdate1+"'";
+            }
+            if (StringUtils.isNotBlank(lenddate1) && !"null".equals(lenddate1)) {
+                sqlfrom += " and b.BTRENDDA <='"+lenddate1+"'";
             }
             sqlfrom +=") a";
 

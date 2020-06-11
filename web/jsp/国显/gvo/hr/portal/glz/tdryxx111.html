@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>团队人员信息</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+
+  <style>
+    body{margin: 10px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    .layui-table td, .layui-table th {
+        position: relative;
+        padding: 9px 15px;
+        min-height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        font-family: "Microsoft YaHei";
+    }
+    .layui-table-tool {
+        position: relative;
+        z-index: 890;
+        width: 100%;
+        min-height: 35px;
+        line-height: 30px;
+        padding: 10px 15px;
+        border-width: 0 0 1px;
+    }
+    .layui-table-tool-self {
+        position: absolute;
+        right: 17px;
+        top: 2px;
+    }
+    .layui-table-cell {
+        height: 19px;
+        line-height: 19px;
+        padding: 0 3px;
+        position: relative;
+        box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+<div style="width: 90%;display: block;margin: auto">
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">高级搜索</h2>
+            <div class="layui-colla-content">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">组织</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">通道</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="channel" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <div style="width: 100%">
+            <table class="layui-hide" id="demo" lay-filter="test" style="text-align: center;"></table>
+
+        </div>
+</div>
+    
+</body>
+<script src="/gvo/hr/portal/js/jquery.js"></script>
+<script src="/js/layui/layui.all.js?1"></script>
+<script>
+    var JXData;
+    layui.use(['laypage', 'layer', 'table','element','form'], function(){
+      var layer = layui.layer //弹层
+          ,table = layui.table //表格
+          ,form = layui.form
+          ,element = layui.element;
+      
+      
+      //执行一个 table 实例
+      var tableJX=table.render({
+        elem: '#demo'
+        ,height: 420
+        ,url: '/api/gvo/hr/portal/glz/tdryxx/getTdryxxDataByUser' //数据接口
+        ,id: 'jxreload'
+        ,title:'团队人员信息'
+        // ,data:[{
+        //     'workcode':'1',
+        //     'name':'zq',
+        //     'companyname':'xx',
+        //     'centername':'xx',
+        //     'deptname':'xx',
+        //     'groupname':'xx',
+        //     'jobtitlename':'xx',
+        //     'sequence':'2020',
+        //     'joblevel':'4-20',
+        //     'level':'5',
+        //     'rjtrq':'xx',
+        //     'halfyear':"xx"
+        // }]
+        ,page: true //开启分页
+        ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        ,defaultToolbar:['filter',{
+            title:'导出',
+              layEvent:'exportJXData',
+              icon:'layui-icon-export'
+          }]
+        ,cols: [[ //表头
+            {field:'workcode', width:80, title: '工号',hide:true},
+            {field:'name', width:80, title: '姓名'},
+            {field:'companyname', width:120, title: '公司'},
+            {field:'centername', width:120, title: '中心',hide:true},
+            {field:'deptname',  width:120,title:'部'},
+            {field:'groupname', width:120, title: '组'},
+            {field:'jobtitlename', width:180, title: '岗位名称'},
+            {field:'channel', width:100, title: '通道',hide:true},
+            {field:'sequence', width:100, title: '序列',hide:true},
+            {field:'joblevel',width:80,title:'职等'},
+            {field:'identitytype',width:100,title:'身份类别',hide:true},
+            {field:'employeetype',width:80,title:'员工类别'},
+            {field:'worktype',width:100,title:'工时类别',hide:true},
+            {field:'rjtrq',width:100,title:'入集团日期'},
+            {field:'syqjzrq',width:100,title:'试用期截止日'},
+            {field:'jtgl',width:100,title:'集团工龄',hide:true},
+            {field:'shgl',width:100,title:'社会工龄',hide:true},
+            {field:'birthday',width:100,title:'出生日期',hide:true},
+            {field:'age',width:80,title:'年龄'},
+            {field:'sex',width:100,title:'性别',hide:true},
+            {field:'nativeplace',width:80,title:'籍贯省'},
+            {field:'educationlevel',width:100,title:'学历'},
+            {field:'school',width:100,title:'学校',hide:true},
+            {field:'major',width:100,title:'专业',hide:true},
+            {field:'bysj',width:100,title:'毕业时间',hide:true},
+            {field:'ahtc',width:100,title:'爱好特长',hide:true},
+            {field:'contact',width:100,title:'联系方式',hide:true},
+            {field:'ygbs',width:100,title:'员工标识'},
+            {field:'rsxxk',width:100,title:'人事信息卡'},
+            {field:'ygjl',width:100,title:'员工记录'},
+        ]],
+          done:function (res,curr,count) {
+            JXData=res.data;
+          }
+    });
+      table.on('toolbar(test)',function (obj) {
+          var checkStatus = table.checkStatus(obj.config.id);
+          if(obj.event=='exportJXData'){
+              window.location.href="/api/gvo/hr/portal/glz/tdryxx/OutExcel";
+          }
+      });
+
+    $('#search').on('click',function () {
+        table.reload('jxreload',{
+            url:"/api/gvo/hr/portal/glz/tdryxx/getTdryxxDataByUser"
+            ,page:{
+                curr:1
+            }
+        });
+    });
+});
+</script>
+</html>

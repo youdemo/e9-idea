@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title></title>
+        <link rel="stylesheet" href="css/layui.css">
+        <style type="text/css">
+			.layui-layout-admin .layui-body{
+				padding: 10px;
+				background: #e8edf4;
+				border: none;
+			}
+			.layui-body iframe{
+				background-color: #FFFFFF;
+			}
+        </style>
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header" >
+                <div class="layui-logo" >
+                    <img src = 'img/logo.png' style = "width: 124px;height: 24px;"/>
+                </div>
+                <ul class="layui-nav layui-layout-left ">
+                    <li class="layui-nav-item menu" >
+                        <a href="#" class = "meau-selected">首页</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="#">考勤管理</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="#">薪酬福利</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="#">绩效管理</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="#">成长在维信诺</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="javascript:changemdcd('glzzz','/gvo/hr/portal/glz/portal/index.html')">管理者自助</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="#">共享平台</a>
+                    </li>
+                    <li class="layui-nav-item menu">
+                        <a href="#">HR流程</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-side layui-bg-black">
+                <div class="layui-side-scroll">
+                    <ul class="layui-nav layui-nav-tree" lay-filter="test" id="zccd">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layui-body">
+                <iframe id="iframekj" src="/gvo/hr/portal/performanceApprove.html" frameborder ="0"  class = "layadmin-iframe" width="100%" height="99%" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+            </div>
+        </div>
+        <script src="/js/layui/layui.all.js?1"></script>
+        <script src="js/jquery.js"></script>
+        <script>
+            //JavaScript代码区域
+            layui.use(['element','layer'], function() {
+                var element = layui.element
+                var layer = layui.layer;
+
+            });
+
+            $(".menu").click(function(){
+                $(".menu a").removeClass("meau-selected");
+                $(this).children("a").addClass("meau-selected");
+            })
+            function changemdcd(mkcdbs,url){
+                getMennu(mkcdbs);
+                changeiframe(url)
+                layui.element.render()
+            }
+            function changeiframe(url){
+                jQuery("#iframekj").attr('src',url);
+
+            }
+
+            function showryxx(orgcode){
+                var that = this;
+                //多窗口模式，层叠置顶
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    ,title: '团队人员信息'
+                    ,area: ['1120px', '580px']
+                    ,shade: 0
+                    ,maxmin: true
+
+                    ,content: '/gvo/hr/portal/glz/tdryxx.html?orgcode='+orgcode
+
+
+                    ,zIndex: layer.zIndex //重点1
+                    ,success: function(layero){
+                        layer.setTop(layero); //重点2
+                    }
+                });
+            }
+
+            function jumpYxjxqfym(currWc,currNf,currYf){
+                var that = this;
+                //多窗口模式，层叠置顶
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    ,title: '已休假详情'
+                    ,area: ['1120px', '580px']
+                    ,shade: 0
+                    ,maxmin: true
+
+                    ,content: '/gvo/hr/portal/glz/yxjxq.html?currWc='+currWc+'&currNf='+currNf+'&currYf='+currYf
+
+
+                    ,zIndex: layer.zIndex //重点1
+                    ,success: function(layero){
+                        layer.setTop(layero); //重点2
+                    }
+                });
+            }
+
+            function getMennu(mkcdbs){
+                var menuhtml;
+                var jsondata = {};
+                $.ajax({
+                    type: "GET",
+                    url: "/api/gvo/hr/portal/getmenu/getmenudata",
+                    data: {'modemenubs':mkcdbs},
+                    dataType: "text",
+                    async:false,//同步   true异步
+                    success: function(data){
+                        data=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+                        jsondata=JSON.parse(data)
+                    }
+                });
+                for(var index=0;index<jsondata.length;index++){
+                    var jsonobj = jsondata[index];
+                    var cdmc = jsonobj.cdmc;
+                    var cddz = jsonobj.cddz;
+                    var secondmenu = jsonobj.secondmenu;
+                    menuhtml = menuhtml+"<li class=\"layui-nav-item \">";
+                    if(cddz == ""){
+                        menuhtml = menuhtml+"<a class=\"\" href=\"javascript:;\">"+cdmc+"</a>";
+                    }else{
+                        menuhtml = menuhtml+"<a class=\"\" href = \"javascript:changeiframe('"+cddz+"')\">"+cdmc+"</a>";
+                    }
+                    if(secondmenu.length>0){
+                        menuhtml = menuhtml+" <dl class = \"layui-nav-child\">";
+                        for(var index1=0;index1<secondmenu.length;index1++){
+                            var jo = secondmenu[index1];
+                            menuhtml = menuhtml+"<dd><a class = \"#\" href = \"javascript:changeiframe('"+jo.cddz+"');\">"+jo.cdmc+"</a></dd>";
+                        }
+                        menuhtml = menuhtml+"</dl>";
+                    }
+
+                    menuhtml = menuhtml+"</li>";
+
+                }
+                jQuery("#zccd").html(menuhtml);
+
+            }
+        </script>
+    </body>
+
+</html>

@@ -21,4 +21,5 @@ public interface HotelOrderDataServcie {
     Map<String,Object> weatableConditonDemo(Map<String, Object> params);
 
     InputStream WeaReportOutExcel(HttpServletRequest request, HttpServletResponse response);
+    String sendToSap(Map<String, Object> params);
 }

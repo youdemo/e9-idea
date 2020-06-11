@@ -36,7 +36,7 @@ begin
 						select @dyts=floor(cast(@dnzdts/(13-convert(int, substring(@rzrq, 6, 2)))*(convert(int, substring(@qsrq, 6, 2))-convert(int, substring(@rzrq, 6, 2))+1) as numeric(10,2)))+case when (cast(@dnzdts/(13-convert(int, substring(@rzrq, 6, 2)))*(convert(int, substring(@qsrq, 6, 2))-convert(int, substring(@rzrq, 6, 2))+1) as numeric(10,2))-floor(cast(@dnzdts/(13-convert(int, substring(@rzrq, 6, 2)))*(convert(int, substring(@qsrq, 6, 2))-convert(int, substring(@rzrq, 6, 2))+1) as numeric(10,2))))>=0.5 then 0.5 else 0 end +2
 					end
 				
-				  select @qnsynj=baseAmount+extraAmount-usedAmount from kq_balanceOfLeave where leaverulesid=10 and resourceid=@ryid and belongyear=substring(@qsrq,0,5)-1 and status=0 and (expirationDate>CONVERT(varchar(100), GETDATE(), 23) or expirationDate is null)
+				  select @qnsynj=baseAmount+extraAmount-usedAmount from kq_balanceOfLeave where leaverulesid=10 and resourceid=@ryid and belongyear=substring(@qsrq,0,5)-1 and status=0 and ((select convert(varchar(12),a.belongyear+1)+'-'+RIGHT('00000000'+CAST( rtrim(expirationmonth) as varchar(10)),2)+'-'+ RIGHT('00000000'+CAST(expirationday as varchar(10)),2) from kq_LeaveRulesDetail where ruleid=10)>CONVERT(varchar(100), GETDATE(), 23))
 				  select @yynj=usedAmount from kq_balanceOfLeave where leaverulesid=10 and resourceid=@ryid and belongyear=substring(@qsrq,0,5) and status=0		  
 				  
 				  select @spzts=isnull(sum(qjts),0) from formtable_main_31 a,workflow_requestbase b where a.requestid=b.requestid and b.currentnodetype in(1,2) and a.sqr=@ryid and a.qjlx=10 and substring(a.qjrqqs,0,5)=substring(@qsrq,0,5)

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>团队人员信息</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+
+  <style>
+    body{margin: 10px; font-size: 12px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    .layui-table td, .layui-table th {
+        position: relative;
+        padding: 9px 15px;
+        min-height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        font-family: "Microsoft YaHei";
+    }
+    .layui-table-tool {
+        position: relative;
+        z-index: 890;
+        width: 100%;
+        min-height: 35px;
+        line-height: 30px;
+        padding: 10px 15px;
+        border-width: 0 0 1px;
+    }
+    .layui-table-tool-self {
+        position: absolute;
+        right: 17px;
+        top: 2px;
+    }
+    .layui-table-cell {
+        height: 19px;
+        line-height: 19px;
+        padding: 0 3px;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .layui-input{
+        height:30px;
+        line-height: 30px;
+    }
+    .layui-form-pane .layui-form-label {
+        height:30px;
+        padding: 4px 9px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 18px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 12px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .layui-form-checkbox span {
+        padding: 0 10px;
+        height: 100%;
+        font-size: 9px;
+        border-radius: 2px 0 0 2px;
+        background-color: #d2d2d2;
+        color: #fff;
+        overflow: hidden;
+    }
+    .layui-form-pane .layui-form-checkbox {
+        margin: 0px;
+    }
+  </style>
+</head>
+<body>
+
+<div style="width: 100%;display: block;margin: auto">
+    <div >
+        <form class="layui-form layui-form-pane" action="" onkeydown="if(event.keyCode==13){return false}">
+            <input type="hidden" id="sfcx" value="0"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">组织</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="width:120px">
+                    <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                </div>
+                <label class="layui-form-label">通道</label>
+                <div class="layui-input-inline" style="width:150px">
+                    <select id="channel" lay-verify="" >
+                        <option value=""></option>
+                        <option value="专业通道">专业通道</option>
+                        <option value="管理通道">管理通道</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">身份类别</label>
+                <div class="layui-input-inline" style="width:150px">
+                    <select id="identitytype" lay-verify="">
+                        <option value=""></option>
+                        <option value="直接人员">直接人员</option>
+                        <option value="间接人员">间接人员</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">职等</label>
+                <div class="layui-input-inline" style="width:100px">
+                    <select id="zdstart" lay-verify="">
+                        <option value=""></option>
+                        <option value="01">01</option><option value="02">02</option> <option value="03">03</option>
+                        <option value="04">04</option><option value="05">05</option> <option value="06">06</option>
+                        <option value="07">07</option><option value="08">08</option> <option value="09">09</option>
+                        <option value="10">10</option><option value="11">11</option> <option value="12">12</option>
+                        <option value="13">13</option><option value="14">14</option> <option value="15">15</option>
+                        <option value="16">16</option><option value="17">17</option> <option value="18">18</option>
+                        <option value="19">19</option><option value="20">20</option> <option value="21">21</option>
+                        <option value="22">22</option><option value="23">23</option> <option value="24">24</option>
+                        <option value="25">25</option><option value="26">26</option> <option value="27">27</option>
+                        <option value="28">28</option><option value="29">29</option> <option value="30">30</option>
+
+                    </select>
+
+                </div>
+                <div class="layui-input-inline" style="width:10px">
+                    <div style="margin-top:6px">至</div>
+
+                </div>
+                <div class="layui-input-inline" style="width:100px">
+                    <select id="zdend" lay-verify="">
+                        <option value=""></option>
+                        <option value="01">01</option><option value="02">02</option> <option value="03">03</option>
+                        <option value="04">04</option><option value="05">05</option> <option value="06">06</option>
+                        <option value="07">07</option><option value="08">08</option> <option value="09">09</option>
+                        <option value="10">10</option><option value="11">11</option> <option value="12">12</option>
+                        <option value="13">13</option><option value="14">14</option> <option value="15">15</option>
+                        <option value="16">16</option><option value="17">17</option> <option value="18">18</option>
+                        <option value="19">19</option><option value="20">20</option> <option value="21">21</option>
+                        <option value="22">22</option><option value="23">23</option> <option value="24">24</option>
+                        <option value="25">25</option><option value="26">26</option> <option value="27">27</option>
+                        <option value="28">28</option><option value="29">29</option> <option value="30">30</option>
+
+                    </select>
+                </div>
+                <label class="layui-form-label">入集团日期</label>
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="text" id="rqstart" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="width:10px">
+                    <div style="margin-top:6px">至</div>
+                </div>
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="text" id="rqend" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+        <div style="width: 100%">
+            <table class="layui-hide" id="tdryxx" lay-filter="test" style="text-align: center;"></table>
+
+        </div>
+</div>
+    
+</body>
+<script src="/gvo/hr/portal/js/jquery.js"></script>
+<script src="/js/layui/layui.all.js?1"></script>
+<script>
+    var orgcodezz = "";
+    var JXData;
+    layui.use(['laypage', 'layer', 'table','element','form','laydate'], function(){
+      var layer = layui.layer //弹层
+          ,table = layui.table //表格
+          ,form = layui.form
+          ,element = layui.element
+          ,laydate = layui.laydate;
+        var orgcodezz = "";
+        var params=window.location.search;
+        if(params.length>1){
+            params=params.substr(1);
+            var strs = params.split("&");
+            orgcodezz = strs[0].split("=")[1];
+        }
+        laydate.render({
+            elem: '#rqstart' //指定元素
+        });
+        laydate.render({
+                elem: '#rqend' //指定元素
+        });
+      //执行一个 table 实例
+      var tableJX=table.render({
+        elem: '#tdryxx'
+        ,height: 420
+        ,url: '/api/gvo/hr/portal/glz/tdryxx/getTdryxxDataByUser?orgcodezz='+orgcodezz //数据接口
+        ,id: 'tdryload'
+        ,method:'post'
+        ,title:'团队人员信息'
+        // ,data:[{
+        //     'workcode':'1',
+        //     'name':'zq',
+        //     'companyname':'xx',
+        //     'centername':'xx',
+        //     'deptname':'xx',
+        //     'groupname':'xx',
+        //     'jobtitlename':'xx',
+        //     'sequence':'2020',
+        //     'joblevel':'4-20',
+        //     'level':'5',
+        //     'rjtrq':'xx',
+        //     'halfyear':"xx"
+        // }]
+        ,page: true //开启分页
+        ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        ,defaultToolbar:['filter',{
+            title:'导出',
+              layEvent:'exportJXData',
+              icon:'layui-icon-export'
+          }]
+        ,cols: [[ //表头
+            {field:'workcode', minWidth:70, title: '工号',hide:true},
+            {field:'name', width:60, title: '姓名'},
+            {field:'companyname', minWidth:80, title: '公司'},
+            {field:'centername', minWidth:100, title: '中心',hide:true},
+            {field:'deptname',  minWidth:100,title:'部'},
+            {field:'groupname', minWidth:100, title: '组'},
+            {field:'jobtitlename', minWidth:100, title: '岗位名称'},
+            {field:'channel', minWidth:80, title: '通道',hide:true},
+            {field:'sequence', minWidth:80, title: '序列',hide:true},
+            {field:'joblevel',width:40,title:'职等'},
+            {field:'identitytype',minWidth:70,title:'身份类别',hide:true},
+            {field:'employeetype',minWidth:65,title:'员工类别',hide:true},
+            {field:'worktype',minWidth:65,title:'工时类别'},
+            {field:'rjtrq',minWidth:75,title:'入集团日期'},
+            {field:'syqjzrq',minWidth:80,title:'试用期截止日'},
+            {field:'jtgl',minWidth:80,title:'集团工龄',hide:true},
+            {field:'shgl',minWidth:80,title:'社会工龄',hide:true},
+            {field:'birthday',minWidth:80,title:'出生日期',hide:true},
+            {field:'age',width:40,title:'年龄'},
+            {field:'sex',width:40,title:'性别',hide:true},
+            {field:'nativeplace',width:60,title:'籍贯省'},
+            {field:'educationlevel',width:55,title:'学历'},
+            {field:'school',minWidth:80,title:'学校',hide:true},
+            {field:'major',minWidth:80,title:'专业',hide:true},
+            {field:'bysj',minWidth:80,title:'毕业时间',hide:true},
+            {field:'ahtc',minWidth:80,title:'爱好特长',hide:true},
+            {field:'contact',minWidth:80,title:'联系方式',hide:true},
+            {field:'ygbs',width:55,title:'员工标识'},
+            {field:'rsxxk',minWidth:70,title:'人事信息卡'},
+            {field:'ygjl',minWidth:60,edit: 'text',title:'员工记录'},
+        ]],
+          done:function (res,curr,count) {
+            JXData=res.data;
+          }
+    });
+        table.on('edit(test)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            $.ajax({
+                type: "POST",
+                url: "/api/gvo/hr/portal/glz/tdryxx/updateygjl",
+                data: {'jlxx':value,'yggh':data.workcode},
+                dataType: "text",
+                async:false,//同步   true异步
+                success: function(data){
+                    data=data.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, '');
+                }
+            });
+        });
+      table.on('toolbar(test)',function (obj) {
+          var checkStatus = table.checkStatus(obj.config.id);
+          var orgcode = encodeURI(encodeURI(jQuery("#orgcode").val()));
+          var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+          var channel = encodeURI(encodeURI(jQuery("#channel").val()));
+          var identitytype = encodeURI(encodeURI(jQuery("#identitytype").val()));
+          var zdstart = jQuery("#zdstart").val();
+          var zdend = jQuery("#zdend").val();
+          var rqstart = jQuery("#rqstart").val();
+          var rqend = jQuery("#rqend").val();
+          var orgcodezzpara = "";
+          if(orgcodezz != "" && jQuery("#sfcx").val() == "0"){
+              orgcodezzpara = orgcodezz;
+          }
+          if(obj.event=='exportJXData'){
+              window.location.href="/api/gvo/hr/portal/glz/tdryxx/OutExcel?orgcode="+orgcode+"&channel="+channel+
+                  "&identitytype="+identitytype+"&zdstart="+zdstart+"&zdend="+zdend+"&rqstart="+rqstart+"&rqend="+rqend+"&sfbhxjzz="+sfbhxjzz+"&orgcodezz="+orgcodezzpara;
+          }
+      });
+
+    $('#search').on('click',function () {
+
+        // var orgcode = jQuery("#orgcode").val();
+        // var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+        // var channel = jQuery("#channel").val();
+        // var identitytype = jQuery("#identitytype").val();
+        var orgcode = encodeURI(encodeURI(jQuery("#orgcode").val()));
+        var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+        var channel = encodeURI(encodeURI(jQuery("#channel").val()));
+        var identitytype = encodeURI(encodeURI(jQuery("#identitytype").val()));
+        var zdstart = jQuery("#zdstart").val();
+        var zdend = jQuery("#zdend").val();
+        var rqstart = jQuery("#rqstart").val();
+        var rqend = jQuery("#rqend").val();
+        table.reload('tdryload',{
+            url:"/api/gvo/hr/portal/glz/tdryxx/getTdryxxDataByUser?orgcode="+orgcode+"&channel="+channel+
+                "&identitytype="+identitytype+"&zdstart="+zdstart+"&zdend="+zdend+"&rqstart="+rqstart+"&rqend="+rqend+"&sfbhxjzz="+sfbhxjzz
+            ,page:{
+                curr:1
+            }
+        });
+        jQuery("#sfcx").val("1");
+    });
+});
+</script>
+</html>

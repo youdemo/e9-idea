@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>个人年度累计加班情况</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css" media="all">
+
+  <style>
+    body{margin: 10px; font-size: 12px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    .layui-table td, .layui-table th {
+        position: relative;
+        padding: 9px 15px;
+        min-height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        font-family: "Microsoft YaHei";
+    }
+    .layui-table-tool {
+        position: relative;
+        z-index: 890;
+        width: 100%;
+        min-height: 35px;
+        line-height: 30px;
+        padding: 10px 15px;
+        border-width: 0 0 1px;
+    }
+
+    .layui-table-tool-self {
+        position: absolute;
+        right: 17px;
+        top: 2px;
+    }
+    .layui-table-cell {
+        height: 16px;
+        line-height: 16px;
+        padding: 0 3px;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .layui-input{
+        height:25px;
+        line-height: 25px;
+    }
+    .layui-form-pane .layui-form-label {
+        height:25px;
+        padding: 4px 9px;
+        line-height:16px;
+    }
+    .layui-btn {
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 18px;
+        background-color: #009688;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 12px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .zh-btn+.zh-btn {
+        margin-left: 10px;
+    }
+    .zh-btn:hover {
+        opacity: .8;
+        filter: alpha(opacity=80);
+        color: #fff;
+        background-color: #005492;
+    }
+    .zh-btn {
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 18px;
+        background-color: #bcc1c0;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        outline: 0;
+        -webkit-appearance: none;
+        -webkit-transition: all .3s;
+        box-sizing: border-box;
+    }
+    .choose_btn{
+        background-color: #005492;
+    }
+    .layui-form-item {
+        margin-bottom: 7px;
+        clear: both;
+        *zoom: 1;
+    }
+    .layui-form-checkbox span {
+        padding: 0 10px;
+        height: 100%;
+        font-size: 9px;
+        border-radius: 2px 0 0 2px;
+        background-color: #d2d2d2;
+        color: #fff;
+        overflow: hidden;
+    }
+    .layui-form-pane .layui-form-checkbox {
+        margin: 0px;
+    }
+  </style>
+</head>
+<body>
+
+<div style="width: 100%;display: block;margin: auto">
+    <div >
+        <div  >
+            <button class="zh-btn " onclick="changewd('0')">部门月度累计加班情况</button>
+            <button class="zh-btn choose_btn" >个人年度累计加班情况</button>
+        </div>
+
+        <form class="layui-form layui-form-pane" action="" onkeydown="if(event.keyCode==13){return false}">
+            <div class="layui-form-item" style="margin-top:2px;margin-buttom:2px">
+                <label class="layui-form-label">组织</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="orgcode" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="width:120px">
+                    <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                </div>
+                <label class="layui-form-label">员工</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="rygh" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-top:2px;margin-buttom:2px">
+                <label class="layui-form-label">身份类别</label>
+                <div class="layui-input-inline">
+                    <select id="identitytype" lay-verify="">
+                        <option value=""></option>
+                        <option value="直接人员">直接人员</option>
+                        <option value="间接人员">间接人员</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">工时类别</label>
+                <div class="layui-input-inline">
+                    <select id="worktype" lay-verify="">
+                        <option value=""></option>
+                        <option value="标准工时">标准工时</option>
+                        <option value="不定时">不定时</option>
+                    </select>
+                </div>
+
+
+
+                <div class="layui-input-inline">
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+        <div style="width: 100%">
+            <table class="layui-hide" id="ndljjbqkmx" lay-filter="test" style="text-align: center;"></table>
+
+        </div>
+</div>
+    
+</body>
+<script src="/gvo/hr/portal/js/jquery.js"></script>
+<script src="/js/layui/layui.all.js?1"></script>
+<script>
+    var JXData;
+    var table;
+    layui.use(['laypage', 'layer', 'table','element','form','laydate'], function(){
+      var layer = layui.layer //弹层
+
+          ,form = layui.form
+          ,element = layui.element;
+    table = layui.table //表格
+
+
+      //执行一个 table 实例
+      var tableJX=table.render({
+        elem: '#ndljjbqkmx'
+        ,height: 400
+        ,url: '/api/gvo/hr/portal/glz/jbqk/getndljjbqk' //数据接口
+        ,id: 'ndljjbqkmx'
+        ,method:'post'
+        ,title:'个人年度累计加班情况'
+
+        ,page: true //开启分页
+        ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+        ,defaultToolbar:['filter',{
+            title:'导出',
+              layEvent:'exportJXData',
+              icon:'layui-icon-export'
+          }]
+        ,cols: [[ //表头
+            {field:'workcode', width:60, title: '工号',hide:true,rowspan:2},
+            {field:'name', width:55, title: '姓名',rowspan:2},
+            {field:'companyname', minWidth:90, title: '公司',rowspan:2},
+            {field:'centername', minWidth:90, title: '中心',hide:true,rowspan:2},
+            {field:'deptname',  minWidth:90,title:'部',rowspan:2},
+            {field:'groupname', minWidth:90, title: '组',rowspan:2},
+              {field:'jobtitlename', width:80, title: '岗位名称',rowspan:2},
+            {field:'identitytype',width:56,title:'身份类别',rowspan:2},
+            {field:'worktype',width:56,title:'工时类别',rowspan:2},
+            {field:'yjjbss',width:80,title:'月均加班时数',rowspan:2},
+            {field:'yljjbss',width:80,title:'加班累计合计',hide:true,rowspan:2},
+            {colspan:12,align:'center',title:'各月加班时数'}
+        ],[ //表头
+              {field:'yue1',width:35,title:'1月'},
+              {field:'yue2',width:35,title:'2月'},
+              {field:'yue3',width:35,title:'3月'},
+              {field:'yue4',width:35,title:'4月'},
+              {field:'yue5',width:35,title:'5月'},
+              {field:'yue6',width:35,title:'6月'},
+              {field:'yue7',width:35,title:'7月'},
+              {field:'yue8',width:35,title:'8月'},
+              {field:'yue9',width:35,title:'9月'},
+              {field:'yue10',width:35,title:'10月'},
+              {field:'yue11',width:35,title:'11月'},
+              {field:'yue12',width:35,title:'12月'}
+
+
+          ]],
+          done:function (res,curr,count) {
+            JXData=res.data;
+          }
+    });
+
+      table.on('toolbar(test)',function (obj) {
+          var checkStatus = table.checkStatus(obj.config.id);
+          var orgcode = encodeURI(encodeURI(jQuery("#orgcode").val()));
+          var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+          var identitytype = encodeURI(encodeURI(jQuery("#identitytype").val()));
+          var worktype = encodeURI(encodeURI(jQuery("#worktype").val()));
+          var rygh =  encodeURI(encodeURI(jQuery("#rygh").val()));
+          if(obj.event=='exportJXData'){
+              window.location.href="/api/gvo/hr/portal/glz/jbqk/ndOutExcel?orgcode="+orgcode+"&identitytype="+identitytype+"&worktype="+worktype+"&rygh="+rygh+"&sfbhxjzz="+sfbhxjzz;
+          }
+      });
+
+
+
+});
+    function zhzs(value){
+
+        value = value.replace(/[^\d]/g,'');
+        if(''!=value){
+            value = parseInt(value);
+        }
+        return value;
+    }
+    function refreshtable(){
+        var orgcode = encodeURI(encodeURI(jQuery("#orgcode").val()));
+        var sfbhxjzz = jQuery("#sfbhxjzz").is(":checked");
+        var identitytype = encodeURI(encodeURI(jQuery("#identitytype").val()));
+        var worktype = encodeURI(encodeURI(jQuery("#worktype").val()));
+        var rygh =  encodeURI(encodeURI(jQuery("#rygh").val()));
+        table.reload('ndljjbqkmx',{
+            url:"/api/gvo/hr/portal/glz/jbqk/getndljjbqk?orgcode="+orgcode+"&identitytype="+identitytype+"&worktype="+worktype+"&rygh="+rygh+"&sfbhxjzz="+sfbhxjzz
+            ,page:{
+                curr:1
+            }
+        });
+    }
+    $('#search').on('click',function () {
+        refreshtable();
+    });
+    function changewd(type){
+        if(type=="0"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ydljjbqkhz.html";
+        }else if(type=="1"){
+            window.location.href="/gvo/hr/portal/glz/jbqk/ndljjbqkmx.html";
+        }
+    }
+</script>
+</html>

@@ -87,7 +87,7 @@ weaver.general.AccountType.langId.set(lg);
 		<%
 		String backfields = "id,(select INVOICENUMBER from fnaInvoiceLedger where id=a.fp) as INVOICENUMBER,fyrq,je,(select spkzlname from uf_fna_CostType where spkzl=a.fykm) as Costtype ";
 		String fromSql  =  " from uf_jyb a";
-		String sqlWhere =  " zt<>'1' and ry='"+ryid+"' ";
+		String sqlWhere =  " zt<>'1' and fp<>'{fpid}' and ry='"+ryid+"' ";
 	    if(!"".equals(yxzfpids)){
 			sqlWhere += " and fp not in("+yxzfpids+")";
 		}

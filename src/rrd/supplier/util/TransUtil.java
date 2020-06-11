@@ -137,6 +137,65 @@ public class TransUtil {
         return  transResult.toString();
 
     }
+
+    /**
+     *可调节宽度
+     * @param fieldName
+     * @param fieldValue
+     * @param isMust
+     * @param tablename
+     * @param showfield
+     * @param keyfield
+     * @param orderfield 排序字段
+     * @param ordertype  排序类型
+     * @return
+     */
+    public String getSelectHtmlTable2(String fieldName,String fieldValue,String isMust,String tablename,String showfield,String keyfield,String orderfield,String ordertype,String width){
+        RecordSet rs = new RecordSet();
+        StringBuffer transResult = new StringBuffer();
+        String  viewtype = "0";
+        if("1".equals(isMust)){
+            viewtype = "1";
+        }
+        transResult.append("<select class=\"e8_btn_top middle\" style=\"width:"+width+"px\" id=\""+fieldName+"\" name=\""+fieldName+"\" " +
+                "viewtype=\""+viewtype+"\" onblur=\"checkmustinput('"+fieldName+"','"+fieldName+"span',this.getAttribute('viewtype'));\">");
+        transResult.append(" <option value=\"\"");
+        if("".equals(fieldValue)){
+            transResult.append("selected");
+        }
+        transResult.append("></option>");
+        String sql = "select "+keyfield+" as selectvalue,"+showfield+" as selectname from "+tablename+"";
+        if("uf_khsshy".equals(tablename)){
+            sql = sql +" where DRSY='01' and DRRT='29'  and DRHRDC = 'N' ";
+        }else if("uf_sl".equals(tablename)){
+            sql = sql +" where  TATXA1 like '%OV%'  or TATXA1 like '%PV%' ";
+        }
+        if(!"".equals(orderfield)){
+            sql += " order by "+orderfield+" "+ordertype;
+        }
+        rs.execute(sql);
+        while(rs.next()){
+
+            String selectname = Util.null2String(rs.getString("selectname"));
+
+
+            String selectvalue = Util.null2String(rs.getString("selectvalue"));
+            transResult.append(" <option value=\""+selectvalue+"\"");
+            if(selectvalue.equals(fieldValue)){
+                transResult.append("selected");
+            }
+            transResult.append(">"+selectname+"</option>");
+        }
+        transResult.append("</select>");
+        transResult.append("<span id=\""+fieldName+"span\" style=\"word-break:break-all;word-wrap:break-word;margin-left:4px;\">");
+        if("".equals(fieldValue)&&"1".equals(viewtype)){
+            transResult.append("<img src=\"/images/BacoError_wev9.png\" align=\"absMiddle\">") ;
+        }
+        transResult.append("</span>");
+        return  transResult.toString();
+
+    }
+
     public String getCheckBoxHtml(String fieldName,String fieldValue,String showtext){
         String result = "";
         if("1".equals(fieldValue)){

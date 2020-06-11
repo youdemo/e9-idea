@@ -14,7 +14,7 @@ var TravelNumber = WfForm.convertFieldNameToId("TravelNumber");//出差单号
 var BtrBukrs = WfForm.convertFieldNameToId("BtrBukrs");//出差单号
 var PayInDoll = WfForm.convertFieldNameToId("PayInDoll");//是否美元支付
 var MoreThan90D = WfForm.convertFieldNameToId("MoreThan90D");//报销是否超90天
-
+var TolCos = WfForm.convertFieldNameToId("TolCos");//报销总金额
 
 ////明细4
 var SZDate_dt4 = WfForm.convertFieldNameToId("SZDate", "detail_4");//日期
@@ -322,10 +322,20 @@ jQuery(document).ready(function(){
                 }
             }
         }
+        var TolCos_val = WfForm.getFieldValue(TolCos);
+        if(TolCos_val == ''){
+            TolCos_val = "0";
+        }
+        if(Number(TolCos_val) <=0){
+            WfForm.showConfirm("报销总金额小于或等于0，提交后将直接归档，请再次确认是否提交 ？", function(){
+                callback();
+            },function(){
+                return ;
+            });
 
-
-
-        callback();
+        }else{
+            callback();
+        }
     })
 
 })
@@ -664,7 +674,10 @@ function checkdt5zsfcb(){
             for (var i = 0; i < arr_dt5.length; i++) {
                 var HOCOST_dt5_val = WfForm.getFieldValue(HOCOSTRMB_dt5+"_"+arr_dt5[i]);
                 var TotStaAmo_dt5_val = WfForm.getFieldValue(TotStaAmo_dt5+"_"+arr_dt5[i]);
-                if(HOCOST_dt5_val != "" && TotStaAmo_dt5_val != ""){
+                if(TotStaAmo_dt5_val == ""){
+                    TotStaAmo_dt5_val = "0";
+                }
+                if(HOCOST_dt5_val != "" && Number(TotStaAmo_dt5_val)>Number("0")){
                     if(Number(HOCOST_dt5_val) > Number(TotStaAmo_dt5_val)){
                         isover = "1";
                         break;

@@ -1,0 +1,12 @@
+{
+	"data":[{ 
+		"name":"V计划项目部", 
+		"icon":"/images/treeimages/subCopany_Colse_wev8.gif", 
+		"id":"dept_1481_26331", 
+		"pId":"0", 
+		"nodeid":"dept_1481_26331", 
+		"nocheck":false, 
+		"oncheck":"check(dept_1481_26331)", 
+		"value":"26331"
+	}]
+}

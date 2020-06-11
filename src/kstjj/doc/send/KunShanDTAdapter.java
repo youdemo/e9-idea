@@ -1,40 +1,14 @@
 package kstjj.doc.send;
 
-import java.io.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipInputStream;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.rpc.ParameterMode;
-import javax.xml.soap.SOAPElement;
-
-import com.api.integration.Base;
-import jxl.read.biff.Record;
-import kstjj.doc.send.AES4DotNet;
-import kstjj.doc.send.ECDocument;
-import kstjj.doc.send.RSA4DotNet;
+import com.sun.istack.ByteArrayDataSource;
+import net.vitale.filippo.axis.handlers.WsseClientHandler;
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
-import org.apache.axis.MessageContext;
 import org.apache.axis.attachments.AttachmentPart;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.encoding.Base64;
 import org.apache.axis.encoding.XMLType;
-import org.apache.axis.message.PrefixedQName;
 import org.apache.axis.message.SOAPHeaderElement;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
@@ -42,13 +16,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
-import org.w3c.dom.Element;
-import org.w3c.dom.Text;
-
-import com.sun.istack.ByteArrayDataSource;
-
-import net.vitale.filippo.axis.handlers.WsseClientHandler;
-import sun.misc.BASE64Decoder;
 import weaver.conn.RecordSet;
 import weaver.docs.webservices.DocAttachment;
 import weaver.docs.webservices.DocInfo;
@@ -56,6 +23,15 @@ import weaver.docs.webservices.DocServiceImpl;
 import weaver.general.BaseBean;
 import weaver.general.Util;
 import weaver.hrm.User;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.xml.namespace.QName;
+import javax.xml.rpc.ParameterMode;
+import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+import java.util.zip.ZipInputStream;
 
 
 /**
@@ -250,10 +226,10 @@ public class KunShanDTAdapter {
 			byte[] byteKey = null;
 			String	mTitle = "";
 			//String mType = "";
-			//String mAttType = "";
+			String mAttType = "";
 			String[] arrTitle = null;
 			//String[] arrType = null;
-			//String[] arrAttType = null;
+			String[] arrAttType = null;
             String zw = "";
             String fj = "";
 			while(attaIter.hasNext()) {
@@ -282,18 +258,33 @@ public class KunShanDTAdapter {
 					pContent = new String(newbyte, ATTA_CHARSET);
 					resDoc = DocumentHelper.parseText(pContent);
 					mTitle = resDoc.selectSingleNode("//PantheonData/PantheonDataBody/DATA/UserArea/FileName").getText();
+                    new BaseBean().writeLog(this.getClass().getName(),mTitle);
 					//System.out.println(mTitle);
 					//mType = doc.selectSingleNode("//PantheonData/PantheonDataBody/DATA/UserArea/ContentType").getText();
-					//mAttType = doc.selectSingleNode("//PantheonData/PantheonDataBody/DATA/UserArea/AttType").getText();
+					mAttType = resDoc.selectSingleNode("//PantheonData/PantheonDataBody/DATA/UserArea/AttType").getText();
+					new BaseBean().writeLog(this.getClass().getName(),mAttType);
 					arrTitle = mTitle.split(";");
 					//arrType = mType.split(";");
-					//arrAttType = mAttType.split(";");
+					arrAttType = mAttType.split(";");
 				} else { // 保存附件到多媒体目录
-					dh.getDataSource().getInputStream().read(byteKey, 0, size);
-					byte[] newbyte = AES4DotNet.Decrypt(byteKey, pArrKey, pArrIV);
+                    new BaseBean().writeLog(this.getClass().getName(),"ContentId:"+atid);
+                    new BaseBean().writeLog(this.getClass().getName(),"arrTitle:"+arrTitle[k]);
+                    new BaseBean().writeLog(this.getClass().getName(),"size:"+size);
+                    InputStream is= dh.getDataSource().getInputStream();
+                    byte[] buffer=new byte[1024];
+                    int len=0;
+                    ByteArrayOutputStream bos=new ByteArrayOutputStream();
+                    while((len=is.read(buffer))!=-1){
+                        bos.write(buffer,0,len);
+                    }
+                    bos.flush();
+                    new BaseBean().writeLog(this.getClass().getName(),"length:"+bos.toByteArray().length);
+					byte[] newbyte = AES4DotNet.Decrypt(bos.toByteArray(), pArrKey, pArrIV);
+                    new BaseBean().writeLog(this.getClass().getName(),"length2:"+newbyte.length);
 
+                    is.close();
                     String fileid=getDocId(arrTitle[k],newbyte);
-                    if("正文.doc".equals(arrTitle[k])){
+                    if("false".equals(arrAttType[k])){
                         zw = fileid;
                     }else{
                         if("".equals(fj)){

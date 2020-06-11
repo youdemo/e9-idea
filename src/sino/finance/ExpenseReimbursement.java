@@ -81,6 +81,8 @@ public class ExpenseReimbursement  implements Action{
 		String sqrgh = "";//
 		String yhzhmc = "";
 		String sjxfkjehj = "";//实际需付款金额
+		String skdwzhmc = "";//收款单位账号名称
+		String jkdlsh = "";//借款单流水号
 		StringBuffer sb = new StringBuffer();
 		GetUtil gu = new GetUtil();
 		String K3CloudURL = Util.null2o(weaver.file.Prop.getPropValue("k3cloudmt", "K3CloudURL"));
@@ -102,8 +104,8 @@ public class ExpenseReimbursement  implements Action{
 			rq = Util.null2String(rs.getString("rq"));//申请日期:
 			//fygzbmfzr = Util.null2String(rs.getString("fygzbmfzr"));//费用归属部门负责人
 			//fycdbm = Util.null2String(rs.getString("fycdbm"));//费用承担部门
-			//khyx = Util.null2String(rs.getString("khyx"));//开户银行
-			//yxzh = Util.null2String(rs.getString("yxzh"));//银行账号
+			khyx = Util.null2String(rs.getString("khyx"));//开户银行
+			yxzh = Util.null2String(rs.getString("yxzh"));//银行账号
 			skdw = Util.null2String(rs.getString("skdw"));//收款单位
 			skdwbm = Util.null2String(rs.getString("skdwbm"));//收款单位
 			skr = Util.null2String(rs.getString("skr"));//收款单位开户行
@@ -124,6 +126,8 @@ public class ExpenseReimbursement  implements Action{
 			tbxm = Util.null2String(rs.getString("tbxm"));//投标项目
 			yhzhmc = Util.null2String(rs.getString("zhmc"));
 			sjxfkjehj = Util.null2String(rs.getString("sjxfkjehj"));
+			skdwzhmc = Util.null2String(rs.getString("skdwzhmc"));
+			jkdlsh = Util.null2String(rs.getString("jkdlsh"));
 		}
 		String zgjdid = Util.null2o(weaver.file.Prop.getPropValue("k3cloudmt", "fybxzgjd"));
 		String cwshjdid = Util.null2o(weaver.file.Prop.getPropValue("k3cloudmt", "fybxcwjd"));
@@ -153,14 +157,20 @@ public class ExpenseReimbursement  implements Action{
 		String zhmc = "";
 		String nblx = "";
 		String wldw = "";
+		String khh = "";
+		String yhzh = "";
 		if("0".equals(bxlx)) {
 			nblx ="BD_Empinfo";
 			wldw = skren;
-			zhmc = skren;
+			zhmc = yhzhmc;
+			khh = khyx;
+			yhzh = yxzh;
 		}else {
 			nblx = "FIN_OTHERS";
 			wldw = skdwbm;
-			zhmc = yhzhmc;
+			zhmc = skdwzhmc;
+			khh = skr;
+			yhzh = skdwyxzh;
 		}
 		if(hl.length()<1) {
 			hl = "1";
@@ -172,10 +182,10 @@ public class ExpenseReimbursement  implements Action{
 		sb.append(" \"FExpenseOrgId\": {\"FNumber\": \""+k3szgs+"\"},\"FExpenseDeptID\": { \"FNUMBER\": \""+k3fycdbm
 		+"\"},\"FOUTCONTACTUNITTYPE\": \"\", \"FCONTACTUNITTYPE\": \""+nblx+"\"," + " \"FOUTCONTACTUNIT\": {\"FNumber\": \"\" }, \"FCONTACTUNIT\": { \"FNumber\": \""+wldw+"\"},");
 		sb.append("\"FPayOrgId\": {\"FNumber\": \""+k3szgs+"\"},\"FPaySettlleTypeID\": {\"FNUMBER\": \""+gu.getFieldVal("uf_jsfs", "bm", "id", jsfs)+"\"},\"FRefundBankAccount\": {\"FNUMBER\": \""
-		+skdwyxzh+"\" },\"FBankBranchT\": \""+skr+"\",\"FBankAccountNameT\": \""+zhmc+"\",\"FBankAccountT\": \""+skdwyxzh+"\",\"FBankTypeRecT\": {\"FNUMBER\": \"\"},\"FProvinceT\": {\"FNAME\": \"\"},\"FCityT\": {\"FNAME\": \"\"},");
+		+yhzh+"\" },\"FBankBranchT\": \""+khh+"\",\"FBankAccountNameT\": \""+zhmc+"\",\"FBankAccountT\": \""+yhzh+"\",\"FBankTypeRecT\": {\"FNUMBER\": \"\"},\"FProvinceT\": {\"FNAME\": \"\"},\"FCityT\": {\"FNAME\": \"\"},");
 		sb.append("\"FDistrictT\": { \"FNUMBER\": \"\" }, \"FLocCurrencyID\": { \"FNUMBER\": \"PRE001\" }, \"FExchangeTypeID\": { \"FNUMBER\": \"HLTX01_SYS\" },  \"FExchangeRate\": "+hl+", \"FSplitEntry\": \"false\", \"FCombinedPay\": \"false\", \"FLocExpAmountSum\": 0, \"FLocReqAmountSum\": "+fkje+", \"FExpAmountSum\": "+fkje+", \"FReqAmountSum\": "+fkje+", \"FCreatorId\": { \"FUserID\": \"\" }, \"FCreateDate\": \""+gu.getDateNow()+"\",  \"FModifierId\": { \"FUserID\": \"\" },");
 		sb.append("\"FModifyDate\": \"\", \"FAPPROVEDATE\": \"\", \"FAPPROVERID\": { \"FUserID\": \"\" }, \"FRequestType\": \"\", \"FReqReimbAmountSum\": "+fkje+", \"FReqPayReFoundAmountSum\": 0, \"FBankAddress\": \"\", \"FBANKCNAPS\": \"\", \"FRealPay\": \"false\", \"FBankDetail\": {  \"FNUMBER\": \"\" }, \"FScanPoint\": {  \"FNUMBER\": \"\" },");
-		sb.append("\"FCountry\": \"\",\"FNProvince\": \"\",\"FNCity\": \"\",\"FNDistrict\": \"\",\"F_ORA_RSCPROJECT\": { \"FNumber\": \""+gu.getFieldVal("uf_yfxm", "bm", "id", szqy)+"\"}, \"F_ORA_ENGPROJECT\": { \"FNumber\": \"\"},\"F_ORA_RECRUITPROJECT\": {\"FNUMBER\": \""+tbxm+"\"},\"F_ORA_LEADERCHECK\": \""+zgsh+"\", \"F_ORA_GMCHECK\": \""+zjlsh+"\",\"F_ORA_FICHECK\": \""+cwsh+"\",\"F_ORA_LEADERDATE\": \""+zgshsj+"\",\"F_ORA_GMDATE\": \""+zjlshsj+"\", \"F_ORA_FIDATE\": \""+cwshsj+"\",");
+		sb.append("\"FCountry\": \"\",\"FNProvince\": \"\",\"FNCity\": \"\",\"FNDistrict\": \"\",\"F_ORA_RSCPROJECT\": { \"FNumber\": \""+gu.getFieldVal("uf_yfxm", "bm", "id", szqy)+"\"}, \"F_ORA_ENGPROJECT\": { \"FNumber\": \"\"},\"F_ORA_RECRUITPROJECT\": {\"FNUMBER\": \""+tbxm+"\"},\"F_ORA_LEADERCHECK\": \""+zgsh+"\", \"F_ORA_GMCHECK\": \""+zjlsh+"\",\"F_ORA_FICHECK\": \""+cwsh+"\",\"F_ORA_LEADERDATE\": \""+zgshsj+"\",\"F_ORA_GMDATE\": \""+zjlshsj+"\", \"F_ORA_FIDATE\": \""+cwshsj+"\",\"F_ORA_LOANNO\": \""+jkdlsh+"\",");
 		if(!"0".equals(bxlx)){
 			sb.append("\"FRequestType\": \"1\",\"FCombinedPay\": \"true\",");
 		}
@@ -205,7 +215,8 @@ public class ExpenseReimbursement  implements Action{
 			//zzszyhm = Util.null2String(rs.getString("zzszyhm"));//增值税专用号码
 			fplx = Util.null2String(rs.getString("fplx"));//发票类型
 			fpsl = Util.null2String(rs.getString("fpsl"));//发票税率%
-			fkje_mx = Util.null2String(rs.getString("fkje"));//
+			//fkje_mx = Util.null2String(rs.getString("fkje"));//
+			fkje_mx = Util.null2String(rs.getString("je"));//
 			if(fpsl.length()<1) {
 				fpsl = "1";
 			}
@@ -219,14 +230,17 @@ public class ExpenseReimbursement  implements Action{
 			if(fkje_mx.length()<1) {
 				fkje_mx = "0";
 			}
-			String fp = gu.getFieldVal("uf_fplxsl", "fplx", "id", fplx);
-			if("增值税发票".equals(fp)) {
-				fp = "1";
-			}else if("火车票".equals(fp)) {
-				fp = "R";
-			}else if("机票".equals(fp)) {
-				fp = "P";
-			}else {
+			String fp = gu.getFieldVal("uf_fplxsl", "bm", "id", fplx);
+//			if("增值税发票".equals(fp)) {
+//				fp = "1";
+//			}else if("火车票".equals(fp)) {
+//				fp = "R";
+//			}else if("机票".equals(fp)) {
+//				fp = "P";
+//			}else {
+//				fp = "0";
+//			}
+			if("".equals(fp)){
 				fp = "0";
 			}
 			if(a>0) {

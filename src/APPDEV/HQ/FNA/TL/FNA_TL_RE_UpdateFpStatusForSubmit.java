@@ -66,11 +66,11 @@ public class FNA_TL_RE_UpdateFpStatusForSubmit implements Action {
             return FAILURE_AND_CONTINUE;
         }
         //交通
-        rs.execute("update uf_jyb set zt='1' where fp in(select Selinv from "+tableName+"_dt2 where mainid="+mainId+" and SELINV is not null )");
+        rs.execute("update uf_jyb set zt='1' where fp in(select Selinv from "+tableName+"_dt2 where mainid="+mainId+" and SELINV is not null )  and fp<>'{fpid}'");
         //其他
-        rs.execute("update uf_jyb set zt='1' where fp in(select selinv from "+tableName+"_dt3 where mainid="+mainId+" and selinv is not null )");
+        rs.execute("update uf_jyb set zt='1' where fp in(select selinv from "+tableName+"_dt3 where mainid="+mainId+" and selinv is not null )  and fp<>'{fpid}'");
         //住宿
-        rs.execute("update uf_jyb set zt='1' where fp in(select selinv from "+tableName+"_dt5 where mainid="+mainId+" and selinv is not null )");
+        rs.execute("update uf_jyb set zt='1' where fp in(select selinv from "+tableName+"_dt5 where mainid="+mainId+" and selinv is not null )  and fp<>'{fpid}'");
 
         return SUCCESS;
     }

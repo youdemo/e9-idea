@@ -20,18 +20,35 @@ var khzdgysxs = WfForm.convertFieldNameToId("khzdgysxs");	//客户指定供应�
 var khzdgyssldbjyyly = WfForm.convertFieldNameToId("khzdgyssldbjyyly");	//客户指定供应商事例的背景/原因/理由
 var fcczldkhrydydzwtx = WfForm.convertFieldNameToId("fcczldkhrydydzwtx");	//发出此指令的客户人员对应的职位/头衔
 var xsfzr = WfForm.convertFieldNameToId("xsfzr");	//销售负责人
+
+var bz2 = WfForm.convertFieldNameToId("bz2");	//币种2
+var bz3 = WfForm.convertFieldNameToId("bz3");	//币种3
+
 jQuery(document).ready(function() {
 
     showHideZZS();
     showOrdisablechek();
     showhidekhzdxz();
     showhidekhzdother();
+    hidebzh();
 })
+
+function hidebzh(){
+    var bz2_val = WfForm.getFieldValue(bz2);//币种2
+    var bz3_val = WfForm.getFieldValue(bz3);//币种3
+    if(bz2_val == ""){
+        jQuery("#bzyc1").hide();
+    }
+    if(bz3_val == ""){
+        jQuery("#bzyc2").hide();
+    }
+
+}
 
 //显示隐藏 客户指定其他
 function showhidekhzdother(){
     var khzdgysxs_val =  WfForm.getFieldValue(khzdgysxs);
-    if(khzdgysxs_val == "1"){
+    if(khzdgysxs_val == "0"){
         jQuery("#khzd_1").show();
         jQuery("#khzd_2").show();
         WfForm.changeFieldAttr(fcczldkhrydydzwtx, 1);
@@ -46,8 +63,6 @@ function showhidekhzdother(){
         WfForm.changeFieldAttr(khzdgyssldbjyyly, 1);
     }
 }
-
-
 //显示隐藏客户指定供应商形式
 function showhidekhzdxz(){
     var khzd_val =  WfForm.getFieldValue(khzd);

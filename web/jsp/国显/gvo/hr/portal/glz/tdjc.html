@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>团队奖惩</title>
+    <link rel="stylesheet" href="../../../../js/layui/css/layui.css" media="all">
+  <style>
+      body{margin: 10px; font-size: 12px;}
+      .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+      .layui-table td, .layui-table th {
+          position: relative;
+          padding: 9px 15px;
+          min-height: 20px;
+          line-height: 20px;
+          font-size: 12px;
+          font-family: "Microsoft YaHei";
+      }
+      .layui-table-tool {
+          position: relative;
+          z-index: 890;
+          width: 100%;
+          min-height: 35px;
+          line-height: 30px;
+          padding: 10px 15px;
+          border-width: 0 0 1px;
+      }
+      .layui-table-tool-self {
+          position: absolute;
+          right: 17px;
+          top: 2px;
+      }
+      .layui-table-cell {
+          height: 19px;
+          line-height: 19px;
+          padding: 0 3px;
+          position: relative;
+          box-sizing: border-box;
+      }
+      .layui-input{
+          height:30px;
+          line-height: 30px;
+      }
+      .layui-form-pane .layui-form-label {
+          height:30px;
+          padding: 4px 9px;
+      }
+      .layui-btn {
+          display: inline-block;
+          height: 30px;
+          line-height: 30px;
+          padding: 0 18px;
+          background-color: #009688;
+          color: #fff;
+          white-space: nowrap;
+          text-align: center;
+          font-size: 12px;
+          border: none;
+          border-radius: 2px;
+          cursor: pointer;
+      }
+      .layui-form-checkbox span {
+          padding: 0 10px;
+          height: 100%;
+          font-size: 9px;
+          border-radius: 2px 0 0 2px;
+          background-color: #d2d2d2;
+          color: #fff;
+          overflow: hidden;
+      }
+      .layui-form-pane .layui-form-checkbox {
+          margin: 0px;
+      }
+  </style>
+</head>
+<body>
+    <div style="width: 100%;display: block;margin: auto">
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">组织</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="org" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:120px">
+                        <input type="checkbox" id="sfbhxjzz" lay-skin="primary" title="是否包含下级组织">
+                    </div>
+                    <label class="layui-form-label">员工：</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input id="emp" type="text" name="title" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">奖惩年度：</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input id="year" type="text" name="title"  class="layui-input">
+                    </div>
+                    <button type="button" id="search" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+        </form>
+        <div style="width: 100%">
+            <table class="layui-hide" id="demo" lay-filter="test" style="text-align: center;"></table>
+        </div>
+    </div>
+</body>
+
+<script src="../js/jquery.js"></script>
+<script src="../../../../js/layui/layui.all.js"></script>
+<script>
+
+layui.use(['layer', 'table','laydate'], function(){
+  // laypage = layui.laypage //分页
+  var layer = layui.layer //弹层
+  var form = layui.form
+  var table = layui.table //表格
+  var laydate = layui.laydate;
+  var JcData;
+  var org=$("#org").val();
+  var emp=$("#emp").val();
+  var year=$("#year").val();
+  var sfbhxjzz=$("#sfbhxjzz").is(":checked");
+  org=encodeURI(encodeURI(org));
+  emp=encodeURI(encodeURI(emp));
+  //执行一个 table 实例
+  var JcTable=table.render({
+    elem: '#demo'
+    ,height: 420
+    ,url: '/api/gvo/hr/portal/glz/tdjc/getJCDataByUser?orgcode='+org+'&workcode='+emp+'&year='+year+'&sfbhxjzz='+sfbhxjzz //数据接口
+    ,id: 'jcreload'
+    ,title:'奖惩'
+    // ,data:[{
+    //     'id':'1',
+    //     'realname':'zq',
+    //     'company':'xx',
+    //     'center':'xx',
+    //     'department':'xx',
+    //     'group':'xx',
+    //     'post':'xx',
+    //     'year':'2020',
+    //     'date':'4-20',
+    //     'level':'5',
+    //     'kind':'xx',
+    //     'description':"xx"
+    // }]
+    ,page: true //开启分页
+    ,toolbar: true //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+    ,defaultToolbar:['filter',{
+        title:"导出",
+        layEvent:"exportData",
+        icon:'layui-icon-export'
+      }]
+    ,cols: [[ //表头
+        {field:'workcode', width:80, title: '工号', hide:true},
+        {field:'name', width:50, title: '姓名'},
+        {field:'companyname', width:120, title: '公司'},
+        {field:'centername', width:120, title: '中心'},
+        {field:'deptname',  width:120,title:'部'},
+        {field:'groupname', width:120, title: '组'},
+        {field:'jobtitlename', width:180, title: '岗位名称'},
+        {field:'year', width:60, title: '奖惩年度'},
+        {field:'jcrq', width:80, title: '奖惩日期'},
+        {field:'jcjb',width:98,title:'奖惩级别'},
+        {field:'type',width:107,title:'奖惩类型'},
+        {field:'description',minWidth:250,title:'事件描述'}
+    ]],
+    done:function(res,curr,count){
+        JcData=res.data;
+        tdTitle();
+    }
+  });
+
+    laydate.render({
+        elem: '#year'
+        ,type: 'year'
+    });
+
+    $("#search").on('click',function (){
+      org=$("#org").val();
+      emp=$("#emp").val();
+      year=$("#year").val();
+      sfbhxjzz=$("#sfbhxjzz").is(":checked");
+      org=encodeURI(encodeURI(org));
+      emp=encodeURI(encodeURI(emp));
+      table.reload('jcreload',{
+          url:"/api/gvo/hr/portal/glz/tdjc/getJCDataByUser?orgcode="+org+"&workcode="+emp+"&year="+year+'&sfbhxjzz='+sfbhxjzz
+          ,page:{
+              curr:1
+          }
+      });
+  });
+
+  function tdTitle(){
+	    $('th').each(function(index,element){
+            if($(element).attr('data-field')=='description'){
+                $(element).attr('title',$(element).text());
+            }
+	    });
+	    $('td').each(function(index,element){
+            if($(element).attr('data-field')=='description') {
+                $(element).attr('title', $(element).text());
+            }
+	    });
+  };
+  table.on('toolbar(test)',function (obj) {
+      var checkStatus = table.checkStatus(obj.config.id);
+      if(obj.event=='exportData'){
+          var org=$("#org").val();
+          var emp=$("#emp").val();
+          var sfbhxjzz=$("#sfbhxjzz").is(":checked");
+          org=encodeURI(encodeURI(org));
+          emp=encodeURI(encodeURI(emp));
+          window.location.href="/api/gvo/hr/portal/glz/tdjc/OutExcel?orgcode="+org+"&workcode="+emp+'&sfbhxjzz='+sfbhxjzz;
+      }
+  })
+});
+
+</script>
+</html>

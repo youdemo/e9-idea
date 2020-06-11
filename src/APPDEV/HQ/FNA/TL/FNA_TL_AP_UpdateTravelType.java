@@ -19,6 +19,7 @@ public class FNA_TL_AP_UpdateTravelType implements Action {
         String TavelDestCityALL = "";//目的地汇总
         String BTRCon = "0";//0国内 1国外
         String flag = "";
+        String ISAir = "0";//0否 1是
         String  sql = "select * from "+tableName+" where requestid="+requestid;
         rs.execute(sql);
         if(rs.next()){
@@ -63,7 +64,17 @@ public class FNA_TL_AP_UpdateTravelType implements Action {
                 BTRCon = "1";
             }
         }
-        sql = "update "+tableName+" set TavelType='"+TravelType+"',TavelDestCityALL='"+TavelDestCityALL+"',BTRCon='"+BTRCon+"' where requestid="+requestid;
+        //判断是否有机票
+        count = 0;
+        sql = "select count(1) as count from  " + tableName + "_dt3 where mainid="+mainId;
+        rs.execute(sql);
+        if (rs.next()) {
+            count = rs.getInt("count");
+        }
+        if(count>0){
+            ISAir = "1";
+        }
+        sql = "update "+tableName+" set TavelType='"+TravelType+"',TavelDestCityALL='"+TavelDestCityALL+"',BTRCon='"+BTRCon+"',ISAir='"+ISAir+"' where requestid="+requestid;
         rs.execute(sql);
         return SUCCESS;
     }

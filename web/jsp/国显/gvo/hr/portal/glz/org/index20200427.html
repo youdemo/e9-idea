@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="" style = "height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组织架构图</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/orgtree.css" />
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script> 
+    <script type="text/javascript" src="js/jquery.lenchart.js"></script>
+    <style type="text/css">
+        /*加减号样式*/
+        .orgWrap .content .plusMinus{
+        	position:absolute;
+        	bottom:3px;
+        	left: 3px;
+        	cursor:pointer;
+        	top: auto;
+        }
+        ul,ol{
+       	 	margin-left: 21px;
+        }
+        /*第一层减号图标去掉*/
+        .orgWrap .level1 i.plusMinus{
+            display: none;
+        }
+        .level2s {
+            position: relative;
+            z-index: 2;
+            background: rgb(244,244,244);
+            margin: 0;
+            padding: 0;
+        }
+        .level2s .level2{
+            position: relative;
+            vertical-align:top;
+            min-width:400px; 
+            width: 100px;
+        }
+        /*新加的css*/
+        /*组织样式*/
+        .orgWrap .content.organization{
+            background:#F3F3F3;
+            width: 215px; 
+            border-radius: 5px;
+            cursor:pointer;
+        }
+        .orgWrap .content .numWrap{
+          padding-left: 10px;
+          background: #D9D9D9;
+        }
+        .orgWrap .content .numWrap>div{
+            display:inline-block;
+            width:33.33%;
+        }
+        .orgWrap .content .name{
+            height:42px;
+            line-height: 42px;
+            font-weight:bold;
+            border-bottom: 1px solid #B9DC93;
+        }
+        /*岗位样式*/
+        .orgWrap .content.position{
+            background:#C3D7E9;
+        }
+        .orgWrap .content .person{
+            background:#E1EBF3;
+        }
+        .a{
+        	float: left;
+        	color: #ffffff;
+        }
+        .a img{
+        	width:60px;
+        	height:60px;
+        	border-radius: 5px 0px 0px 0px;
+        }
+    </style>
+</head>
+<body style = "background-color:rgb(244,244,244);overflow: auto;height: 95%;z-index: -1;margin-top: 2%;padding-top: 2px;">
+    <div class = "orgWrap" style = "background-color:rgb(244,244,244);z-index: 2"></div>
+    <script src="js/watermark.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var obj = {
+                "data": {
+                        "id":"11",
+                        "department": "V1", 
+                        "departmentlabel": "", 
+                        "manager": "张三", 
+                        "managerlabel": "总裁", 
+                        "zz": 20, 
+                        "zzlabel": "在职", 
+                        "llfs": "17863076218", 
+                        "llfslabel": "联系方式",
+                        "rgb":"79,129,189"
+                }, 
+                "children": [
+                        {
+                                "data": {
+                                        "id":"11",
+                                        "department": "薄膜技术部", 
+                                        "departmentlabel": "", 
+                                        "manager": "张三", 
+                                        "managerlabel": "部门经理", 
+                                        "zz": 20, 
+                                        "zzlabel": "在职", 
+                                        "llfs": "17863076218", 
+                                        "llfslabel": "联系方式",
+                                        "rgb":"79,129,189"
+                                }, 
+                                "children": [
+                                        {
+                                     
+                                                "data": {
+                                                        "id":"11",
+                                                        "department": "薄膜技术部", 
+                                                        "departmentlabel": "", 
+                                                        "manager": "张三", 
+                                                        "managerlabel": "部门经理", 
+                                                        "zz": 20, 
+                                                        "zzlabel": "在职", 
+                                                        "llfs": "17863076218", 
+                                                        "llfslabel": "联系方式",
+                                                        "rgb":"79,129,189"
+                                                }, 
+                                                "children": [
+                                                        {
+                                                          
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }, 
+                                                        
+                                                ]
+                                        }
+                                ]
+
+                        },
+                         {
+                                "data": {
+                                        "id":"11",
+                                        "department": "薄膜技术部", 
+                                        "departmentlabel": "", 
+                                        "manager": "张三", 
+                                        "managerlabel": "部门经理", 
+                                        "zz": 20, 
+                                        "zzlabel": "在职", 
+                                        "llfs": "17863076218", 
+                                        "llfslabel": "联系方式",
+                                        "rgb":"79,129,189"
+                                }, 
+                                "children": [
+                                        {
+                                     
+                                                "data": {
+                                                        "id":"11",
+                                                        "department": "薄膜技术部", 
+                                                        "departmentlabel": "", 
+                                                        "manager": "张三", 
+                                                        "managerlabel": "部门经理", 
+                                                        "zz": 20, 
+                                                        "zzlabel": "在职", 
+                                                        "llfs": "17863076218", 
+                                                        "llfslabel": "联系方式",
+                                                        "rgb":"79,129,189"
+                                                }, 
+                                                "children": [
+                                                        {
+                                                          
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }, 
+                                                        {
+                                                                
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }
+                                                ]
+                                        }
+                                ]
+                                
+                        },
+                         {
+                                "data": {
+                                        "id":"11",
+                                        "department": "薄膜技术部", 
+                                        "departmentlabel": "", 
+                                        "manager": "张三", 
+                                        "managerlabel": "部门经理", 
+                                        "zz": 20, 
+                                        "zzlabel": "在职", 
+                                        "llfs": "17863076218", 
+                                        "llfslabel": "联系方式",
+                                        "rgb":"79,129,189"
+                                }, 
+                                "children": [
+                                        {
+                                     
+                                                "data": {
+                                                        "id":"11",
+                                                        "department": "薄膜技术部", 
+                                                        "departmentlabel": "", 
+                                                        "manager": "张三", 
+                                                        "managerlabel": "部门经理", 
+                                                        "zz": 20, 
+                                                        "zzlabel": "在职", 
+                                                        "llfs": "17863076218", 
+                                                        "llfslabel": "联系方式",
+                                                        "rgb":"79,129,189"
+                                                }, 
+                                                "children": [
+                                                        {
+                                                          
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }, 
+                                                        {
+                                                                
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }
+                                                ]
+                                        }
+                                ]
+                                
+                        },
+                         {
+                                "data": {
+                                        "id":"11",
+                                        "department": "薄膜技术部", 
+                                        "departmentlabel": "", 
+                                        "manager": "张三", 
+                                        "managerlabel": "部门经理", 
+                                        "zz": 20, 
+                                        "zzlabel": "在职", 
+                                        "llfs": "17863076218", 
+                                        "llfslabel": "联系方式",
+                                        "rgb":"79,129,189"
+                                }, 
+                                "children": [
+                                        {
+                                     
+                                                "data": {
+                                                        "id":"11",
+                                                        "department": "薄膜技术部", 
+                                                        "departmentlabel": "", 
+                                                        "manager": "张三", 
+                                                        "managerlabel": "部门经理", 
+                                                        "zz": 20, 
+                                                        "zzlabel": "在职", 
+                                                        "llfs": "17863076218", 
+                                                        "llfslabel": "联系方式",
+                                                        "rgb":"79,129,189"
+                                                }, 
+                                                "children": [
+                                                        {
+                                                          
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }, 
+                                                        {
+                                                                
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }
+                                                ]
+                                        }
+                                ]
+                                
+                        },
+                         {
+                                "data": {
+                                        "id":"11",
+                                        "department": "薄膜技术部", 
+                                        "departmentlabel": "", 
+                                        "manager": "张三", 
+                                        "managerlabel": "部门经理", 
+                                        "zz": 20, 
+                                        "zzlabel": "在职", 
+                                        "llfs": "17863076218", 
+                                        "llfslabel": "联系方式",
+                                        "rgb":"79,129,189"
+                                }, 
+                                "children": [
+                                        {
+                                     
+                                                "data": {
+                                                        "id":"11",
+                                                        "department": "薄膜技术部", 
+                                                        "departmentlabel": "", 
+                                                        "manager": "张三", 
+                                                        "managerlabel": "部门经理", 
+                                                        "zz": 20, 
+                                                        "zzlabel": "在职", 
+                                                        "llfs": "17863076218", 
+                                                        "llfslabel": "联系方式",
+                                                        "rgb":"79,129,189"
+                                                }, 
+                                                "children": [
+                                                        {
+                                                          
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }, 
+                                                        {
+                                                                
+                                                                "data": {
+                                                                        "id":"11",
+                                                                        "department": "薄膜技术部", 
+                                                                        "departmentlabel": "", 
+                                                                        "manager": "张三", 
+                                                                        "managerlabel": "部门经理", 
+                                                                        "zz": 20, 
+                                                                        "zzlabel": "在职", 
+                                                                        "llfs": "17863076218", 
+                                                                        "llfslabel": "联系方式",
+                                                                        "rgb":"79,129,189"
+                                                                }, 
+                                                                "children": [ ]
+                                                        }
+                                                ]
+                                        }
+                                ]
+                                
+                        },
+
+                       
+                         
+                         
+                ]
+        }
+            
+            $('.orgWrap').lenChart({
+                data:obj,
+                drag:false,
+                renderdata:function(data,$dom){
+                    var value = data.data;
+                    if (value && Object.keys(value).length) {
+                       
+                        	//部门
+                            var $department = $('<div><span>'+value.departmentlabel+' </span><span class="department"></span></div>')
+                           	!!(value.department) && $department.find('.department').text(value.department)
+
+                            //经理  
+                            var $manager = $('<div><span>'+value.managerlabel+' </span><span class="num"></span></div>')
+                            !!(value.managerlabel) && $manager.find('.num').text(value.manager)
+                           
+                            //在职人数     
+                            var $zz = $('<div><span>'+value.zzlabel+' </span><span class="zz"></span></div>')
+                            !!(value.zz) && $zz.find('.zz').text(value.zz)
+                            
+
+                            //联系方式 
+                            var $short = $('<div><span>'+value.llfslabel+':</span><span class="llfs"></span></div>')
+                            if (value.llfs) {
+                                $short.find('.llfs').text(value.llfs)
+                            }
+
+                            var $clearDiv = $('<div style = "clear:both"></div>')
+                            var $card = $('<div class = "card" value = '+value.id+'></div>')
+                            var $headImag = $('<div class ="a" style = "width:60px;height:58px;" ><img src = "img/1.jpg"/></div>');
+                            var $wrap = $('<div class="a" style = "width:150px;padding-left:5px;background-color:rgb('+value.rgb+');line-height:15px;"></div>') ;
+                            $wrap.append($department, $zz,$manager, $short);
+                           	$card.append($headImag,$wrap,$clearDiv);
+                            $dom.addClass('organization')
+                            $dom.append($card)
+
+                       		var icon = '<i class="icon plusMinus icon-minus-sign"></i>';
+                        	var $icon = $(icon);
+                        	if (data.children && data.children.length) {
+                           		$dom.append($icon);
+                        	}
+
+                    }
+                },
+                callback:function(){
+                    $(".card").click(function(){
+                        alert($(this).attr('value'));
+                        window.open("https://www.baidu.com");
+                    })
+
+                    var level1_size = $(".level2").length;
+
+                    if(level1_size == '1'){
+                        $(".level1s .level1").css('left','0px');  
+                    }else if(level1_size == '2'){
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px'); 
+                        $(".level1s .level1").css('left','-110px');  
+                    }else if(level1_size == '3'){
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px');  
+                        $(".level1s .level1").css('left','-100px');  
+                    }else if (level1_size == '4'){
+                        $(".level1s .level1").css('left','-100px');
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px');      
+                    }else{
+                        $(".level1s .level1").css('left','-101px');
+                        $(".orgWrap").css('margin-left',-($("body").width()/2)+50+'px');     
+                    }
+
+                   
+
+                    for(var i = 0;i<10;i++){
+                        $(".level"+i).css("margin-top",'-2px'); 
+                        $(".level"+i).css("background-color","rgb(244,244,244)"); 
+                    }
+
+
+                    var now = getNow();
+                    watermark({"watermark_txt":"郭兰涛"+now});
+                }
+            })
+            
+        })
+    </script>
+</body>
+</html>

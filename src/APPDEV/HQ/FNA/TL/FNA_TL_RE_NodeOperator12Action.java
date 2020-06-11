@@ -1,11 +1,16 @@
 package APPDEV.HQ.FNA.TL;
 
 import APPDEV.HQ.Contract.ConCommonClass;
+import APPDEV.HQ.UTIL.BringMainAndDetailByMain;
+import APPDEV.HQ.UTIL.GetMachineUtil;
 import weaver.conn.RecordSet;
 import weaver.general.BaseBean;
 import weaver.general.Util;
 import weaver.interfaces.workflow.action.Action;
 import weaver.soa.workflow.request.RequestInfo;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 	
@@ -38,7 +43,7 @@ public class FNA_TL_RE_NodeOperator12Action implements Action{
 		// cygbjqtclf 超预估标记(其他差旅费)  OthExcMark
 		// BTRBEGDA 开始日期  BTRENDDA 结束日期
 		
-		sql = "select BtrPER,BTRCon,HoExcStaMark, "
+		sql = "select FICTR,FundCenterCODE,BtrBukrs,BtrPER,BTRCon,HoExcStaMark, "
 			+ "to_date(BTRENDDA,'yyyy-mm-dd')-to_date(BTRBEGDA,'yyyy-mm-dd')+1 Tripdays "
 		    + " from " + tableName + " where requestid = '" + requestid + "'";
 		rs.execute(sql);
@@ -46,8 +51,33 @@ public class FNA_TL_RE_NodeOperator12Action implements Action{
 			String btrPER = Util.null2String(rs.getString("BtrPER"));
 			String bTRCon = Util.null2String(rs.getString("BTRCon"));
 			String over2 = Util.null2String(rs.getString("HoExcStaMark"));
+			String BtrBukrs = Util.null2String(rs.getString("BtrBukrs"));//公司代码
+			String FundCenterCODE = Util.null2String(rs.getString("FundCenterCODE"));//基金中心key
+			String FICTR =  Util.null2String(rs.getString("FICTR"));//基金中心SAP
 			int tripdays = rs.getInt("Tripdays");
-			
+			//manager6
+			String manager6 = "";
+			if(!FundCenterCODE.equals(FICTR)){
+				new BaseBean().writeLog("FNA_TL_RE_NodeOperator12Action  BtrBukrs: "+BtrBukrs+"   FundCenterCODE: "+FundCenterCODE);
+				String baseSapData = getBaseSapData(BtrBukrs, FundCenterCODE, "50");
+				new BaseBean().writeLog("FNA_TL_RE_NodeOperator12Action  json:"+baseSapData);
+				String FundCenterP = "";//基金中心负责人工号
+				String FundCenterPid = "";//负责人id
+				sql = "select id from hrmresource where workcode='"+FundCenterP+"'";
+				rs.execute(sql);
+				if(rs.next()){
+					FundCenterPid = Util.null2String(rs.getString("id"));
+				}
+				if(!"".equals(FundCenterPid)){
+					manager6=getManager6(FundCenterPid);
+					if(manager6.equals(FundCenterPid)){
+						manager6 = "";
+					}
+				}
+			}
+			sql = "update "+tableName+" set manager6='"+manager6+"' where requestid="+requestid;
+			rs.execute(sql);
+
 			// 先清空 123 的值
 			sql = "update " + tableName + " set manager1 = null,manager2 = null,manager3 = null where requestid = " + requestid ;
 			rs.executeSql(sql);
@@ -158,6 +188,29 @@ public class FNA_TL_RE_NodeOperator12Action implements Action{
 		}
 		return roleStr;
 	}
+
+	/**
+	 *
+	 * @param ryid 人员id
+	 * @return
+	 */
+	public String getManager6(String ryid){
+		RecordSet rs = new RecordSet();
+		String managerid = "";
+		int seclevel = 0;
+		String sql = "select managerid,(select seclevel from hrmresource where id=a.managerid) as seclevel from hrmresource a where id="+ryid;
+		rs.execute(sql);
+		if(rs.next()){
+			managerid = Util.null2String(rs.getString("managerid"));
+			seclevel = Util.getIntValue(rs.getString("seclevel"),0);
+		}
+		if("".equals(managerid)||seclevel>=70){
+			return ryid;
+		}else{
+			return getManager6(managerid);
+		}
+
+	}
 	
 	/**
 	 * 获取所有层级人员上级（最高到N-1 查询 uf_fna_NJ1）
@@ -236,6 +289,29 @@ public class FNA_TL_RE_NodeOperator12Action implements Action{
 			}
 		}
 		return false;
+	}
+
+	/**
+	 *
+	 * @param IV_FBID 公司代码
+	 * @param IV_FISTL 基金中心代码
+	 * @param workflowId  默认50
+	 * @return
+	 */
+	public String getBaseSapData(String IV_FBID, String IV_FISTL,String workflowId) {
+		Map<String, String> oaDatas = new HashMap<String, String>();
+		oaDatas.put("IV_FBID", IV_FBID);
+		oaDatas.put("IV_FISTL", IV_FISTL);
+		String dataSourceId = "";
+		String machine = GetMachineUtil.getMachine();
+		if ("PRO".equals(machine)) {//正式
+			dataSourceId = "41";
+		}else {//96
+			dataSourceId = "141";
+		}
+		BringMainAndDetailByMain bmb = new BringMainAndDetailByMain(dataSourceId);//正式 41 测试141
+		String result = bmb.getReturn(oaDatas, workflowId, "", null);
+		return result;
 	}
 
 

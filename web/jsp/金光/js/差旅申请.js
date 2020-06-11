@@ -43,7 +43,11 @@ var projectRow = ".project";//项目明细行
 var hrmScope = "field51489";//人事范围
 var mobile = "field51450";//联系方式
 // var companycode = "field51451";//公司代码
-
+var SAPComment = WfForm.convertFieldNameToId("SAPComment");//SAP获取人员信息注释
+var APLUS = WfForm.convertFieldNameToId("APLUS");//系统属性
+var PROJECT680 = WfForm.convertFieldNameToId("PROJECT680");//项目680
+var wbsstr = WfForm.convertFieldNameToId("PROJECT680");//项目描述
+var wbs = WfForm.convertFieldNameToId("wbs");//项目编号
 jQuery(document).ready(function(){
     WfForm.bindFieldChangeEvent(startdate, function(obj,id,value){
         getTravelPersonDate();
@@ -60,6 +64,7 @@ jQuery(document).ready(function(){
             ]
         });
     })
+    showhidesm680();
     WfForm.bindFieldChangeEvent(projectType, function(obj,id,value){
         WfForm.changeFieldValue(AGroupType, {
             value: "",
@@ -85,9 +90,20 @@ jQuery(document).ready(function(){
                 {id:"",name:""}
             ]
         });
+        WfForm.changeFieldValue(PROJECT680, {
+            value: "",
+            specialobj:[
+                {id:"",name:""}
+            ]
+        });
+        WfForm.changeFieldValue(wbsstr, {value: ""});
+        WfForm.changeFieldValue(wbs, {value: ""});
+        showhidesm680();
+
     });
-
-
+    WfForm.bindFieldChangeEvent(APLUS, function(obj,id,value){
+        showhidesm680();
+    })
     //携程预订ckeck框
     WfForm.bindFieldChangeEvent(ISCtrip, function(obj,id,value){
         setctripLayout();
@@ -101,8 +117,6 @@ jQuery(document).ready(function(){
     WfForm.bindFieldChangeEvent(HoAmoHide, function(obj,id,value){
         checkHoAmoMoney();
     });
-
-
     //差旅开始日期
     WfForm.bindFieldChangeEvent(travelStartDate, function(obj,id,value){
         var datavalue = value;
@@ -259,8 +273,6 @@ jQuery(document).ready(function(){
     });
 
     setTimeout('setctripLayout()',500);
-
-
     //流程提交校验
     WfForm.registerCheckEvent(WfForm.OPER_SUBMIT, function(callback){
         var flag = "1";
@@ -270,7 +282,7 @@ jQuery(document).ready(function(){
         var aircraftCheck_x = aircraftCheck();
         //时间 格式
         if(flag == '1' && checkDate_x == '1' ){
-           alert("差旅结束时间格式不对！");
+            alert("差旅结束时间格式不对！");
             flag = "0"
         }
         if(flag == '1' && checkDate_1 == "1"){
@@ -333,7 +345,7 @@ jQuery(document).ready(function(){
         //   flag = "0"
         //}
         if(flag == '1' && hotelCheck_x == "2"){
-           alert("住宿日期的开始/结束日期范围不在差旅开始/结束日期范围内！");
+            alert("住宿日期的开始/结束日期范围不在差旅开始/结束日期范围内！");
             flag = "0"
         }
         if(flag == '1' && hotelCheck_x == "3" ){
@@ -375,6 +387,55 @@ jQuery(document).ready(function(){
     });
 });
 
+function showhidesm680(){
+
+    var projectType_val = WfForm.getFieldValue(projectType);
+    var APLUS_val = WfForm.getFieldValue(APLUS);
+    if(projectType_val == "1"){
+        if(APLUS_val == "0"){
+            jQuery("#prj680").hide();
+            jQuery("#prj666").show();
+            WfForm.changeFieldAttr(project, 3);
+            WfForm.changeFieldAttr(department, 3);
+            WfForm.changeFieldAttr(PROJECT680, 2);
+            WfForm.changeFieldAttr(wbs, 2);
+            WfForm.changeFieldValue(PROJECT680, {
+                value: "",
+                specialobj:[
+                    {id:"",name:""}
+                ]
+            });
+            WfForm.changeFieldValue(wbsstr, {value: ""});
+            WfForm.changeFieldValue(wbs, {value: ""});
+        }else if(APLUS_val == "1"){
+            jQuery("#prj680").show();
+            jQuery("#prj666").hide();
+            WfForm.changeFieldAttr(project, 2);
+            WfForm.changeFieldAttr(department, 3);
+            WfForm.changeFieldAttr(PROJECT680, 3);
+            WfForm.changeFieldAttr(wbs, 3);
+            WfForm.changeFieldValue(project, {
+                value: "",
+                specialobj:[
+                    {id:"",name:""}
+                ]
+            });
+            WfForm.changeFieldValue(department, {
+                value: "",
+                specialobj:[
+                    {id:"",name:""}
+                ]
+            });
+        }
+
+    }else{
+        WfForm.changeFieldAttr(project, 2);
+        WfForm.changeFieldAttr(department, 2);
+        WfForm.changeFieldAttr(PROJECT680, 2);
+        WfForm.changeFieldAttr(wbs, 2);
+    }
+}
+
 //日期增加函数
 function addDate(date,days){
     var d=new Date(date);
@@ -389,8 +450,6 @@ function getTravelPersonDate(){
     var teavelJobTitle_val = WfForm.getFieldValue(teavelJobTitle);//出差人岗位
     var companycode_val = WfForm.getFieldValue(companycode);//公司代码
     if(treavelperson_val != "" && startdate_val != "" && teavelJobTitle_val != "" && companycode_val != "" ){
-
-
         jQuery.ajax({
             type: "POST",
             url: "/appdevjsp/HQ/FNA/TL/fna_tl_getTravelPersonBaseData.jsp",
@@ -425,6 +484,8 @@ function getTravelPersonDate(){
                         ]
                     });
                     WfForm.changeFieldValue(SAPComment, {value:json.EV_MESSAGE});
+                    WfForm.changeFieldValue(APLUS, {value:json.EV_APLUS});
+
                 }else{
                     WfForm.changeFieldValue(clz, {
                         value: "",
@@ -446,6 +507,7 @@ function getTravelPersonDate(){
                     WfForm.changeFieldValue(cbzx, {value:""});
                     WfForm.changeFieldValue(cbzxmc, {value:""});
                     WfForm.changeFieldValue(SAPComment, {value:""});
+                    WfForm.changeFieldValue(APLUS, {value:""});
                     alert("获取差旅人员基本信息失败，请联系系统管理员");
                 }
             }
@@ -493,8 +555,6 @@ function checkDateDT1(){
     var dateArray = "";
     var beginDate_dt1Val = getDetailVals("detail_1",beginDate_dt1).split(',');
     var endDate_dt1Val = getDetailVals("detail_1",endDate_dt1).split(',');
-
-
     if(beginDate_dt1Val != ''){
         for( var i =0;i<beginDate_dt1Val.length;i++){
             if(beginDate_dt1Val[i] != ''){
@@ -518,8 +578,6 @@ function checkDateDT1(){
                 //if(comparisonDate(beginDate_dt1Val[i],endDate_dt1Val[i]) == '1'){
                 //   return 3;
                 //}
-
-
                 dateArray += getDateStr(beginDate_dt1Val[i],endDate_dt1Val[i],0)+",";
             }
         }
@@ -569,8 +627,6 @@ function isUninterrupted(startDate,endDate,dateArray){
     var bzDateList=dateArray.split(",").length - 1;
     // var csDateList=getDateStr(aDate,bDate,0).split(",").length;
     var csDateList=getDateStr(startDate,endDate,0).split(",").length;
-
-
     if((bzDateList != csDateList) &&  csDateList != '' && bzDateList != ''){
         return 1;
     }else{
@@ -632,8 +688,6 @@ function aircraftCheck(){
         }
     }
 }
-
-
 //住宿明细表校验
 function hotelCheck(){
     var dateArray = "";
@@ -735,8 +789,6 @@ function checkTravelTime(){
     });
     return paramter;
 }
-
-
 //住宿费校验
 function checkHoAmoMoney(){
     var HoAmoHideVal = WfForm.getFieldValue(HoAmoHide);

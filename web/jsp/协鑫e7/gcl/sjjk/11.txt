@@ -1,0 +1,21 @@
+insert into doc_table_map(id,billtablename,type) values(29,'formtable_main_2559','LCSJSZ');
+insert into doc_table_map(id,billtablename,type) values(30,'formtable_main_2560','SJJKJLB');
+insert into doc_table_map(id,workflowid,type) values(31,310913,'LCSJSZJS')
+select max(id) from htmllabelindex
+insert into htmllabelindex (id,indexdesc) values (3959013,'流程审计设置');
+insert into Htmllabelinfo (indexid,labelname,Languageid) values (3959013,'流程审计设置',7);
+insert into Htmllabelinfo (indexid,labelname,Languageid) values (3959013,'流程審計設置',9);
+insert into Htmllabelinfo (indexid,labelname,Languageid) values (3959013,'Process audit settings',8);
+insert into htmllabelindex (id,indexdesc) values (3959014,'流程审计查询');
+insert into Htmllabelinfo (indexid,labelname,Languageid) values (3959014,'流程审计查询',7);
+insert into Htmllabelinfo (indexid,labelname,Languageid) values (3959014,'流程審計查詢',9);
+insert into Htmllabelinfo (indexid,labelname,Languageid) values (3959014,'Process audit query',8);
+select max(id) from LeftMenuInfo
+Call LMConfig_U_ByInfoInsert (2,1,18);
+Call LMInfo_Insert (3954006,3959013,'/images_face/ecologyFace_2/LeftMenuIcon/level3.gif','/gcl/sjjk/workflow-sj-sz.jsp',2,1,18,12);
+Call LMConfig_U_ByInfoInsert (2,1,19);
+Call LMInfo_Insert (3954007,3959014,'/images_face/ecologyFace_2/LeftMenuIcon/level3.gif','/gcl/sjjk/workflow-sj-jk.jsp',2,1,19,12);
+
+浏览按钮
+select b.id,b.workflowname,' ' from formtable_main_2560 a,workflow_base b where a.workflowid=b.id and sjszid = (select max(id) from formtable_main_2559 where ','||to_char(sjry)||',' like '%,$userid$,%')
+select b.id,b.lastname,c.departmentname from hrmresource b,hrmrolemembers a,hrmdepartment c where b.id=a.resourceid and b.departmentid=c.id and a.roleid in(SELECT REGEXP_SUBSTR(a.sjdx, '[^,]+', 1, LEVEL, 'i') item FROM (select sjdx from formtable_main_2559 where id =(select max(id) from formtable_main_2559 where ','||to_char(sjry)||',' like '%,$userid$,%')) a CONNECT BY rownum <= regexp_count(a.sjdx, ',') + 1)
